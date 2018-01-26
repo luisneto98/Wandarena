@@ -27,8 +27,8 @@ class GameConsole
         $logRound["player1"] = array("hand"=>$player1->getDeckInHand()->getCards());
         $logRound["player2"] = array("hand"=>$player2->getDeckInHand()->getCards());
 
-        $card1 = $player1->playRound();
-        $card2 = $player2->playRound();
+        $card1 = $player1->playRound($game,$player2->getDeckInHand());
+        $card2 = $player2->playRound($game,$player1->getDeckInHand());
 
         //log
         $logRound["player1"]["playedCard"] = $card1;

@@ -132,9 +132,9 @@ class Player
         $this->victories += 1;
     }
 
-    public function playRound(){
-        $card = $this->Code->call("round", $this->deckInHand);
-        if($card == null  || !(in_array($card, $this->deckInHand)))
+    public function playRound($game,$deckP2){
+        $card = $game::play($this->Code,$this->deckInHand->getCards(),$deckP2->getCards());
+        if($card == null  || !(in_array($card, $this->deckInHand->getCards())))
             $card = $this->deckInHand->getCard(0);
         $this->deckInHand->removeCard($card);
         return $card;

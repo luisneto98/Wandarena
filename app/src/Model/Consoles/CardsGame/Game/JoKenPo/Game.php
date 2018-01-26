@@ -7,6 +7,7 @@ class Game
 {
     const NAME = "Jo-Ken-Po";
     const ROUNDS = 3;
+    const COUNTCARDS = 3;
     const CARDS = array("pedra","papel","tesoura");
 
 
@@ -48,5 +49,25 @@ class Game
         }else{
             return 2;
         }
+    }
+
+    /**
+     * @param $code
+     * @param $cardsP1
+     * @param $cardsP2
+     * @return mixed
+     * define how to play
+     */
+    static function play($code,$cardsP1,$cardsP2){
+        if(count($cardsP1) == self::COUNTCARDS){
+            return $code->call("round1",$cardsP1);
+
+        }elseif(count($cardsP1) == (self::COUNTCARDS - 1)){
+            return $code->call("round2",array($cardsP1[0],$cardsP1[1],$cardsP2[0],$cardsP2[1]));
+        }else{
+            return $cardsP1[0];
+        }
+
+
     }
 }
