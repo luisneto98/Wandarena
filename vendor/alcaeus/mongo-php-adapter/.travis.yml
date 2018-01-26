@@ -1,0 +1,52 @@
+dist: trusty
+sudo: false
+language: php
+
+services:
+  - mongodb
+
+php:
+  - 7.0
+  - 7.1
+  - 7.2
+
+env:
+  global:
+    - DRIVER_VERSION="stable"
+
+addons:
+  apt:
+    sources:
+      - sourceline: "deb [arch=amd64] https://repo.mongodb.org/apt/ubuntu trusty/mongodb-org/3.4 multiverse"
+        key_url: "https://www.mongodb.org/static/pgp/server-3.4.asc"
+      - "mongodb-upstart"
+    packages: ['mongodb-org-server']
+
+matrix:
+  fast_finish: true
+  include:
+    # Test against legacy driver to ensure validity of the test suite
+    - php: 5.6
+      env: DRIVER_VERSION=stable LEGACY_DRIVER_VERSION=stable
+    # Test against set of lowest dependencies
+    - php: 5.6
+      env: DRIVER_VERSION="1.2.0" COMPOSER_FLAGS="--prefer-dist --prefer-lowest"
+      addons:
+        apt:
+          sources:
+            - sourceline: "deb [arch=amd64] https://repo.mongodb.org/apt/ubuntu trusty/mongodb-org/3.0 multiverse"
+              key_url: "https://www.mongodb.org/static/pgp/server-3.0.asc"
+            - "mongodb-upstart"
+          packages: ['mongodb-org-server']
+
+before_install:
+  - pecl install -f mongodb-${DRIVER_VERSION}
+  - composer update ${COMPOSER_FLAGS}
+  - if [ "x$LEGACY_DRIVER_VERSION" != "x" ]; then yes '' | pecl -q install -f mongo-${LEGACY_DRIVER_VERSION}; fi
+
+script:
+  - ./vendor/bin/phpunit --coverage-clover=coverage.clover
+
+after_script:
+  - wget https://scrutinizer-ci.com/ocular.phar
+  - php ocular.phar code-coverage:upload --format=php-clover coverage.clover
