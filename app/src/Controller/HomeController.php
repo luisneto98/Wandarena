@@ -6,6 +6,7 @@ use App\AuthAdapters\AuthAdapterUser;
 
 use App\Facilitator\App\SessionFacilitator;
 use App\Mapper\User;
+use App\Mapper\Confrontation;
 use App\Model\Consoles\CardsGame\Game\JoKenPo\Game;
 use App\Model\Consoles\CardsGame\GameConsole;
 use Interop\Container\ContainerInterface;
@@ -36,11 +37,11 @@ class HomeController extends AbstractController
      * @Get(name="/", alias="cosmo.home.inicio")
      */
     public function indexAction(ServerRequestInterface $request, ResponseInterface $response) {
-        $gameConsole = new GameConsole();
-        var_dump($gameConsole->startGame("/home/luisneto98/Documentos/Wanda/21Mar/Uploads/bot.lua",
-            "/home/luisneto98/Documentos/Wanda/21Mar/Uploads/bot.lua",Game::class));
-
-
+        $confront = new Confrontation();
+        $confront->setPlayer1("/home/luisneto98/Documentos/Wanda/21Mar/Uploads/bot.lua")
+            ->setPlayer2("/home/luisneto98/Documentos/Wanda/21Mar/Uploads/bot.lua");
+        var_dump($confront->start(Game::class));
+        var_dump($confront->getWinner());
         return 0;
     }
 

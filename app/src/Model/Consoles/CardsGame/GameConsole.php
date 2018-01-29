@@ -92,6 +92,14 @@ class GameConsole
         for ($i = 0; $i < 100;$i++){
             array_push($this->logJson["matchs"],$this->runMatch($player1,$player2,$game));
         }
-        return json_encode($this->logJson);
+
+        if($player1->getVictories() > $player2->getVictories()){
+            $this->logJson["winner"] = 1;
+        }elseif($player1->getVictories() < $player2->getVictories()){
+            $this->logJson["winner"] = 2;
+        }else{
+            $this->logJson["winner"] = 0;
+        }
+        return $this->logJson;
     }
 }
