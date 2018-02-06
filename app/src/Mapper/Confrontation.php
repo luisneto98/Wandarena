@@ -35,6 +35,14 @@ class Confrontation
     private $winner;
 
     /**
+     * @ODM\Field(name="key", type="int")
+     */
+    private $key;
+    /**
+     * @ODM\Field(name="order", type="int")
+     */
+    private $order;
+    /**
      * @ODM\Field(name="logJson"; type="string")
      */
     private $logJson;
@@ -107,6 +115,43 @@ class Confrontation
     {
         return $this->logJson;
     }
+
+    /**
+     * @return mixed
+     */
+    public function getKey()
+    {
+        return $this->key;
+    }
+
+    /**
+     * @param mixed $key
+     * @return $this
+     */
+    public function setKey($key)
+    {
+        $this->key = $key;
+        return $this;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getOrder()
+    {
+        return $this->order;
+    }
+
+    /**
+     * @param mixed $order
+     * @return $this
+     */
+    public function setOrder($order)
+    {
+        $this->order = $order;
+        return $this;
+    }
+
 
 
 
