@@ -38,8 +38,8 @@ class HomeController extends AbstractController
      */
     public function indexAction(ServerRequestInterface $request, ResponseInterface $response) {
         $confront = new Confrontation();
-        $confront->setPlayer1("/home/luisneto98/Documentos/Wanda/21Mar/Uploads/bot.lua")
-            ->setPlayer2("/home/luisneto98/Documentos/Wanda/21Mar/Uploads/bot.lua");
+        $confront->setPlayer1(Game::BOT)
+            ->setPlayer2(Game::BOT);
         var_dump($confront->start(Game::class));
         var_dump($confront->getWinner());
         return 0;

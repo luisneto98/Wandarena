@@ -56,16 +56,64 @@ class Arena
      */
     private $isReady;
 
+    /**
+     * @ODM\Field(name="winner")
+     * @ReferenceOne(targetDocument="Submit")
+     */
+    private $winner;
+
 
     public function start(){
-        if($this->getDateUnix($this->date) > time()){
-            if(!$this->isReady()){
+        if($this->getDateUnix($this->date) >= time()){
+            if(!$this->isReady){
+                $auxSubmits = $this->submits;
+                while(count($auxSubmits) > 1){
+                    $this->createConfrontations($auxSubmits);
+                }
+                $this->winner = $auxSubmits;
 
+                return true;
             }
         }
             return false;
 
 
+    }
+    private function createConfrontations($submits){
+        $auxConfrontatios = array();
+        $auxSubmits = array();
+        $key = ceil(count($submits)/2);
+        if(count($submits) % 2 == 0){
+            for($i = 0 ; $i < count($submits) ; $i += 2){
+                $confrontation = new Confrontation();
+                $confrontation->setPlayer1($submits[$i])->setPlayer2($submits[$i]);
+                $confrontation->start($this->game);
+                $confrontation->setKey($key);
+                $confrontation->setOrder($i/2 + 1);
+                array_push($auxConfrontatios,$confrontation);
+                array_push($auxSubmits,$confrontation->getWinner());
+            }
+        }else{
+            for($i = 0 ; $i < count($submits)-1 ; $i += 2){
+                $confrontation = new Confrontation();
+                $confrontation->setPlayer1($submits[$i])->setPlayer2($submits[$i]);
+                $confrontation->start($this->game);
+                $confrontation->setKey($key);
+                $confrontation->setOrder($i/2 + 1);
+                array_push($auxConfrontatios,$confrontation);
+                array_push($auxSubmits,$confrontation->getWinner());
+            }
+            $confrontation = new Confrontation();
+            $confrontation->setPlayer1($submits[count($submits)-1])->setPlayer2($this->game::Bot);
+            $confrontation->start($this->game);
+            $confrontation->setKey($key);
+            $confrontation->setOrder($i/2 + 1);
+            array_push($auxConfrontatios,$confrontation);
+            array_push($auxSubmits,$confrontation->getWinner());
+
+        }
+        $this->confrontations = array_merge($this->confrontations,$auxConfrontatios);
+        return $auxSubmits;
     }
 
     private function getDateUnix($date){

@@ -9,6 +9,7 @@ class Game
     const ROUNDS = 3;
     const COUNTCARDS = 3;
     const CARDS = array("pedra","papel","tesoura");
+    const BOT = __DIR__."/Bot.lua";
 
 
     /**
@@ -30,6 +31,13 @@ class Game
      */
     static function getCards(){
         return self::CARDS;
+    }
+
+    /**
+     * @return string
+     */
+    static function getBot(){
+        return self::BOT;
     }
 
     /**
