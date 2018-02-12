@@ -2,6 +2,7 @@
 
 namespace App\Mapper;
 
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ODM\MongoDB\Mapping\Annotations as ODM;
 
 /**
@@ -24,6 +25,16 @@ class User
      */
     private $password;
 
+    /**
+     * @ReferenceMany(targetDocument = "Submit" , inversedBy="user")
+     */
+    private $submits;
+
+
+    public function __construct()
+    {
+        $this->submits = new ArrayCollection();
+    }
 
     /**
      * @return mixed
@@ -88,6 +99,25 @@ class User
     {
         $this->fullname = $fullname;
     }
+
+    /**
+     * @return mixed
+     */
+    public function getSubmits()
+    {
+        return $this->submits;
+    }
+
+    /**
+     * @param $submit
+     * @return $this
+     */
+    public function addSubmit($submit)
+    {
+        $this->submits->add($submit);
+        return $this;
+    }
+
 
 
 

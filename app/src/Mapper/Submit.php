@@ -21,8 +21,85 @@ class Submit
 
 
     /**
-     * @ReferenceOne(targetDocument = "User")
+     * @ReferenceOne(targetDocument = "User" , mappedBy="submits")
      */
     private $user;
+
+
+    /**
+     * @ODM\Field(name="code", type="bin")
+     */
+    private $code;
+
+    /**
+     * @ODM\Field(name="nickname", type="string")
+     */
+    private $nickname;
+
+    /**
+     * @return mixed
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getUser()
+    {
+        return $this->user;
+    }
+
+    /**
+     * @param mixed $user
+     * @return Submit
+     */
+    public function setUser($user)
+    {
+        $this->user = $user;
+        return $this;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getCode()
+    {
+        return $this->code;
+    }
+
+    /**
+     * @param mixed $code
+     * @return Submit
+     */
+    public function setCode($code)
+    {
+        $this->code = $code;
+        return $this;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getNickname()
+    {
+        return $this->nickname;
+    }
+
+    /**
+     * @param mixed $nickname
+     * @return Submit
+     */
+    public function setNickname($nickname)
+    {
+        $this->nickname = $nickname;
+        return $this;
+    }
+
+
+
+
 
 }

@@ -34,7 +34,7 @@ class Arena
 
     /**
      * @ODM\Field(name="submits")
-     * @ReferenceMany(targetDocument="Submit")
+     * @ReferenceMany(targetDocument="Submit)
      */
     private $submits;
 
