@@ -52,10 +52,8 @@ class HomeController extends AbstractController
      * @Get(name="/mostrar", alias="cosmo.home.mostrar")
      */
     public function mostrarAction(ServerRequestInterface $request, ResponseInterface $response) {
-        $router = $this->_ci->get('router');
 
-        $user = $this->_dm->getRepository(User::class)->findAll();
-        return $this->view->render($response,"View/listaUsuarios.twig",["usuarios" => $user]);
+        return $this->view->render($response,"View/Layout.twig",["admin" => true]);
     }
 
 }

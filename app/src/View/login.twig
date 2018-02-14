@@ -1,0 +1,29 @@
+
+<!doctype html>
+<html lang="pt-br">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="pagina de login do site Wandarena">
+    <meta name="author" content="Luis Alves">
+    <!-- Bootstrap core CSS -->
+    <link rel="stylesheet" href="{{ base_url() }}/css/bootstrap.min.css" >
+    <link rel="stylesheet" href="{{ base_url() }}/css/sigin.css">
+    <title>Wandarena | log in</title>
+
+
+
+</head>
+
+<body class="text-center">
+<form class="form-signin">
+    <img class="mb-4 text-center" src="{{ base_url() }}/Images/System/Logo_Wandarena.png" alt="" width="330" height="300">
+    <h6 class="h6 mb-3 font-weight-normal">Bem vindo ao sistema Wandarena</h6>
+    <label for="inputUser" class="sr-only">Usuario</label>
+    <input type="text" id="inputUser" class="form-control" placeholder="Usuário" required autofocus>
+    <label for="inputPassword" class="sr-only">Password</label>
+    <input type="password" id="inputPassword" class="form-control" placeholder="Senha" required>
+    <button class="btn btn-lg btn-primary btn-block" type="submit">Entrar</button>
+</form>
+</body>
+</html>
