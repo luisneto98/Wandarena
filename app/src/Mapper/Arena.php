@@ -8,6 +8,7 @@
 
 namespace App\Mapper;
 
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ODM\MongoDB\Mapping\Annotations as ODM;
 
 /**
@@ -21,47 +22,57 @@ class Arena
     private $id;
 
     /**
-     * game location
      * @ODM\Field(name="game", type="string")
      */
     private $game;
 
     /**
-     * console location
      * @ODM\Field(name="console", type="string")
      */
     private $console;
 
     /**
-     * @ODM\Field(name="submits")
-     * @ReferenceMany(targetDocument="Submit)
+     * @ODM\Field(name="description", type="string")
+     */
+    private $description;
+
+    /**
+     * @ODM\Field(name="title", type="string")
+     */
+    private $title;
+
+    /**
+     * @ODM\ReferenceMany(targetDocument="Submit")
      */
     private $submits;
 
 
     /**
-     * @ODM\Field(name="confrontations")
-     * @ReferenceMany(targetDocument="Confrontation")
+     * @ODM\ReferenceMany(targetDocument="Confrontation")
      */
     private $confrontations;
 
 
     /**
-     * @ODM\Field(name="date" type="date")
+     * @ODM\Field(name="date", type="date")
      */
     private $date;
 
     /**
-     * @ODM\Field(name="isReady" type="bool")
+     * @ODM\Field(name="isReady", type="bool")
      */
     private $isReady;
 
     /**
-     * @ODM\Field(name="winner")
-     * @ReferenceOne(targetDocument="Submit")
+     * @ODM\ReferenceOne(targetDocument="Submit")
      */
     private $winner;
 
+    public function __construct()
+    {
+        $this->submits = new ArrayCollection();
+        $this->confrontations = new ArrayCollection();
+    }
 
     public function start(){
         if($this->getDateUnix($this->date) >= time()){
@@ -179,9 +190,9 @@ class Arena
      * @param mixed $submits
      * @return Arena
      */
-    public function setSubmits($submits)
+    public function addSubmits($submits)
     {
-        $this->submits = $submits;
+        $this->submits->add($submits);
         return $this;
     }
 
@@ -219,6 +230,78 @@ class Arena
     {
         $this->isReady = $isReady;
         return $this;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getDescription()
+    {
+        return $this->description;
+    }
+
+    /**
+     * @param mixed $description
+     * @return Arena
+     */
+    public function setDescription($description)
+    {
+        $this->description = $description;
+        return $this;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getTitle()
+    {
+        return $this->title;
+    }
+
+    /**
+     * @param mixed $title
+     * @return Arena
+     */
+    public function setTitle($title)
+    {
+        $this->title = $title;
+        return $this;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getConfrontations()
+    {
+        return $this->confrontations;
+    }
+
+    /**
+     * @param mixed $confrontations
+     */
+    public function setConfrontations($confrontations)
+    {
+        $this->confrontations = $confrontations;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getWinner()
+    {
+        return $this->winner;
+    }
+
+    /**
+     * @param mixed $winner
+     */
+    public function setWinner($winner)
+    {
+        $this->winner = $winner;
+    }
+
+    public function getDateDefault(){
+        return $this->date->format('Y-m-d\TH:i');
     }
 
 

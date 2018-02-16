@@ -18,6 +18,7 @@ use SlimAuth\SlimAuthFacade;
  * Class HomeController
  * @package App\Controller
  * @Controller
+ * @Router("/")
  */
 class HomeController extends AbstractController
 {
@@ -37,12 +38,7 @@ class HomeController extends AbstractController
      * @Get(name="/", alias="cosmo.home.inicio")
      */
     public function indexAction(ServerRequestInterface $request, ResponseInterface $response) {
-        $confront = new Confrontation();
-        $confront->setPlayer1(Game::BOT)
-            ->setPlayer2(Game::BOT);
-        var_dump($confront->start(Game::class));
-        var_dump($confront->getWinner());
-        return 0;
+        return $this->view->render($response,"View/Layout.twig",["admin" => true]);
     }
 
     /**
@@ -52,8 +48,7 @@ class HomeController extends AbstractController
      * @Get(name="/mostrar", alias="cosmo.home.mostrar")
      */
     public function mostrarAction(ServerRequestInterface $request, ResponseInterface $response) {
-
-        return $this->view->render($response,"View/Layout.twig",["admin" => true]);
+        return $this->view->render($response,"View/Arena/registerArena.twig",["admin" => true]);
     }
 
 }

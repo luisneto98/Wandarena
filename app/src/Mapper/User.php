@@ -26,7 +26,7 @@ class User
     private $password;
 
     /**
-     * @ReferenceMany(targetDocument = "Submit" , inversedBy="user")
+     * @ODM\ReferenceMany(targetDocument = "Submit" , inversedBy="user")
      */
     private $submits;
 
@@ -84,21 +84,6 @@ class User
         $this->password = $password;
     }
 
-    /**
-     * @return mixed
-     */
-    public function getFullname()
-    {
-        return $this->fullname;
-    }
-
-    /**
-     * @param mixed $fullname
-     */
-    public function setFullname($fullname)
-    {
-        $this->fullname = $fullname;
-    }
 
     /**
      * @return mixed

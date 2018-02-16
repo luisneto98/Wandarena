@@ -14,8 +14,9 @@ class __TwigTemplate_c863a9da9ec1fc0fd54f1fc69a6317b56368ec145f08e27a9f588caf694
             'Arenas' => array($this, 'block_Arenas'),
             'Pratice' => array($this, 'block_Pratice'),
             'registerUser' => array($this, 'block_registerUser'),
-            'ControlArenas' => array($this, 'block_ControlArenas'),
-            'container' => array($this, 'block_container'),
+            'arenasControl' => array($this, 'block_arenasControl'),
+            'titlePage' => array($this, 'block_titlePage'),
+            'content' => array($this, 'block_content'),
         );
     }
 
@@ -65,21 +66,20 @@ class __TwigTemplate_c863a9da9ec1fc0fd54f1fc69a6317b56368ec145f08e27a9f588caf694
             </button>
             <div class=\"collapse navbar-collapse \" id=\"navbarNavAltMarkup\">
                 <ul class=\"navbar-nav\">
-                    <li class=\"nav-item active\">
-                        <a class=\"nav-link\" href=\"#\">Arenas ";
-        // line 33
+                    <li class=\"nav-item ";
+        // line 32
         $this->displayBlock('Arenas', $context, $blocks);
-        echo "</a>
+        echo "\">
+                        <a class=\"nav-link\" href=\"#\">Arenas </a>
                     </li>
                     ";
         // line 35
         if ((($context["admin"] ?? null) == false)) {
             // line 36
-            echo "                        <li class=\"nav-item\">
-                            <a class=\"nav-link\" href=\"#\">Praticar ";
-            // line 37
+            echo "                        <li class=\"nav-item ";
             $this->displayBlock('Pratice', $context, $blocks);
-            echo "</a>
+            echo "\">
+                            <a class=\"nav-link\" href=\"#\">Praticar </a>
                         </li>
                     ";
         }
@@ -87,17 +87,19 @@ class __TwigTemplate_c863a9da9ec1fc0fd54f1fc69a6317b56368ec145f08e27a9f588caf694
         echo "                    ";
         if ((($context["admin"] ?? null) == true)) {
             // line 41
-            echo "                        <li class=\"nav-item\">
-                            <a class=\"nav-link\" href=\"#\">Cadastrar Usuário ";
-            // line 42
+            echo "                        <li class=\"nav-item ";
             $this->displayBlock('registerUser', $context, $blocks);
-            echo "</a>
+            echo "\">
+                            <a class=\"nav-link\" href=\"#\">Cadastrar Usuário </a>
                         </li>
-                        <li class=\"nav-item\">
-                            <a class=\"nav-link\" href=\"#\">Controle Arenas ";
+                        <li class=\"nav-item ";
+            // line 44
+            $this->displayBlock('arenasControl', $context, $blocks);
+            echo "\">
+                            <a class=\"nav-link\" href=\"";
             // line 45
-            $this->displayBlock('ControlArenas', $context, $blocks);
-            echo "</a>
+            echo twig_escape_filter($this->env, $this->env->getExtension('Slim\Views\TwigExtension')->pathFor("wanda.arena.control.index"), "html", null, true);
+            echo "\">Controle de Arenas </a>
                         </li>
                     ";
         }
@@ -107,15 +109,20 @@ class __TwigTemplate_c863a9da9ec1fc0fd54f1fc69a6317b56368ec145f08e27a9f588caf694
         </nav>
 
     </header>
-   <section class=\" container\">
-       ";
+   <main>
+       <h3 class=\"mb-5 mt-3 ml-5 display-4\"> ";
         // line 54
-        $this->displayBlock('container', $context, $blocks);
-        // line 55
-        echo "
-   </section>
+        $this->displayBlock('titlePage', $context, $blocks);
+        echo "</h3>
+       <section class=\"container-fluid\">
+           ";
+        // line 56
+        $this->displayBlock('content', $context, $blocks);
+        // line 57
+        echo "       </section>
+   </main>
     <footer class=\"mt-auto bg-dark text-light fixed-bottom border-top border-white\">
-        <div class=\"float-right hidden-xs border-right version\">
+        <div class=\"float-right hidden-xs mr-2 version\">
             <b>Version</b> 0.1.2
         </div>
         <strong>Copyright &copy; 2017-2018 <a href=\"mailto:alvesgamadossantos@gmail.com\">Luis Alves</a> e <a href=\"#\">Telemídia</a></strong>.
@@ -134,28 +141,33 @@ class __TwigTemplate_c863a9da9ec1fc0fd54f1fc69a6317b56368ec145f08e27a9f588caf694
     {
     }
 
-    // line 33
+    // line 32
     public function block_Arenas($context, array $blocks = array())
     {
     }
 
-    // line 37
+    // line 36
     public function block_Pratice($context, array $blocks = array())
     {
     }
 
-    // line 42
+    // line 41
     public function block_registerUser($context, array $blocks = array())
     {
     }
 
-    // line 45
-    public function block_ControlArenas($context, array $blocks = array())
+    // line 44
+    public function block_arenasControl($context, array $blocks = array())
     {
     }
 
     // line 54
-    public function block_container($context, array $blocks = array())
+    public function block_titlePage($context, array $blocks = array())
+    {
+    }
+
+    // line 56
+    public function block_content($context, array $blocks = array())
     {
         echo " ";
     }
@@ -172,7 +184,7 @@ class __TwigTemplate_c863a9da9ec1fc0fd54f1fc69a6317b56368ec145f08e27a9f588caf694
 
     public function getDebugInfo()
     {
-        return array (  158 => 54,  153 => 45,  148 => 42,  143 => 37,  138 => 33,  133 => 18,  115 => 55,  113 => 54,  105 => 48,  99 => 45,  93 => 42,  90 => 41,  87 => 40,  81 => 37,  78 => 36,  76 => 35,  71 => 33,  53 => 18,  46 => 14,  42 => 13,  38 => 12,  25 => 1,);
+        return array (  170 => 56,  165 => 54,  160 => 44,  155 => 41,  150 => 36,  145 => 32,  140 => 18,  122 => 57,  120 => 56,  115 => 54,  107 => 48,  101 => 45,  97 => 44,  90 => 41,  87 => 40,  79 => 36,  77 => 35,  71 => 32,  54 => 18,  47 => 14,  43 => 13,  39 => 12,  26 => 1,);
     }
 
     public function getSourceContext()
@@ -208,20 +220,20 @@ class __TwigTemplate_c863a9da9ec1fc0fd54f1fc69a6317b56368ec145f08e27a9f588caf694
             </button>
             <div class=\"collapse navbar-collapse \" id=\"navbarNavAltMarkup\">
                 <ul class=\"navbar-nav\">
-                    <li class=\"nav-item active\">
-                        <a class=\"nav-link\" href=\"#\">Arenas {% block Arenas %}{% endblock %}</a>
+                    <li class=\"nav-item {% block Arenas %}{% endblock %}\">
+                        <a class=\"nav-link\" href=\"#\">Arenas </a>
                     </li>
                     {% if admin == false %}
-                        <li class=\"nav-item\">
-                            <a class=\"nav-link\" href=\"#\">Praticar {% block Pratice %}{% endblock %}</a>
+                        <li class=\"nav-item {% block Pratice %}{% endblock %}\">
+                            <a class=\"nav-link\" href=\"#\">Praticar </a>
                         </li>
                     {% endif %}
                     {% if admin == true %}
-                        <li class=\"nav-item\">
-                            <a class=\"nav-link\" href=\"#\">Cadastrar Usuário {% block registerUser %}{% endblock %}</a>
+                        <li class=\"nav-item {% block registerUser %}{% endblock %}\">
+                            <a class=\"nav-link\" href=\"#\">Cadastrar Usuário </a>
                         </li>
-                        <li class=\"nav-item\">
-                            <a class=\"nav-link\" href=\"#\">Controle Arenas {% block ControlArenas %}{% endblock %}</a>
+                        <li class=\"nav-item {% block arenasControl %}{% endblock %}\">
+                            <a class=\"nav-link\" href=\"{{ path_for('wanda.arena.control.index') }}\">Controle de Arenas </a>
                         </li>
                     {% endif %}
                 </ul>
@@ -229,12 +241,14 @@ class __TwigTemplate_c863a9da9ec1fc0fd54f1fc69a6317b56368ec145f08e27a9f588caf694
         </nav>
 
     </header>
-   <section class=\" container\">
-       {% block container%} {% endblock %}
-
-   </section>
+   <main>
+       <h3 class=\"mb-5 mt-3 ml-5 display-4\"> {% block titlePage %}{% endblock %}</h3>
+       <section class=\"container-fluid\">
+           {% block content%} {% endblock %}
+       </section>
+   </main>
     <footer class=\"mt-auto bg-dark text-light fixed-bottom border-top border-white\">
-        <div class=\"float-right hidden-xs border-right version\">
+        <div class=\"float-right hidden-xs mr-2 version\">
             <b>Version</b> 0.1.2
         </div>
         <strong>Copyright &copy; 2017-2018 <a href=\"mailto:alvesgamadossantos@gmail.com\">Luis Alves</a> e <a href=\"#\">Telemídia</a></strong>.

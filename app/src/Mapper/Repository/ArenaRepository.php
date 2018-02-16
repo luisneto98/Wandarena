@@ -8,10 +8,19 @@
 
 namespace App\Mapper\Repository;
 
+use App\Mapper\Arena;
 use Doctrine\ODM\MongoDB\DocumentRepository;
+use Doctrine\ODM\MongoDB\PersistentCollection;
 
 class ArenaRepository extends DocumentRepository
-
 {
 
+
+    /**
+     * @param $id
+     * @return array
+     */
+    public function getArenaWithId($id) {
+        return $this->dm->getRepository(Arena::class)->findBy(['id' => $id]);
+    }
 }
