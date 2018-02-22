@@ -12,6 +12,7 @@ class __TwigTemplate_3a558961d516063423837084d89ef6049a74f10a06fea0b238b9e42d31e
         $this->blocks = array(
             'title' => array($this, 'block_title'),
             'titlePage' => array($this, 'block_titlePage'),
+            'arenasControl' => array($this, 'block_arenasControl'),
             'content' => array($this, 'block_content'),
         );
     }
@@ -38,17 +39,34 @@ class __TwigTemplate_3a558961d516063423837084d89ef6049a74f10a06fea0b238b9e42d31e
         echo "Cadastro de Arena";
     }
 
-    // line 5
+    // line 4
+    public function block_arenasControl($context, array $blocks = array())
+    {
+        echo "active";
+    }
+
+    // line 6
     public function block_content($context, array $blocks = array())
     {
-        // line 6
-        echo "    <form class = \"offset-sm-2 col-sm-8 rounded p-4\" method=\"post\" action=\"";
+        // line 7
+        echo "    <form class = \"offset-sm-2 col-sm-8 rounded p-4 border\" method=\"post\" action=\"";
         echo twig_escape_filter($this->env, $this->env->getExtension('Slim\Views\TwigExtension')->pathFor("wanda.arena.register.save"), "html", null, true);
         echo "\">
-        <div class=\"form-group \">
+        ";
+        // line 8
+        if ((($context["arena"] ?? null) != null)) {
+            // line 9
+            echo "            <input type=\"hidden\" name=\"id\" value=\"";
+            echo twig_escape_filter($this->env, twig_get_attribute($this->env, $this->getSourceContext(), ($context["arena"] ?? null), "id", array()), "html", null, true);
+            echo "\">
+
+        ";
+        }
+        // line 12
+        echo "        <div class=\"form-group \">
             <label for=\"Title\">Título:</label>
             <input type=\"text\" class=\"form-control\" id=\"Title\" name=\"title\" placeholder=\"Título...\" ";
-        // line 9
+        // line 14
         if ((($context["arena"] ?? null) != null)) {
             echo " value=\"";
             echo twig_escape_filter($this->env, twig_get_attribute($this->env, $this->getSourceContext(), ($context["arena"] ?? null), "title", array()), "html", null, true);
@@ -66,7 +84,7 @@ class __TwigTemplate_3a558961d516063423837084d89ef6049a74f10a06fea0b238b9e42d31e
         <div class=\"form-group\">
             <label for=\"Description\">Descrição:</label>
             <textarea class=\"form-control\" id=\"Description\" rows=\"3\" name=\"description\" >";
-        // line 20
+        // line 25
         if ((($context["arena"] ?? null) != null)) {
             echo " ";
             echo twig_escape_filter($this->env, twig_get_attribute($this->env, $this->getSourceContext(), ($context["arena"] ?? null), "description", array()), "html", null, true);
@@ -76,7 +94,7 @@ class __TwigTemplate_3a558961d516063423837084d89ef6049a74f10a06fea0b238b9e42d31e
         <div class=\"form-group\">
             <label for=\"date\">Data:</label>
             <input type=\"datetime-local\"  class=\"form-control\" id=\"date\" name=\"date\" ";
-        // line 24
+        // line 29
         if ((($context["arena"] ?? null) != null)) {
             echo " value=\"";
             echo twig_escape_filter($this->env, twig_get_attribute($this->env, $this->getSourceContext(), ($context["arena"] ?? null), "getDateDefault", array(), "method"), "html", null, true);
@@ -84,7 +102,7 @@ class __TwigTemplate_3a558961d516063423837084d89ef6049a74f10a06fea0b238b9e42d31e
         }
         echo ">
         </div>
-        <div class=\"form-group row offset-8 float-right col-4\">
+        <div class=\"form-group row offset-8 col-4\">
             <button class=\"form-control btn btn-primary\" id=\"submit\" type=\"submit\">Enviar</button>
         </div>
     </form>
@@ -103,7 +121,7 @@ class __TwigTemplate_3a558961d516063423837084d89ef6049a74f10a06fea0b238b9e42d31e
 
     public function getDebugInfo()
     {
-        return array (  80 => 24,  70 => 20,  52 => 9,  45 => 6,  42 => 5,  36 => 3,  30 => 2,  11 => 1,);
+        return array (  98 => 29,  88 => 25,  70 => 14,  66 => 12,  59 => 9,  57 => 8,  52 => 7,  49 => 6,  43 => 4,  37 => 3,  31 => 2,  11 => 1,);
     }
 
     public function getSourceContext()
@@ -111,9 +129,14 @@ class __TwigTemplate_3a558961d516063423837084d89ef6049a74f10a06fea0b238b9e42d31e
         return new Twig_Source("{% extends \"View/Layout.twig\" %}
 {% block title %} Cadastrar Arena {% endblock %}
 {% block titlePage %}Cadastro de Arena{% endblock %}
+{% block arenasControl %}active{% endblock %}
 
 {% block content %}
-    <form class = \"offset-sm-2 col-sm-8 rounded p-4\" method=\"post\" action=\"{{ path_for(\"wanda.arena.register.save\") }}\">
+    <form class = \"offset-sm-2 col-sm-8 rounded p-4 border\" method=\"post\" action=\"{{ path_for(\"wanda.arena.register.save\") }}\">
+        {% if arena != NULL %}
+            <input type=\"hidden\" name=\"id\" value=\"{{ arena.id }}\">
+
+        {% endif %}
         <div class=\"form-group \">
             <label for=\"Title\">Título:</label>
             <input type=\"text\" class=\"form-control\" id=\"Title\" name=\"title\" placeholder=\"Título...\" {% if arena != NULL %} value=\"{{ arena.title }}\"{% endif %}>
@@ -133,7 +156,7 @@ class __TwigTemplate_3a558961d516063423837084d89ef6049a74f10a06fea0b238b9e42d31e
             <label for=\"date\">Data:</label>
             <input type=\"datetime-local\"  class=\"form-control\" id=\"date\" name=\"date\" {% if arena != NULL %} value=\"{{ arena.getDateDefault() }}\"{% endif %}>
         </div>
-        <div class=\"form-group row offset-8 float-right col-4\">
+        <div class=\"form-group row offset-8 col-4\">
             <button class=\"form-control btn btn-primary\" id=\"submit\" type=\"submit\">Enviar</button>
         </div>
     </form>

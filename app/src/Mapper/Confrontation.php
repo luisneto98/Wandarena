@@ -53,10 +53,11 @@ class Confrontation
         $gameConsole = new GameConsole();
         $this->logJson = $gameConsole->startGame($this->player1,$this->player2,$gameClass);
         $this->winner = $this->logJson["winner"];
+        $this->logJson = json_encode($this->logJson);
         if($this->winner == 0){
             return $this->start($gameClass);
         }
-        return $this->logJson;
+        return json_decode($this->logJson);
     }
 
     /**

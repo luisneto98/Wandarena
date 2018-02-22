@@ -4,6 +4,9 @@
 {% block arenasControl %} active {% endblock %}
 {% block content %}
 
+    <div class="row offset-11 mb-4">
+        <a class="btn btn-primary" href="{{ path_for('wanda.arena.register.index') }}">Criar Arena</a>
+    </div>
     <table class="table">
         <thead class="thead-dark">
             <tr>
@@ -11,6 +14,7 @@
                 <th scope="col">Título</th>
                 <th scope="col">Data</th>
                 <th scope="col">Descrição</th>
+                <th scope="col">Jogo</th>
                 <th scope="col">Deletar</th>
                 <th scope="col">Alterar</th>
             </tr>
@@ -18,13 +22,15 @@
         <tbody>
         {% for arena in arenas %}
         <tr>
-            <th scope="row">{{ loop.index }}</th>
-            <td class="text-truncate">{{ arena.title }}</td>
-            <td class="text-truncate">{{ arena.getDateDefault() }}</td>
-            <td class="text-truncate">{{ arena.description }}</td>
-            <td class="text-truncate"><a class="btn btn-primary" href="{{ path_for('wanda.arena.control.delete',{"id" : arena.id}) }}">Deletar</a></td>
-            <td class="text-truncate"><a class="btn btn-primary" href="{{ path_for('wanda.arena.control.change',{"id" : arena.id}) }}">Alterar</a></td>
-            <td></td>
+            <div class="container row">
+                <th>{{ loop.index }}</th>
+                <td class="text-truncate">{{ arena.title }}</td>
+                <td class="text-truncate">{{ arena.getDateDefault() }}</td>
+                <td class="text-truncate" style="max-width: 20rem;">{{ arena.description }}</td>
+                <td class="text-truncate" style="max-width: 20rem;">{{ arena.getGameName() }}</td>
+                <td class="text-truncate"><a class="btn btn-danger" href="{{ path_for('wanda.arena.control.delete',{"id" : arena.id}) }}">Deletar</a></td>
+                <td class="text-truncate"><a class="btn btn-success" href="{{ path_for('wanda.arena.control.change',{"id" : arena.id}) }}">Alterar</a></td>
+            </div>
         </tr>
         {% endfor %}
         </tbody>

@@ -22,14 +22,10 @@ class Arena
     private $id;
 
     /**
-     * @ODM\Field(name="game", type="string")
+     * @ODM\Field(name="gameInfo", type="collection")
      */
-    private $game;
+    private $gameInfo;
 
-    /**
-     * @ODM\Field(name="console", type="string")
-     */
-    private $console;
 
     /**
      * @ODM\Field(name="description", type="string")
@@ -143,40 +139,34 @@ class Arena
     }
 
     /**
+     * @param $id
+     */
+    public function setId($id){
+        $this->id  = $id;
+    }
+
+    /**
      * @return mixed
      */
-    public function getGame()
+    public function getGameInfo()
     {
-        return $this->game;
+        return $this->gameInfo;
+    }
+
+    public function getGameName(){
+        return $this->gameInfo[0];
     }
 
     /**
      * @param mixed $game
      * @return Arena
      */
-    public function setGame($game)
+    public function setGameInfo($game)
     {
-        $this->game = $game;
+        $this->gameInfo = $game;
         return $this;
     }
 
-    /**
-     * @return mixed
-     */
-    public function getConsole()
-    {
-        return $this->console;
-    }
-
-    /**
-     * @param mixed $console
-     * @return Arena
-     */
-    public function setConsole($console)
-    {
-        $this->console = $console;
-        return $this;
-    }
 
     /**
      * @return mixed
@@ -300,9 +290,18 @@ class Arena
         $this->winner = $winner;
     }
 
+    /**
+     * @return mixed
+     */
     public function getDateDefault(){
         return $this->date->format('Y-m-d\TH:i');
     }
+
+    public function getBGArena(){
+        return ($this->gameInfo[1])::getImageBG();
+    }
+
+
 
 
 

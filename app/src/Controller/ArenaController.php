@@ -54,19 +54,19 @@ class ArenaController extends AbstractController
      */
     public function saveAction(Request $request, Response $response) {
         $arena = new Arena();
-        $arena->getId($request->getParam("id"));
-        $arena->setConsole("App\Model\Consoles\CardsGame\GameConsole");
+        $arena->setId($request->getParam("id"));
         $arena->setDescription($request->getParam("description"));
         $arena->setDate(new \MongoDate(strtotime($request->getParam("date"))));
         var_dump(date("Y-m-d\TH:i",strtotime($request->getParam("date"))));
         $arena->setTitle($request->getParam("title"));
+        $game = array("name"=>"Jo-Ken-Po","game"=>"App\Model\Consoles\CardsGame\Game\JoKenPo\Game","console"=>"App\Model\Consoles\CardsGame\GameConsole");
         if($request->getParam("game") == "Jo-Ken-Po")
-           $arena->setGame("App\Model\Consoles\CardsGame\Game\JoKenPo\Game");
+           $arena->setGameInfo($game);
         $this->_dm->persist($arena);
 
         $this->_dm->flush();
-        $arenas = $this->_dm->getRepository(Arena::class)->findAll();
-        return $this->view->render($response,"View/Arena/registerArena.twig",["admin" => true]);
+        $router = $this->_ci->get('router');
+        return $response->withRedirect($router->pathFor('wanda.arena.control.index'));
     }
 
     /**
@@ -77,7 +77,7 @@ class ArenaController extends AbstractController
      */
     public function listAction(Request $request, Response $response) {
         $arenas = $this->_dm->getRepository(Arena::class)->findAll();
-        return $this->view->render($response,"View/Arena/arenasControl.twig",["admin" => true,"arenas"=>$arenas]);
+        return $this->view->render($response,"View/Arena/arenasControl.twig",["admin" => true,"arenas"=>$arenas,"nome"=>$arenas[0]->getGameInfo()[0]]);
     }
     /**
      * @param Request $request
@@ -110,5 +110,6 @@ class ArenaController extends AbstractController
         return $this->view->render($response,"View/Arena/registerArena.twig",["admin" => true,"arena"=>$arena[0]]);
 
     }
+
 
 }

@@ -1,0 +1,23 @@
+{% extends "View/Layout.twig" %}
+{% block title %} Arenas {% endblock %}
+{% block titlePage %}Lista de Arenas{% endblock %}
+{% block arena %} active {% endblock %}
+{% block content %}
+    <div class="row ml-5">
+    {% for arena in arenas %}
+        <div class="card m-3">
+            <img class="card-img-top" style="max-width: 20rem; max-height: 10rem" src="{{ base_url() }}{{ arena.getBGArena() }}" alt="Card image cap">
+            <div class="card-body">
+                <h5 class="card-title">{{ arena.title }}</h5>
+                <h6 class="card-subtitle text-muted"> {{ arena.getGameName() }} </h6>
+                <div style="max-height: 20rem; max-width: 15rem;">
+                    <span title="{{ arena.description }}"><p class="card-text text-truncate" >{{ arena.description }}</p></span>
+
+                    <p class="card-text"><small class="text-muted">{{ arena.getDateDefault() }}</small></p>
+                </div>
+                <a class="btn btn-primary float-right" href="#">Entrar</a>
+            </div>
+        </div>
+    {% endfor %}
+    </div>
+{% endblock %}

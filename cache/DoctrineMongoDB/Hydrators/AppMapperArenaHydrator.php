@@ -42,30 +42,17 @@ class AppMapperArenaHydrator implements HydratorInterface
             $hydratedData['id'] = $return;
         }
 
-        /** @Field(type="string") */
-        if (isset($data['game']) || (! empty($this->class->fieldMappings['game']['nullable']) && array_key_exists('game', $data))) {
-            $value = $data['game'];
+        /** @Field(type="collection") */
+        if (isset($data['gameInfo']) || (! empty($this->class->fieldMappings['gameInfo']['nullable']) && array_key_exists('gameInfo', $data))) {
+            $value = $data['gameInfo'];
             if ($value !== null) {
-                $typeIdentifier = $this->class->fieldMappings['game']['type'];
-                $return = (string) $value;
+                $typeIdentifier = $this->class->fieldMappings['gameInfo']['type'];
+                $return = $value;
             } else {
                 $return = null;
             }
-            $this->class->reflFields['game']->setValue($document, $return);
-            $hydratedData['game'] = $return;
-        }
-
-        /** @Field(type="string") */
-        if (isset($data['console']) || (! empty($this->class->fieldMappings['console']['nullable']) && array_key_exists('console', $data))) {
-            $value = $data['console'];
-            if ($value !== null) {
-                $typeIdentifier = $this->class->fieldMappings['console']['type'];
-                $return = (string) $value;
-            } else {
-                $return = null;
-            }
-            $this->class->reflFields['console']->setValue($document, $return);
-            $hydratedData['console'] = $return;
+            $this->class->reflFields['gameInfo']->setValue($document, $return);
+            $hydratedData['gameInfo'] = $return;
         }
 
         /** @Field(type="string") */

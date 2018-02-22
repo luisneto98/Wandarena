@@ -11,8 +11,9 @@ class __TwigTemplate_c863a9da9ec1fc0fd54f1fc69a6317b56368ec145f08e27a9f588caf694
 
         $this->blocks = array(
             'title' => array($this, 'block_title'),
-            'Arenas' => array($this, 'block_Arenas'),
-            'Pratice' => array($this, 'block_Pratice'),
+            'scripthead' => array($this, 'block_scripthead'),
+            'arena' => array($this, 'block_arena'),
+            'practice' => array($this, 'block_practice'),
             'registerUser' => array($this, 'block_registerUser'),
             'arenasControl' => array($this, 'block_arenasControl'),
             'titlePage' => array($this, 'block_titlePage'),
@@ -53,84 +54,95 @@ class __TwigTemplate_c863a9da9ec1fc0fd54f1fc69a6317b56368ec145f08e27a9f588caf694
         // line 18
         $this->displayBlock('title', $context, $blocks);
         echo "</title>
-
+    ";
+        // line 19
+        $this->displayBlock('scripthead', $context, $blocks);
+        // line 20
+        echo "
 
 
 </head>
 <body class=\" backgroundBody\">
-    <header>
-        <nav class=\"navbar navbar-expand-lg bg-yellow navbar-light \">
-            <a class=\"navbar-brand font-weight-bold text-dark\" href=\"#\">Wandarena<b class=\"font-weight-normal text-secondary\">Telemídia</b></a>
-            <button class=\"navbar-toggler\" type=\"button\" data-toggle=\"collapse\" data-target=\"#navbarNavAltMarkup\" aria-controls=\"navbarNavAltMarkup\" aria-expanded=\"false\" aria-label=\"Toggle navigation\">
-                <span class=\"navbar-toggler-icon\"></span>
-            </button>
-            <div class=\"collapse navbar-collapse \" id=\"navbarNavAltMarkup\">
-                <ul class=\"navbar-nav\">
-                    <li class=\"nav-item ";
-        // line 32
-        $this->displayBlock('Arenas', $context, $blocks);
+    <div style=\"max-height: 100%; min-height: 100%\">
+        <header class=\"d-inline\">
+            <nav class=\"navbar navbar-expand-lg bg-yellow navbar-light\">
+                <a class=\"navbar-brand font-weight-bold text-dark\" href=\"#\">Wandarena<b class=\"font-weight-normal text-secondary\">Telemídia</b></a>
+                <button class=\"navbar-toggler\" type=\"button\" data-toggle=\"collapse\" data-target=\"#navbarNavAltMarkup\" aria-controls=\"navbarNavAltMarkup\" aria-expanded=\"false\" aria-label=\"Toggle navigation\">
+                    <span class=\"navbar-toggler-icon\"></span>
+                </button>
+                <div class=\"collapse navbar-collapse \" id=\"navbarNavAltMarkup\">
+                    <ul class=\"navbar-nav\">
+                        <li class=\"nav-item ";
+        // line 34
+        $this->displayBlock('arena', $context, $blocks);
         echo "\">
-                        <a class=\"nav-link\" href=\"#\">Arenas </a>
-                    </li>
-                    ";
+                            <a class=\"nav-link\" href=\"";
         // line 35
-        if ((($context["admin"] ?? null) == false)) {
-            // line 36
-            echo "                        <li class=\"nav-item ";
-            $this->displayBlock('Pratice', $context, $blocks);
-            echo "\">
-                            <a class=\"nav-link\" href=\"#\">Praticar </a>
+        echo twig_escape_filter($this->env, $this->env->getExtension('Slim\Views\TwigExtension')->pathFor("wanda.home.index"), "html", null, true);
+        echo "\">Arenas </a>
                         </li>
-                    ";
-        }
-        // line 40
-        echo "                    ";
+                        ";
+        // line 37
         if ((($context["admin"] ?? null) == true)) {
-            // line 41
-            echo "                        <li class=\"nav-item ";
+            // line 38
+            echo "                            <li class=\"nav-item ";
+            $this->displayBlock('practice', $context, $blocks);
+            echo "\">
+                                <a class=\"nav-link\" href=\"";
+            // line 39
+            echo twig_escape_filter($this->env, $this->env->getExtension('Slim\Views\TwigExtension')->pathFor("wanda.home.practice"), "html", null, true);
+            echo "\">Praticar </a>
+                            </li>
+                        ";
+        }
+        // line 42
+        echo "                        ";
+        if ((($context["admin"] ?? null) == true)) {
+            // line 43
+            echo "                            <li class=\"nav-item ";
             $this->displayBlock('registerUser', $context, $blocks);
             echo "\">
-                            <a class=\"nav-link\" href=\"#\">Cadastrar Usuário </a>
-                        </li>
-                        <li class=\"nav-item ";
-            // line 44
+                                <a class=\"nav-link\" href=\"#\">Cadastrar Usuário </a>
+                            </li>
+                            <li class=\"nav-item ";
+            // line 46
             $this->displayBlock('arenasControl', $context, $blocks);
             echo "\">
-                            <a class=\"nav-link\" href=\"";
-            // line 45
+                                <a class=\"nav-link\" href=\"";
+            // line 47
             echo twig_escape_filter($this->env, $this->env->getExtension('Slim\Views\TwigExtension')->pathFor("wanda.arena.control.index"), "html", null, true);
             echo "\">Controle de Arenas </a>
-                        </li>
-                    ";
+                            </li>
+                        ";
         }
-        // line 48
-        echo "                </ul>
-            </div>
-        </nav>
+        // line 50
+        echo "                    </ul>
+                </div>
+            </nav>
 
-    </header>
-   <main>
-       <h3 class=\"mb-5 mt-3 ml-5 display-4\"> ";
-        // line 54
+        </header>
+       <main>
+           <h3 class=\"mb-5 mt-3 ml-5\"> ";
+        // line 56
         $this->displayBlock('titlePage', $context, $blocks);
         echo "</h3>
-       <section class=\"container-fluid\">
-           ";
-        // line 56
+           <section class=\"container-fluid mb-5\" >
+               ";
+        // line 58
         $this->displayBlock('content', $context, $blocks);
-        // line 57
-        echo "       </section>
-   </main>
-    <footer class=\"mt-auto bg-dark text-light fixed-bottom border-top border-white\">
-        <div class=\"float-right hidden-xs mr-2 version\">
-            <b>Version</b> 0.1.2
-        </div>
-        <strong>Copyright &copy; 2017-2018 <a href=\"mailto:alvesgamadossantos@gmail.com\">Luis Alves</a> e <a href=\"#\">Telemídia</a></strong>.
-        All rights
-        reserved.
-    </footer>
+        // line 59
+        echo "           </section>
+       </main>
+        <footer class=\"mt-auto bg-dark text-light border-top footer border-white position-fixed\" style=\"bottom: 0px; width: 100%\">
+            <div class=\" float-right hidden-xs mr-2 version\">
+                <b>Version</b> 0.1.2
+            </div>
+            <strong>Copyright &copy; 2017-2018 <a href=\"mailto:alvesgamadossantos@gmail.com\">Luis Alves</a> e <a href=\"#\">Telemídia</a></strong>.
+            All rights
+            reserved.
+        </footer>
 
-
+    </div>
 </body>
 
 </html>";
@@ -141,32 +153,37 @@ class __TwigTemplate_c863a9da9ec1fc0fd54f1fc69a6317b56368ec145f08e27a9f588caf694
     {
     }
 
-    // line 32
-    public function block_Arenas($context, array $blocks = array())
+    // line 19
+    public function block_scripthead($context, array $blocks = array())
     {
     }
 
-    // line 36
-    public function block_Pratice($context, array $blocks = array())
+    // line 34
+    public function block_arena($context, array $blocks = array())
     {
     }
 
-    // line 41
+    // line 38
+    public function block_practice($context, array $blocks = array())
+    {
+    }
+
+    // line 43
     public function block_registerUser($context, array $blocks = array())
     {
     }
 
-    // line 44
+    // line 46
     public function block_arenasControl($context, array $blocks = array())
     {
     }
 
-    // line 54
+    // line 56
     public function block_titlePage($context, array $blocks = array())
     {
     }
 
-    // line 56
+    // line 58
     public function block_content($context, array $blocks = array())
     {
         echo " ";
@@ -184,7 +201,7 @@ class __TwigTemplate_c863a9da9ec1fc0fd54f1fc69a6317b56368ec145f08e27a9f588caf694
 
     public function getDebugInfo()
     {
-        return array (  170 => 56,  165 => 54,  160 => 44,  155 => 41,  150 => 36,  145 => 32,  140 => 18,  122 => 57,  120 => 56,  115 => 54,  107 => 48,  101 => 45,  97 => 44,  90 => 41,  87 => 40,  79 => 36,  77 => 35,  71 => 32,  54 => 18,  47 => 14,  43 => 13,  39 => 12,  26 => 1,);
+        return array (  187 => 58,  182 => 56,  177 => 46,  172 => 43,  167 => 38,  162 => 34,  157 => 19,  152 => 18,  134 => 59,  132 => 58,  127 => 56,  119 => 50,  113 => 47,  109 => 46,  102 => 43,  99 => 42,  93 => 39,  88 => 38,  86 => 37,  81 => 35,  77 => 34,  61 => 20,  59 => 19,  55 => 18,  48 => 14,  44 => 13,  40 => 12,  27 => 1,);
     }
 
     public function getSourceContext()
@@ -207,56 +224,58 @@ class __TwigTemplate_c863a9da9ec1fc0fd54f1fc69a6317b56368ec145f08e27a9f588caf694
     <script src=\"https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js\" integrity=\"sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q\" crossorigin=\"anonymous\"></script>
     <script src=\"https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js\" integrity=\"sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl\" crossorigin=\"anonymous\"></script>
     <title>Wandarena | {% block title %}{% endblock %}</title>
+    {% block scripthead %}{% endblock %}
 
 
 
 </head>
 <body class=\" backgroundBody\">
-    <header>
-        <nav class=\"navbar navbar-expand-lg bg-yellow navbar-light \">
-            <a class=\"navbar-brand font-weight-bold text-dark\" href=\"#\">Wandarena<b class=\"font-weight-normal text-secondary\">Telemídia</b></a>
-            <button class=\"navbar-toggler\" type=\"button\" data-toggle=\"collapse\" data-target=\"#navbarNavAltMarkup\" aria-controls=\"navbarNavAltMarkup\" aria-expanded=\"false\" aria-label=\"Toggle navigation\">
-                <span class=\"navbar-toggler-icon\"></span>
-            </button>
-            <div class=\"collapse navbar-collapse \" id=\"navbarNavAltMarkup\">
-                <ul class=\"navbar-nav\">
-                    <li class=\"nav-item {% block Arenas %}{% endblock %}\">
-                        <a class=\"nav-link\" href=\"#\">Arenas </a>
-                    </li>
-                    {% if admin == false %}
-                        <li class=\"nav-item {% block Pratice %}{% endblock %}\">
-                            <a class=\"nav-link\" href=\"#\">Praticar </a>
+    <div style=\"max-height: 100%; min-height: 100%\">
+        <header class=\"d-inline\">
+            <nav class=\"navbar navbar-expand-lg bg-yellow navbar-light\">
+                <a class=\"navbar-brand font-weight-bold text-dark\" href=\"#\">Wandarena<b class=\"font-weight-normal text-secondary\">Telemídia</b></a>
+                <button class=\"navbar-toggler\" type=\"button\" data-toggle=\"collapse\" data-target=\"#navbarNavAltMarkup\" aria-controls=\"navbarNavAltMarkup\" aria-expanded=\"false\" aria-label=\"Toggle navigation\">
+                    <span class=\"navbar-toggler-icon\"></span>
+                </button>
+                <div class=\"collapse navbar-collapse \" id=\"navbarNavAltMarkup\">
+                    <ul class=\"navbar-nav\">
+                        <li class=\"nav-item {% block arena %}{% endblock %}\">
+                            <a class=\"nav-link\" href=\"{{ path_for('wanda.home.index') }}\">Arenas </a>
                         </li>
-                    {% endif %}
-                    {% if admin == true %}
-                        <li class=\"nav-item {% block registerUser %}{% endblock %}\">
-                            <a class=\"nav-link\" href=\"#\">Cadastrar Usuário </a>
-                        </li>
-                        <li class=\"nav-item {% block arenasControl %}{% endblock %}\">
-                            <a class=\"nav-link\" href=\"{{ path_for('wanda.arena.control.index') }}\">Controle de Arenas </a>
-                        </li>
-                    {% endif %}
-                </ul>
+                        {% if admin == true %}
+                            <li class=\"nav-item {% block practice %}{% endblock %}\">
+                                <a class=\"nav-link\" href=\"{{ path_for('wanda.home.practice') }}\">Praticar </a>
+                            </li>
+                        {% endif %}
+                        {% if admin == true %}
+                            <li class=\"nav-item {% block registerUser %}{% endblock %}\">
+                                <a class=\"nav-link\" href=\"#\">Cadastrar Usuário </a>
+                            </li>
+                            <li class=\"nav-item {% block arenasControl %}{% endblock %}\">
+                                <a class=\"nav-link\" href=\"{{ path_for('wanda.arena.control.index') }}\">Controle de Arenas </a>
+                            </li>
+                        {% endif %}
+                    </ul>
+                </div>
+            </nav>
+
+        </header>
+       <main>
+           <h3 class=\"mb-5 mt-3 ml-5\"> {% block titlePage %}{% endblock %}</h3>
+           <section class=\"container-fluid mb-5\" >
+               {% block content%} {% endblock %}
+           </section>
+       </main>
+        <footer class=\"mt-auto bg-dark text-light border-top footer border-white position-fixed\" style=\"bottom: 0px; width: 100%\">
+            <div class=\" float-right hidden-xs mr-2 version\">
+                <b>Version</b> 0.1.2
             </div>
-        </nav>
+            <strong>Copyright &copy; 2017-2018 <a href=\"mailto:alvesgamadossantos@gmail.com\">Luis Alves</a> e <a href=\"#\">Telemídia</a></strong>.
+            All rights
+            reserved.
+        </footer>
 
-    </header>
-   <main>
-       <h3 class=\"mb-5 mt-3 ml-5 display-4\"> {% block titlePage %}{% endblock %}</h3>
-       <section class=\"container-fluid\">
-           {% block content%} {% endblock %}
-       </section>
-   </main>
-    <footer class=\"mt-auto bg-dark text-light fixed-bottom border-top border-white\">
-        <div class=\"float-right hidden-xs mr-2 version\">
-            <b>Version</b> 0.1.2
-        </div>
-        <strong>Copyright &copy; 2017-2018 <a href=\"mailto:alvesgamadossantos@gmail.com\">Luis Alves</a> e <a href=\"#\">Telemídia</a></strong>.
-        All rights
-        reserved.
-    </footer>
-
-
+    </div>
 </body>
 
 </html>", "View/Layout.twig", "/var/www/html/Wandarena/app/src/View/Layout.twig");

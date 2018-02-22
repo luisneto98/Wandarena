@@ -1,9 +1,14 @@
 {% extends "View/Layout.twig" %}
 {% block title %} Cadastrar Arena {% endblock %}
 {% block titlePage %}Cadastro de Arena{% endblock %}
+{% block arenasControl %}active{% endblock %}
 
 {% block content %}
-    <form class = "offset-sm-2 col-sm-8 rounded p-4" method="post" action="{{ path_for("wanda.arena.register.save") }}">
+    <form class = "offset-sm-2 col-sm-8 rounded p-4 border" method="post" action="{{ path_for("wanda.arena.register.save") }}">
+        {% if arena != NULL %}
+            <input type="hidden" name="id" value="{{ arena.id }}">
+
+        {% endif %}
         <div class="form-group ">
             <label for="Title">Título:</label>
             <input type="text" class="form-control" id="Title" name="title" placeholder="Título..." {% if arena != NULL %} value="{{ arena.title }}"{% endif %}>
@@ -23,7 +28,7 @@
             <label for="date">Data:</label>
             <input type="datetime-local"  class="form-control" id="date" name="date" {% if arena != NULL %} value="{{ arena.getDateDefault() }}"{% endif %}>
         </div>
-        <div class="form-group row offset-8 float-right col-4">
+        <div class="form-group row offset-8 col-4">
             <button class="form-control btn btn-primary" id="submit" type="submit">Enviar</button>
         </div>
     </form>
