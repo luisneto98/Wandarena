@@ -6,6 +6,7 @@ namespace App\Model\Consoles\CardsGame\Game\JoKenPo;
 class Game
 {
     const NAME = "Jo-Ken-Po";
+    const MATCHS = 100;
     const ROUNDS = 3;
     const COUNTCARDS = 3;
     const CARDS = array("pedra","papel","tesoura");
@@ -30,6 +31,13 @@ class Game
      */
     static function getRounds(){
         return self::ROUNDS;
+    }
+
+    /**
+     * @return int
+     */
+    static function getMatchs(){
+        return self::MATCHS;
     }
 
     /**

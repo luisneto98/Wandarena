@@ -49,7 +49,7 @@ class HomeController extends AbstractController
         $imagebg = Game::getImageBG();
         var_dump($cardsimage);
         return $this->view->render($response,"View/Arena/cardsGamePlayer.twig",["admin" => true,"cardsimage"=>$cardsimage,
-            "gameimages"=>$gameimages,"imagebg"=>$imagebg,"game"=>$game]);
+            "gameimages"=>$gameimages,"imagebg"=>$imagebg,"game"=>$game,"matchs"=>Game::getMatchs(),"rounds"=>Game::getRounds(),"qtdCards"=>Game::COUNTCARDS]);
     }
 
     /**

@@ -3,48 +3,84 @@
 {% block titlePage %}Tocador{% endblock %}
 {% block arenas %} active {% endblock %}
 {% block scripthead %}
-    <script>
-
-        $(document).ready(function(){
-            $("#velocidade").change(function(){
-                aux = parseInt($("#velocidade").val());
-                if(aux >= 0)
-                    cardspeed = aux;
-            });
-        });
-
-        function update(){
-            canvas = document.getElementById('canv');
-            if(canvas.getContext){
-                ctx = canvas.getContext('2d');
-                loadGameData();
-                loadImages();
-                animate();
-            }
-        }
-/*
-        function animate(){
-            if(zas == -1)
-                requestAnimationFrame( animate );
-            else{
-                //console.log("oi");
-                cancelAnimationFrame( animate );
-                if(modotv != false){
-                    //console.log("oi");
-                    setTimeout(function() { window.location.href = "../modotv.php"; }, 5000);
-                }
-            }
-            //setTimeout(animate, 1000);
-            partida();
-        }
-*/
-    </script>
 {% endblock %}
 {% block content %}
-    <input id="velocidade" type="number">
-    <canvas id="canv" width="1024" height="512">
+    <input id="velocidade" onload="draw();" type="number">
+    <canvas id="wanda"  width="1024" height="512">
     <script>
+
+        var ctx = loadCanvasCtx();
         var gamedata;
+        /////background
+        var imageBG = new Image();
+        imageBG.src = "{{ base_url() }}{{ imagebg }}";
+        ////////
+        ///////enemy
+        var imageEnemy1 = new Image();
+        imageEnemy1.src = "{{ base_url() }}{{ gameimages.enemy }}";
+        var imageEnemy2 = new Image();
+        imageEnemy2.src = "{{ base_url() }}{{ gameimages.enemy }}";
+        ///////
+        //////face
+        var imageFace1 = new Image();
+        imageFace1.src = "{{ base_url() }}{{ gameimages.face }}";
+        var imageFace2 = new Image();
+        imageFace2.src = "{{ base_url() }}{{ gameimages.face }}";
+        ///////
+        //////var system
+        var match = 0;
+        var round = 0;
+        var max_matchs = {{ matchs }};
+        var max_rounds = {{ rounds }};
+        var heightDeck = 300;
+        var widthScreen = 1024;
+        var qtdcards = {{ qtdCards }};
+        var imageCards = [];
+        loadImageCards();
+        var marginCard = (heightDeck / (qtdcards + 1))/qtdcards;
+        var heightCard = (heightDeck / (qtdcards)) - marginCard;
+        var widthCard = heightCard;
+        //////
+        ///////player1
+        var player1 = {round: [], deck:[] , name: "Jogador1", pointsInMatch: 0 , pointsInGame : 0, posiXDeck: 150 , posiYDeck:150};
+        ///////
+        ///////Player2
+        var player2 = {round: [], deck:[] , name: "Jogador2", pointsInMatch: 0 , pointsInGame : 0, posiXDeck: widthScreen-150 , posiYDeck:150};
+        ///////
+
+
+        function loadImageCards(){
+            {% for card in cardsimage %}
+                imageCards["{{ card.name }}"] = new Image();
+                imageCards["{{ card.name }}"].src = "{{ base_url() }}{{ card.image }}";
+                imageCards["{{ card.name }}"].width = widthCard;
+                imageCards["{{ card.name }}"].height = heightCard;
+            {% endfor %}
+        }
+        function configCards(){
+            for (i = 0; i < player1.round[round].hand.length; i++) {
+                var namecard = player1.round[round].hand[i];
+                player1.round[round].hand[i] = {};
+                player1.round[round].hand[i].name = namecard;
+                player1.round[round].hand[i].image = imageCards[player1.round[round].hand[i].name];
+                player1.round[round].hand[i].posiX = player1.posiXDeck;
+                player1.round[round].hand[i].posiY = player1.posiYDeck + ((heightCard+marginCard)*i);
+            }
+            for (i = 0; i < player2.round[round].hand.length; i++) {
+                var namecard = player2.round[round].hand[i];
+                player2.round[round].hand[i] = {};
+                player2.round[round].hand[i].name = namecard;
+                player2.round[round].hand[i].image = imageCards[player2.round[round].hand[i].name];
+                player2.round[round].hand[i].posiX = player2.posiXDeck-widthCard;
+                player2.round[round].hand[i].posiY = player2.posiYDeck + ((heightCard+marginCard)*i);
+            }
+        }
+        function loadCanvasCtx(){
+            var c = document.getElementById("wanda");
+            var ctx = c.getContext("2d");
+            return ctx;
+        }
+
         function loadGameData(){
             gamedata = {};
             gamedata.matchs = [];
@@ -92,7 +128,26 @@
                  {% endfor %}
 
         }
+
+        function loadMatch(){
+            for (i = 0; i < gamedata.matchs[match].rounds.length; i++) {
+                player1.round[i] = {};
+                player1.round[i].hand = gamedata.matchs[match].rounds[i].player1.hand;
+                player1.round[i].playedcard = gamedata.matchs[match].rounds[i].player1.playedcard;
+            }
+
+            for (i = 0; i < gamedata.matchs[match].rounds.length; i++) {
+                player2.round[i] = {};
+                player2.round[i].hand = gamedata.matchs[match].rounds[i].player2.hand;
+                player2.round[i].playedcard = gamedata.matchs[match].rounds[i].player2.playedcard;
+            }
+            configCards();
+            match = match+1;
+            round = 0;
+        }
+
         loadGameData();
+        loadMatch();
         console.log(gamedata);
         ///////////////////////
         function printNames(){
@@ -100,9 +155,9 @@
             ctx.fillStyle = "rgba(255, 255, 255, 255)";
             ctx.scale(3, 3);
             //ctx.font = 'bold 10pt Courier'; /* Experimental */
-            ctx.fillText(namejog1.toUpperCase()/*"Jogador 1"*/, 150/3, 50/3);
+            ctx.fillText(player1.name/*"Jogador 1"*/, 255/3, 50/3);
             //ctx.fillText(namejog1.toUpperCase()/*"Jogador 1"*/, 255/3, 50/3); // Verificar se está correto posteriormente
-            ctx.fillText(namejog2.toUpperCase()/*"Jogador 2"*/, 542/3, 50/3);
+            ctx.fillText(player2.name/*"Jogador 2"*/, 540/3, 50/3);
             //ctx.fillText(namejog2.toUpperCase()/*"Jogador 2"*/, 540/3, 50/3); // Lembre-se da posição original em relação a desenhos de textos no canvas (verificar isso)
             ctx.scale(1, 1);
             ctx.restore();
@@ -113,21 +168,23 @@
             ctx.fillStyle = "rgba(255, 255, 255, 255)"
             ctx.save();
             ctx.scale(3.2, 3.15);
-            ctx.fillText("Ganhou:" + jogador1.rodadas, 145/3.12, 80/3.15);
-            ctx.fillText("Ganhou:" + jogador2.rodadas, 527/3.12, 80/3.15);
+            ctx.fillText("Ganhou:" + player1.pointsInGame, 145/3.12, 80/3.15);
+            ctx.fillText("Ganhou:" + player2.pointsInGame, 527/3.12, 80/3.15);
             ctx.restore();
             ctx.save();
             ctx.scale(1.2, 1.2);
-            ctx.fillText("Restam:" + (totalRodadas - rodada), 430/1.2, 10/1.2);
+            ctx.fillText("Restam:" + (max_matchs - match), 430/1.2, 10/1.2);
             ctx.save();
             ctx.scale(1.4, 1.4);
-            ctx.fillText("Atual: " + jogador1.confronto, 12/1.4, 154/1.4);
-            ctx.fillText("Atual: " + jogador2.confronto, (1024-12-250)/1.4, 154/1.4);
+            ctx.fillText("Atual: " + player1.pointsInMatch, 12/1.4, 154/1.4);
+            ctx.fillText("Atual: " + player2.pointsInMatch, (1024-12-250)/1.4, 154/1.4);
             ctx.restore();
             ctx.save();
             ctx.scale(1, 1);
-            ctx.fillRect(120, 90, jogador1.rodadas*(610/100), 30);
-            ctx.fillRect(840-106-jogador2.rodadas*(610/100), 90,jogador2.rodadas*(610/100), 30);
+            ctx.fillRect(120, 90, player1.pointsInGame*(610/100), 30);
+            ctx.fillRect(840-106-player2.pointsInGame*(610/100), 90,player2.pointsInGame*(610/100), 30);
+            //ctx.fillRect(player1.posiXDeck, player1.posiYDeck,100, 250);
+            //ctx.fillRect(player2.posiXDeck-100, player2.posiYDeck,100, 250);
             ctx.restore();
             ctx.restore();
             ctx.scale(4, 4);
@@ -142,36 +199,39 @@
 
         }
 
-        function drawacard(n, x, y){
-            ctx.drawImage(cardsImage[n], x, y);
-        }
-
         function drawcards(){
             var j = 0;
-            for(var i in jogador1.mao){
-                drawacard(jogador1.mao[i], jogador1.cardx[j], jogador1.cardy[j]);
-                j++;
-            }
-            j = 0;
-            for(var i in jogador2.mao){
-                drawacard(jogador2.mao[i], jogador2.cardx[j], jogador2.cardy[j]);
-                j++;
-            }
-        }
 
+            for(i = 0 ; i < player1.round[round].hand.length ; i++){
+                console.log(player1.round[round].hand[i].image.width);
+                ctx.drawImage(player1.round[round].hand[i].image, player1.round[round].hand[i].posiX, player1.round[round].hand[i].posiY,
+                    widthCard,heightCard);
+
+            }
+            for(i = 0 ; i < player2.round[round].hand.length ; i++){
+                console.log(player2.round[round].hand[i]);
+                ctx.drawImage(player2.round[round].hand[i].image, player2.round[round].hand[i].posiX, player2.round[round].hand[i].posiY,
+                    widthCard,heightCard);
+
+            }
+
+        }
+        canvas_draw();
         function canvas_draw(){
             ctx.font = "12px Comic Sans";
             ctx.save();
-            ctx.drawImage(imageBG2, 0, 0, imageBG2.width, imageBG2.height);
+            ctx.drawImage(imageBG, 0, 0, imageBG.width, imageBG.height);
 
-            ctx.drawImage(imageEnemy_1, 20, 340, imageEnemy_1.width, imageEnemy_1.height);
-            ctx.drawImage(imageEnemy_2, 1024-180, 340);
-            ctx.drawImage(imageFace_1, 12, 20);
-            ctx.drawImage(imageFace_2, 1024-140, 20);
+
+            ctx.drawImage(imageEnemy1, 20, 340, imageEnemy1.width, imageEnemy1.height);
+            ctx.drawImage(imageEnemy2, 1024-180, 340);
+            ctx.drawImage(imageFace1, 12, 20);
+            ctx.drawImage(imageFace2, 1024-140, 20);
             ctx.restore();
             printNames();
             drawcards();
             drawScores();
+
         }
 
     </script>

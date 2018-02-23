@@ -49,64 +49,151 @@ class __TwigTemplate_e64f239b895bd363d8f83430afd17a24d1ba09ae0ce6482b039df96c30d
     // line 5
     public function block_scripthead($context, array $blocks = array())
     {
-        // line 6
-        echo "    <script>
-
-        \$(document).ready(function(){
-            \$(\"#velocidade\").change(function(){
-                aux = parseInt(\$(\"#velocidade\").val());
-                if(aux >= 0)
-                    cardspeed = aux;
-            });
-        });
-
-        function update(){
-            canvas = document.getElementById('canv');
-            if(canvas.getContext){
-                ctx = canvas.getContext('2d');
-                loadGameData();
-                loadImages();
-                animate();
-            }
-        }
-/*
-        function animate(){
-            if(zas == -1)
-                requestAnimationFrame( animate );
-            else{
-                //console.log(\"oi\");
-                cancelAnimationFrame( animate );
-                if(modotv != false){
-                    //console.log(\"oi\");
-                    setTimeout(function() { window.location.href = \"../modotv.php\"; }, 5000);
-                }
-            }
-            //setTimeout(animate, 1000);
-            partida();
-        }
-*/
-    </script>
-";
     }
 
-    // line 43
+    // line 7
     public function block_content($context, array $blocks = array())
     {
-        // line 44
-        echo "    <input id=\"velocidade\" type=\"number\">
-    <canvas id=\"canv\" width=\"1024\" height=\"512\">
+        // line 8
+        echo "    <input id=\"velocidade\" onload=\"draw();\" type=\"number\">
+    <canvas id=\"wanda\"  width=\"1024\" height=\"512\">
     <script>
+
+        var ctx = loadCanvasCtx();
         var gamedata;
+        /////background
+        var imageBG = new Image();
+        imageBG.src = \"";
+        // line 16
+        echo twig_escape_filter($this->env, $this->env->getExtension('Slim\Views\TwigExtension')->baseUrl(), "html", null, true);
+        echo twig_escape_filter($this->env, ($context["imagebg"] ?? null), "html", null, true);
+        echo "\";
+        ////////
+        ///////enemy
+        var imageEnemy1 = new Image();
+        imageEnemy1.src = \"";
+        // line 20
+        echo twig_escape_filter($this->env, $this->env->getExtension('Slim\Views\TwigExtension')->baseUrl(), "html", null, true);
+        echo twig_escape_filter($this->env, twig_get_attribute($this->env, $this->getSourceContext(), ($context["gameimages"] ?? null), "enemy", array()), "html", null, true);
+        echo "\";
+        var imageEnemy2 = new Image();
+        imageEnemy2.src = \"";
+        // line 22
+        echo twig_escape_filter($this->env, $this->env->getExtension('Slim\Views\TwigExtension')->baseUrl(), "html", null, true);
+        echo twig_escape_filter($this->env, twig_get_attribute($this->env, $this->getSourceContext(), ($context["gameimages"] ?? null), "enemy", array()), "html", null, true);
+        echo "\";
+        ///////
+        //////face
+        var imageFace1 = new Image();
+        imageFace1.src = \"";
+        // line 26
+        echo twig_escape_filter($this->env, $this->env->getExtension('Slim\Views\TwigExtension')->baseUrl(), "html", null, true);
+        echo twig_escape_filter($this->env, twig_get_attribute($this->env, $this->getSourceContext(), ($context["gameimages"] ?? null), "face", array()), "html", null, true);
+        echo "\";
+        var imageFace2 = new Image();
+        imageFace2.src = \"";
+        // line 28
+        echo twig_escape_filter($this->env, $this->env->getExtension('Slim\Views\TwigExtension')->baseUrl(), "html", null, true);
+        echo twig_escape_filter($this->env, twig_get_attribute($this->env, $this->getSourceContext(), ($context["gameimages"] ?? null), "face", array()), "html", null, true);
+        echo "\";
+        ///////
+        //////var system
+        var match = 0;
+        var round = 0;
+        var max_matchs = ";
+        // line 33
+        echo twig_escape_filter($this->env, ($context["matchs"] ?? null), "html", null, true);
+        echo ";
+        var max_rounds = ";
+        // line 34
+        echo twig_escape_filter($this->env, ($context["rounds"] ?? null), "html", null, true);
+        echo ";
+        var heightDeck = 300;
+        var widthScreen = 1024;
+        var qtdcards = ";
+        // line 37
+        echo twig_escape_filter($this->env, ($context["qtdCards"] ?? null), "html", null, true);
+        echo ";
+        var imageCards = [];
+        loadImageCards();
+        var marginCard = (heightDeck / (qtdcards + 1))/qtdcards;
+        var heightCard = (heightDeck / (qtdcards)) - marginCard;
+        var widthCard = heightCard;
+        //////
+        ///////player1
+        var player1 = {round: [], deck:[] , name: \"Jogador1\", pointsInMatch: 0 , pointsInGame : 0, posiXDeck: 150 , posiYDeck:150};
+        ///////
+        ///////Player2
+        var player2 = {round: [], deck:[] , name: \"Jogador2\", pointsInMatch: 0 , pointsInGame : 0, posiXDeck: widthScreen-150 , posiYDeck:150};
+        ///////
+
+
+        function loadImageCards(){
+            ";
+        // line 53
+        $context['_parent'] = $context;
+        $context['_seq'] = twig_ensure_traversable(($context["cardsimage"] ?? null));
+        foreach ($context['_seq'] as $context["_key"] => $context["card"]) {
+            // line 54
+            echo "                imageCards[\"";
+            echo twig_escape_filter($this->env, twig_get_attribute($this->env, $this->getSourceContext(), $context["card"], "name", array()), "html", null, true);
+            echo "\"] = new Image();
+                imageCards[\"";
+            // line 55
+            echo twig_escape_filter($this->env, twig_get_attribute($this->env, $this->getSourceContext(), $context["card"], "name", array()), "html", null, true);
+            echo "\"].src = \"";
+            echo twig_escape_filter($this->env, $this->env->getExtension('Slim\Views\TwigExtension')->baseUrl(), "html", null, true);
+            echo twig_escape_filter($this->env, twig_get_attribute($this->env, $this->getSourceContext(), $context["card"], "image", array()), "html", null, true);
+            echo "\";
+                imageCards[\"";
+            // line 56
+            echo twig_escape_filter($this->env, twig_get_attribute($this->env, $this->getSourceContext(), $context["card"], "name", array()), "html", null, true);
+            echo "\"].width = widthCard;
+                imageCards[\"";
+            // line 57
+            echo twig_escape_filter($this->env, twig_get_attribute($this->env, $this->getSourceContext(), $context["card"], "name", array()), "html", null, true);
+            echo "\"].height = heightCard;
+            ";
+        }
+        $_parent = $context['_parent'];
+        unset($context['_seq'], $context['_iterated'], $context['_key'], $context['card'], $context['_parent'], $context['loop']);
+        $context = array_intersect_key($context, $_parent) + $_parent;
+        // line 59
+        echo "        }
+        function configCards(){
+            for (i = 0; i < player1.round[round].hand.length; i++) {
+                var namecard = player1.round[round].hand[i];
+                player1.round[round].hand[i] = {};
+                player1.round[round].hand[i].name = namecard;
+                player1.round[round].hand[i].image = imageCards[player1.round[round].hand[i].name];
+                player1.round[round].hand[i].posiX = player1.posiXDeck;
+                player1.round[round].hand[i].posiY = player1.posiYDeck + ((heightCard+marginCard)*i);
+            }
+            for (i = 0; i < player2.round[round].hand.length; i++) {
+                var namecard = player2.round[round].hand[i];
+                player2.round[round].hand[i] = {};
+                player2.round[round].hand[i].name = namecard;
+                player2.round[round].hand[i].image = imageCards[player2.round[round].hand[i].name];
+                player2.round[round].hand[i].posiX = player2.posiXDeck-widthCard;
+                player2.round[round].hand[i].posiY = player2.posiYDeck + ((heightCard+marginCard)*i);
+            }
+        }
+        function loadCanvasCtx(){
+            var c = document.getElementById(\"wanda\");
+            var ctx = c.getContext(\"2d\");
+            return ctx;
+        }
+
         function loadGameData(){
             gamedata = {};
             gamedata.matchs = [];
             gamedata.winner = ";
-        // line 51
+        // line 87
         echo twig_escape_filter($this->env, twig_get_attribute($this->env, $this->getSourceContext(), ($context["game"] ?? null), "winner", array()), "html", null, true);
         echo ";
 
                 ";
-        // line 53
+        // line 89
         $context['_parent'] = $context;
         $context['_seq'] = twig_ensure_traversable(twig_get_attribute($this->env, $this->getSourceContext(), ($context["game"] ?? null), "matchs", array()));
         $context['loop'] = array(
@@ -123,25 +210,25 @@ class __TwigTemplate_e64f239b895bd363d8f83430afd17a24d1ba09ae0ce6482b039df96c30d
             $context['loop']['last'] = 1 === $length;
         }
         foreach ($context['_seq'] as $context["_key"] => $context["match"]) {
-            // line 54
+            // line 90
             echo "                    gamedata.matchs[";
             echo twig_escape_filter($this->env, twig_get_attribute($this->env, $this->getSourceContext(), $context["loop"], "index0", array()), "html", null, true);
             echo "] = {};
                     gamedata.matchs[";
-            // line 55
+            // line 91
             echo twig_escape_filter($this->env, twig_get_attribute($this->env, $this->getSourceContext(), $context["loop"], "index0", array()), "html", null, true);
             echo "].player1 = {};
                     gamedata.matchs[";
-            // line 56
+            // line 92
             echo twig_escape_filter($this->env, twig_get_attribute($this->env, $this->getSourceContext(), $context["loop"], "index0", array()), "html", null, true);
             echo "].player1.cards = [];
                     ";
-            // line 57
+            // line 93
             $context["loop1"] = twig_get_attribute($this->env, $this->getSourceContext(), $context["loop"], "index0", array());
-            // line 58
+            // line 94
             echo "
                     ";
-            // line 59
+            // line 95
             $context['_parent'] = $context;
             $context['_seq'] = twig_ensure_traversable(twig_get_attribute($this->env, $this->getSourceContext(), twig_get_attribute($this->env, $this->getSourceContext(), $context["match"], "player1", array()), "deck", array()));
             $context['loop'] = array(
@@ -158,7 +245,7 @@ class __TwigTemplate_e64f239b895bd363d8f83430afd17a24d1ba09ae0ce6482b039df96c30d
                 $context['loop']['last'] = 1 === $length;
             }
             foreach ($context['_seq'] as $context["_key"] => $context["card"]) {
-                // line 60
+                // line 96
                 echo "                        gamedata.matchs[";
                 echo twig_escape_filter($this->env, ($context["loop1"] ?? null), "html", null, true);
                 echo "].player1.cards[";
@@ -179,19 +266,19 @@ class __TwigTemplate_e64f239b895bd363d8f83430afd17a24d1ba09ae0ce6482b039df96c30d
             $_parent = $context['_parent'];
             unset($context['_seq'], $context['_iterated'], $context['_key'], $context['card'], $context['_parent'], $context['loop']);
             $context = array_intersect_key($context, $_parent) + $_parent;
-            // line 62
+            // line 98
             echo "
                     gamedata.matchs[";
-            // line 63
+            // line 99
             echo twig_escape_filter($this->env, twig_get_attribute($this->env, $this->getSourceContext(), $context["loop"], "index0", array()), "html", null, true);
             echo "].player2 = {};
                     gamedata.matchs[";
-            // line 64
+            // line 100
             echo twig_escape_filter($this->env, twig_get_attribute($this->env, $this->getSourceContext(), $context["loop"], "index0", array()), "html", null, true);
             echo "].player2.cards = [];
 
                     ";
-            // line 66
+            // line 102
             $context['_parent'] = $context;
             $context['_seq'] = twig_ensure_traversable(twig_get_attribute($this->env, $this->getSourceContext(), twig_get_attribute($this->env, $this->getSourceContext(), $context["match"], "player2", array()), "deck", array()));
             $context['loop'] = array(
@@ -208,7 +295,7 @@ class __TwigTemplate_e64f239b895bd363d8f83430afd17a24d1ba09ae0ce6482b039df96c30d
                 $context['loop']['last'] = 1 === $length;
             }
             foreach ($context['_seq'] as $context["_key"] => $context["card"]) {
-                // line 67
+                // line 103
                 echo "                        gamedata.matchs[";
                 echo twig_escape_filter($this->env, ($context["loop1"] ?? null), "html", null, true);
                 echo "].player2.cards[";
@@ -229,21 +316,21 @@ class __TwigTemplate_e64f239b895bd363d8f83430afd17a24d1ba09ae0ce6482b039df96c30d
             $_parent = $context['_parent'];
             unset($context['_seq'], $context['_iterated'], $context['_key'], $context['card'], $context['_parent'], $context['loop']);
             $context = array_intersect_key($context, $_parent) + $_parent;
-            // line 69
+            // line 105
             echo "
 
                     gamedata.matchs[";
-            // line 71
+            // line 107
             echo twig_escape_filter($this->env, twig_get_attribute($this->env, $this->getSourceContext(), $context["loop"], "index0", array()), "html", null, true);
             echo "].rounds = [];
                     gamedata.matchs[";
-            // line 72
+            // line 108
             echo twig_escape_filter($this->env, twig_get_attribute($this->env, $this->getSourceContext(), $context["loop"], "index0", array()), "html", null, true);
             echo "].winner = ";
             echo twig_escape_filter($this->env, twig_get_attribute($this->env, $this->getSourceContext(), $context["match"], "winner", array()), "html", null, true);
             echo ";
                     ";
-            // line 73
+            // line 109
             $context['_parent'] = $context;
             $context['_seq'] = twig_ensure_traversable(twig_get_attribute($this->env, $this->getSourceContext(), $context["match"], "rounds", array()));
             $context['loop'] = array(
@@ -260,28 +347,28 @@ class __TwigTemplate_e64f239b895bd363d8f83430afd17a24d1ba09ae0ce6482b039df96c30d
                 $context['loop']['last'] = 1 === $length;
             }
             foreach ($context['_seq'] as $context["_key"] => $context["round"]) {
-                // line 74
+                // line 110
                 echo "                        gamedata.matchs[";
                 echo twig_escape_filter($this->env, ($context["loop1"] ?? null), "html", null, true);
                 echo "].rounds[";
                 echo twig_escape_filter($this->env, twig_get_attribute($this->env, $this->getSourceContext(), $context["loop"], "index0", array()), "html", null, true);
                 echo "] = {};
                         gamedata.matchs[";
-                // line 75
+                // line 111
                 echo twig_escape_filter($this->env, ($context["loop1"] ?? null), "html", null, true);
                 echo "].rounds[";
                 echo twig_escape_filter($this->env, twig_get_attribute($this->env, $this->getSourceContext(), $context["loop"], "index0", array()), "html", null, true);
                 echo "].player1 = {};
                         gamedata.matchs[";
-                // line 76
+                // line 112
                 echo twig_escape_filter($this->env, ($context["loop1"] ?? null), "html", null, true);
                 echo "].rounds[";
                 echo twig_escape_filter($this->env, twig_get_attribute($this->env, $this->getSourceContext(), $context["loop"], "index0", array()), "html", null, true);
                 echo "].player1.hand = [];
                         ";
-                // line 77
+                // line 113
                 $context["loop2"] = twig_get_attribute($this->env, $this->getSourceContext(), $context["loop"], "index0", array());
-                // line 78
+                // line 114
                 echo "                        ";
                 $context['_parent'] = $context;
                 $context['_seq'] = twig_ensure_traversable(twig_get_attribute($this->env, $this->getSourceContext(), twig_get_attribute($this->env, $this->getSourceContext(), $context["round"], "player1", array()), "hand", array()));
@@ -299,7 +386,7 @@ class __TwigTemplate_e64f239b895bd363d8f83430afd17a24d1ba09ae0ce6482b039df96c30d
                     $context['loop']['last'] = 1 === $length;
                 }
                 foreach ($context['_seq'] as $context["_key"] => $context["card"]) {
-                    // line 79
+                    // line 115
                     echo "                            gamedata.matchs[";
                     echo twig_escape_filter($this->env, ($context["loop1"] ?? null), "html", null, true);
                     echo "].rounds[";
@@ -322,7 +409,7 @@ class __TwigTemplate_e64f239b895bd363d8f83430afd17a24d1ba09ae0ce6482b039df96c30d
                 $_parent = $context['_parent'];
                 unset($context['_seq'], $context['_iterated'], $context['_key'], $context['card'], $context['_parent'], $context['loop']);
                 $context = array_intersect_key($context, $_parent) + $_parent;
-                // line 81
+                // line 117
                 echo "                        gamedata.matchs[";
                 echo twig_escape_filter($this->env, ($context["loop1"] ?? null), "html", null, true);
                 echo "].rounds[";
@@ -332,21 +419,21 @@ class __TwigTemplate_e64f239b895bd363d8f83430afd17a24d1ba09ae0ce6482b039df96c30d
                 echo "\";
 
                         gamedata.matchs[";
-                // line 83
+                // line 119
                 echo twig_escape_filter($this->env, ($context["loop1"] ?? null), "html", null, true);
                 echo "].rounds[";
                 echo twig_escape_filter($this->env, twig_get_attribute($this->env, $this->getSourceContext(), $context["loop"], "index0", array()), "html", null, true);
                 echo "].player2 = {};
                         gamedata.matchs[";
-                // line 84
+                // line 120
                 echo twig_escape_filter($this->env, ($context["loop1"] ?? null), "html", null, true);
                 echo "].rounds[";
                 echo twig_escape_filter($this->env, twig_get_attribute($this->env, $this->getSourceContext(), $context["loop"], "index0", array()), "html", null, true);
                 echo "].player2.hand = [];
                         ";
-                // line 85
+                // line 121
                 $context["loop2"] = twig_get_attribute($this->env, $this->getSourceContext(), $context["loop"], "index0", array());
-                // line 86
+                // line 122
                 echo "                        ";
                 $context['_parent'] = $context;
                 $context['_seq'] = twig_ensure_traversable(twig_get_attribute($this->env, $this->getSourceContext(), twig_get_attribute($this->env, $this->getSourceContext(), $context["round"], "player2", array()), "hand", array()));
@@ -364,7 +451,7 @@ class __TwigTemplate_e64f239b895bd363d8f83430afd17a24d1ba09ae0ce6482b039df96c30d
                     $context['loop']['last'] = 1 === $length;
                 }
                 foreach ($context['_seq'] as $context["_key"] => $context["card"]) {
-                    // line 87
+                    // line 123
                     echo "                        gamedata.matchs[";
                     echo twig_escape_filter($this->env, ($context["loop1"] ?? null), "html", null, true);
                     echo "].rounds[";
@@ -387,7 +474,7 @@ class __TwigTemplate_e64f239b895bd363d8f83430afd17a24d1ba09ae0ce6482b039df96c30d
                 $_parent = $context['_parent'];
                 unset($context['_seq'], $context['_iterated'], $context['_key'], $context['card'], $context['_parent'], $context['loop']);
                 $context = array_intersect_key($context, $_parent) + $_parent;
-                // line 89
+                // line 125
                 echo "                        gamedata.matchs[";
                 echo twig_escape_filter($this->env, ($context["loop1"] ?? null), "html", null, true);
                 echo "].rounds[";
@@ -408,7 +495,7 @@ class __TwigTemplate_e64f239b895bd363d8f83430afd17a24d1ba09ae0ce6482b039df96c30d
             $_parent = $context['_parent'];
             unset($context['_seq'], $context['_iterated'], $context['_key'], $context['round'], $context['_parent'], $context['loop']);
             $context = array_intersect_key($context, $_parent) + $_parent;
-            // line 91
+            // line 127
             echo "
                  ";
             ++$context['loop']['index0'];
@@ -423,10 +510,29 @@ class __TwigTemplate_e64f239b895bd363d8f83430afd17a24d1ba09ae0ce6482b039df96c30d
         $_parent = $context['_parent'];
         unset($context['_seq'], $context['_iterated'], $context['_key'], $context['match'], $context['_parent'], $context['loop']);
         $context = array_intersect_key($context, $_parent) + $_parent;
-        // line 93
+        // line 129
         echo "
         }
+
+        function loadMatch(){
+            for (i = 0; i < gamedata.matchs[match].rounds.length; i++) {
+                player1.round[i] = {};
+                player1.round[i].hand = gamedata.matchs[match].rounds[i].player1.hand;
+                player1.round[i].playedcard = gamedata.matchs[match].rounds[i].player1.playedcard;
+            }
+
+            for (i = 0; i < gamedata.matchs[match].rounds.length; i++) {
+                player2.round[i] = {};
+                player2.round[i].hand = gamedata.matchs[match].rounds[i].player2.hand;
+                player2.round[i].playedcard = gamedata.matchs[match].rounds[i].player2.playedcard;
+            }
+            configCards();
+            match = match+1;
+            round = 0;
+        }
+
         loadGameData();
+        loadMatch();
         console.log(gamedata);
         ///////////////////////
         function printNames(){
@@ -434,9 +540,9 @@ class __TwigTemplate_e64f239b895bd363d8f83430afd17a24d1ba09ae0ce6482b039df96c30d
             ctx.fillStyle = \"rgba(255, 255, 255, 255)\";
             ctx.scale(3, 3);
             //ctx.font = 'bold 10pt Courier'; /* Experimental */
-            ctx.fillText(namejog1.toUpperCase()/*\"Jogador 1\"*/, 150/3, 50/3);
+            ctx.fillText(player1.name/*\"Jogador 1\"*/, 255/3, 50/3);
             //ctx.fillText(namejog1.toUpperCase()/*\"Jogador 1\"*/, 255/3, 50/3); // Verificar se está correto posteriormente
-            ctx.fillText(namejog2.toUpperCase()/*\"Jogador 2\"*/, 542/3, 50/3);
+            ctx.fillText(player2.name/*\"Jogador 2\"*/, 540/3, 50/3);
             //ctx.fillText(namejog2.toUpperCase()/*\"Jogador 2\"*/, 540/3, 50/3); // Lembre-se da posição original em relação a desenhos de textos no canvas (verificar isso)
             ctx.scale(1, 1);
             ctx.restore();
@@ -447,21 +553,23 @@ class __TwigTemplate_e64f239b895bd363d8f83430afd17a24d1ba09ae0ce6482b039df96c30d
             ctx.fillStyle = \"rgba(255, 255, 255, 255)\"
             ctx.save();
             ctx.scale(3.2, 3.15);
-            ctx.fillText(\"Ganhou:\" + jogador1.rodadas, 145/3.12, 80/3.15);
-            ctx.fillText(\"Ganhou:\" + jogador2.rodadas, 527/3.12, 80/3.15);
+            ctx.fillText(\"Ganhou:\" + player1.pointsInGame, 145/3.12, 80/3.15);
+            ctx.fillText(\"Ganhou:\" + player2.pointsInGame, 527/3.12, 80/3.15);
             ctx.restore();
             ctx.save();
             ctx.scale(1.2, 1.2);
-            ctx.fillText(\"Restam:\" + (totalRodadas - rodada), 430/1.2, 10/1.2);
+            ctx.fillText(\"Restam:\" + (max_matchs - match), 430/1.2, 10/1.2);
             ctx.save();
             ctx.scale(1.4, 1.4);
-            ctx.fillText(\"Atual: \" + jogador1.confronto, 12/1.4, 154/1.4);
-            ctx.fillText(\"Atual: \" + jogador2.confronto, (1024-12-250)/1.4, 154/1.4);
+            ctx.fillText(\"Atual: \" + player1.pointsInMatch, 12/1.4, 154/1.4);
+            ctx.fillText(\"Atual: \" + player2.pointsInMatch, (1024-12-250)/1.4, 154/1.4);
             ctx.restore();
             ctx.save();
             ctx.scale(1, 1);
-            ctx.fillRect(120, 90, jogador1.rodadas*(610/100), 30);
-            ctx.fillRect(840-106-jogador2.rodadas*(610/100), 90,jogador2.rodadas*(610/100), 30);
+            ctx.fillRect(120, 90, player1.pointsInGame*(610/100), 30);
+            ctx.fillRect(840-106-player2.pointsInGame*(610/100), 90,player2.pointsInGame*(610/100), 30);
+            //ctx.fillRect(player1.posiXDeck, player1.posiYDeck,100, 250);
+            //ctx.fillRect(player2.posiXDeck-100, player2.posiYDeck,100, 250);
             ctx.restore();
             ctx.restore();
             ctx.scale(4, 4);
@@ -476,36 +584,39 @@ class __TwigTemplate_e64f239b895bd363d8f83430afd17a24d1ba09ae0ce6482b039df96c30d
 
         }
 
-        function drawacard(n, x, y){
-            ctx.drawImage(cardsImage[n], x, y);
-        }
-
         function drawcards(){
             var j = 0;
-            for(var i in jogador1.mao){
-                drawacard(jogador1.mao[i], jogador1.cardx[j], jogador1.cardy[j]);
-                j++;
-            }
-            j = 0;
-            for(var i in jogador2.mao){
-                drawacard(jogador2.mao[i], jogador2.cardx[j], jogador2.cardy[j]);
-                j++;
-            }
-        }
 
+            for(i = 0 ; i < player1.round[round].hand.length ; i++){
+                console.log(player1.round[round].hand[i].image.width);
+                ctx.drawImage(player1.round[round].hand[i].image, player1.round[round].hand[i].posiX, player1.round[round].hand[i].posiY,
+                    widthCard,heightCard);
+
+            }
+            for(i = 0 ; i < player2.round[round].hand.length ; i++){
+                console.log(player2.round[round].hand[i]);
+                ctx.drawImage(player2.round[round].hand[i].image, player2.round[round].hand[i].posiX, player2.round[round].hand[i].posiY,
+                    widthCard,heightCard);
+
+            }
+
+        }
+        canvas_draw();
         function canvas_draw(){
             ctx.font = \"12px Comic Sans\";
             ctx.save();
-            ctx.drawImage(imageBG2, 0, 0, imageBG2.width, imageBG2.height);
+            ctx.drawImage(imageBG, 0, 0, imageBG.width, imageBG.height);
 
-            ctx.drawImage(imageEnemy_1, 20, 340, imageEnemy_1.width, imageEnemy_1.height);
-            ctx.drawImage(imageEnemy_2, 1024-180, 340);
-            ctx.drawImage(imageFace_1, 12, 20);
-            ctx.drawImage(imageFace_2, 1024-140, 20);
+
+            ctx.drawImage(imageEnemy1, 20, 340, imageEnemy1.width, imageEnemy1.height);
+            ctx.drawImage(imageEnemy2, 1024-180, 340);
+            ctx.drawImage(imageFace1, 12, 20);
+            ctx.drawImage(imageFace2, 1024-140, 20);
             ctx.restore();
             printNames();
             drawcards();
             drawScores();
+
         }
 
     </script>
@@ -524,7 +635,7 @@ class __TwigTemplate_e64f239b895bd363d8f83430afd17a24d1ba09ae0ce6482b039df96c30d
 
     public function getDebugInfo()
     {
-        return array (  427 => 93,  412 => 91,  391 => 89,  368 => 87,  350 => 86,  348 => 85,  342 => 84,  336 => 83,  326 => 81,  303 => 79,  285 => 78,  283 => 77,  277 => 76,  271 => 75,  264 => 74,  247 => 73,  241 => 72,  237 => 71,  233 => 69,  212 => 67,  195 => 66,  190 => 64,  186 => 63,  183 => 62,  162 => 60,  145 => 59,  142 => 58,  140 => 57,  136 => 56,  132 => 55,  127 => 54,  110 => 53,  105 => 51,  96 => 44,  93 => 43,  53 => 6,  50 => 5,  44 => 4,  38 => 3,  32 => 2,  11 => 1,);
+        return array (  514 => 129,  499 => 127,  478 => 125,  455 => 123,  437 => 122,  435 => 121,  429 => 120,  423 => 119,  413 => 117,  390 => 115,  372 => 114,  370 => 113,  364 => 112,  358 => 111,  351 => 110,  334 => 109,  328 => 108,  324 => 107,  320 => 105,  299 => 103,  282 => 102,  277 => 100,  273 => 99,  270 => 98,  249 => 96,  232 => 95,  229 => 94,  227 => 93,  223 => 92,  219 => 91,  214 => 90,  197 => 89,  192 => 87,  162 => 59,  154 => 57,  150 => 56,  143 => 55,  138 => 54,  134 => 53,  115 => 37,  109 => 34,  105 => 33,  96 => 28,  90 => 26,  82 => 22,  76 => 20,  68 => 16,  58 => 8,  55 => 7,  50 => 5,  44 => 4,  38 => 3,  32 => 2,  11 => 1,);
     }
 
     public function getSourceContext()
@@ -534,48 +645,84 @@ class __TwigTemplate_e64f239b895bd363d8f83430afd17a24d1ba09ae0ce6482b039df96c30d
 {% block titlePage %}Tocador{% endblock %}
 {% block arenas %} active {% endblock %}
 {% block scripthead %}
-    <script>
-
-        \$(document).ready(function(){
-            \$(\"#velocidade\").change(function(){
-                aux = parseInt(\$(\"#velocidade\").val());
-                if(aux >= 0)
-                    cardspeed = aux;
-            });
-        });
-
-        function update(){
-            canvas = document.getElementById('canv');
-            if(canvas.getContext){
-                ctx = canvas.getContext('2d');
-                loadGameData();
-                loadImages();
-                animate();
-            }
-        }
-/*
-        function animate(){
-            if(zas == -1)
-                requestAnimationFrame( animate );
-            else{
-                //console.log(\"oi\");
-                cancelAnimationFrame( animate );
-                if(modotv != false){
-                    //console.log(\"oi\");
-                    setTimeout(function() { window.location.href = \"../modotv.php\"; }, 5000);
-                }
-            }
-            //setTimeout(animate, 1000);
-            partida();
-        }
-*/
-    </script>
 {% endblock %}
 {% block content %}
-    <input id=\"velocidade\" type=\"number\">
-    <canvas id=\"canv\" width=\"1024\" height=\"512\">
+    <input id=\"velocidade\" onload=\"draw();\" type=\"number\">
+    <canvas id=\"wanda\"  width=\"1024\" height=\"512\">
     <script>
+
+        var ctx = loadCanvasCtx();
         var gamedata;
+        /////background
+        var imageBG = new Image();
+        imageBG.src = \"{{ base_url() }}{{ imagebg }}\";
+        ////////
+        ///////enemy
+        var imageEnemy1 = new Image();
+        imageEnemy1.src = \"{{ base_url() }}{{ gameimages.enemy }}\";
+        var imageEnemy2 = new Image();
+        imageEnemy2.src = \"{{ base_url() }}{{ gameimages.enemy }}\";
+        ///////
+        //////face
+        var imageFace1 = new Image();
+        imageFace1.src = \"{{ base_url() }}{{ gameimages.face }}\";
+        var imageFace2 = new Image();
+        imageFace2.src = \"{{ base_url() }}{{ gameimages.face }}\";
+        ///////
+        //////var system
+        var match = 0;
+        var round = 0;
+        var max_matchs = {{ matchs }};
+        var max_rounds = {{ rounds }};
+        var heightDeck = 300;
+        var widthScreen = 1024;
+        var qtdcards = {{ qtdCards }};
+        var imageCards = [];
+        loadImageCards();
+        var marginCard = (heightDeck / (qtdcards + 1))/qtdcards;
+        var heightCard = (heightDeck / (qtdcards)) - marginCard;
+        var widthCard = heightCard;
+        //////
+        ///////player1
+        var player1 = {round: [], deck:[] , name: \"Jogador1\", pointsInMatch: 0 , pointsInGame : 0, posiXDeck: 150 , posiYDeck:150};
+        ///////
+        ///////Player2
+        var player2 = {round: [], deck:[] , name: \"Jogador2\", pointsInMatch: 0 , pointsInGame : 0, posiXDeck: widthScreen-150 , posiYDeck:150};
+        ///////
+
+
+        function loadImageCards(){
+            {% for card in cardsimage %}
+                imageCards[\"{{ card.name }}\"] = new Image();
+                imageCards[\"{{ card.name }}\"].src = \"{{ base_url() }}{{ card.image }}\";
+                imageCards[\"{{ card.name }}\"].width = widthCard;
+                imageCards[\"{{ card.name }}\"].height = heightCard;
+            {% endfor %}
+        }
+        function configCards(){
+            for (i = 0; i < player1.round[round].hand.length; i++) {
+                var namecard = player1.round[round].hand[i];
+                player1.round[round].hand[i] = {};
+                player1.round[round].hand[i].name = namecard;
+                player1.round[round].hand[i].image = imageCards[player1.round[round].hand[i].name];
+                player1.round[round].hand[i].posiX = player1.posiXDeck;
+                player1.round[round].hand[i].posiY = player1.posiYDeck + ((heightCard+marginCard)*i);
+            }
+            for (i = 0; i < player2.round[round].hand.length; i++) {
+                var namecard = player2.round[round].hand[i];
+                player2.round[round].hand[i] = {};
+                player2.round[round].hand[i].name = namecard;
+                player2.round[round].hand[i].image = imageCards[player2.round[round].hand[i].name];
+                player2.round[round].hand[i].posiX = player2.posiXDeck-widthCard;
+                player2.round[round].hand[i].posiY = player2.posiYDeck + ((heightCard+marginCard)*i);
+            }
+        }
+        function loadCanvasCtx(){
+            var c = document.getElementById(\"wanda\");
+            var ctx = c.getContext(\"2d\");
+            return ctx;
+        }
+
         function loadGameData(){
             gamedata = {};
             gamedata.matchs = [];
@@ -623,7 +770,26 @@ class __TwigTemplate_e64f239b895bd363d8f83430afd17a24d1ba09ae0ce6482b039df96c30d
                  {% endfor %}
 
         }
+
+        function loadMatch(){
+            for (i = 0; i < gamedata.matchs[match].rounds.length; i++) {
+                player1.round[i] = {};
+                player1.round[i].hand = gamedata.matchs[match].rounds[i].player1.hand;
+                player1.round[i].playedcard = gamedata.matchs[match].rounds[i].player1.playedcard;
+            }
+
+            for (i = 0; i < gamedata.matchs[match].rounds.length; i++) {
+                player2.round[i] = {};
+                player2.round[i].hand = gamedata.matchs[match].rounds[i].player2.hand;
+                player2.round[i].playedcard = gamedata.matchs[match].rounds[i].player2.playedcard;
+            }
+            configCards();
+            match = match+1;
+            round = 0;
+        }
+
         loadGameData();
+        loadMatch();
         console.log(gamedata);
         ///////////////////////
         function printNames(){
@@ -631,9 +797,9 @@ class __TwigTemplate_e64f239b895bd363d8f83430afd17a24d1ba09ae0ce6482b039df96c30d
             ctx.fillStyle = \"rgba(255, 255, 255, 255)\";
             ctx.scale(3, 3);
             //ctx.font = 'bold 10pt Courier'; /* Experimental */
-            ctx.fillText(namejog1.toUpperCase()/*\"Jogador 1\"*/, 150/3, 50/3);
+            ctx.fillText(player1.name/*\"Jogador 1\"*/, 255/3, 50/3);
             //ctx.fillText(namejog1.toUpperCase()/*\"Jogador 1\"*/, 255/3, 50/3); // Verificar se está correto posteriormente
-            ctx.fillText(namejog2.toUpperCase()/*\"Jogador 2\"*/, 542/3, 50/3);
+            ctx.fillText(player2.name/*\"Jogador 2\"*/, 540/3, 50/3);
             //ctx.fillText(namejog2.toUpperCase()/*\"Jogador 2\"*/, 540/3, 50/3); // Lembre-se da posição original em relação a desenhos de textos no canvas (verificar isso)
             ctx.scale(1, 1);
             ctx.restore();
@@ -644,21 +810,23 @@ class __TwigTemplate_e64f239b895bd363d8f83430afd17a24d1ba09ae0ce6482b039df96c30d
             ctx.fillStyle = \"rgba(255, 255, 255, 255)\"
             ctx.save();
             ctx.scale(3.2, 3.15);
-            ctx.fillText(\"Ganhou:\" + jogador1.rodadas, 145/3.12, 80/3.15);
-            ctx.fillText(\"Ganhou:\" + jogador2.rodadas, 527/3.12, 80/3.15);
+            ctx.fillText(\"Ganhou:\" + player1.pointsInGame, 145/3.12, 80/3.15);
+            ctx.fillText(\"Ganhou:\" + player2.pointsInGame, 527/3.12, 80/3.15);
             ctx.restore();
             ctx.save();
             ctx.scale(1.2, 1.2);
-            ctx.fillText(\"Restam:\" + (totalRodadas - rodada), 430/1.2, 10/1.2);
+            ctx.fillText(\"Restam:\" + (max_matchs - match), 430/1.2, 10/1.2);
             ctx.save();
             ctx.scale(1.4, 1.4);
-            ctx.fillText(\"Atual: \" + jogador1.confronto, 12/1.4, 154/1.4);
-            ctx.fillText(\"Atual: \" + jogador2.confronto, (1024-12-250)/1.4, 154/1.4);
+            ctx.fillText(\"Atual: \" + player1.pointsInMatch, 12/1.4, 154/1.4);
+            ctx.fillText(\"Atual: \" + player2.pointsInMatch, (1024-12-250)/1.4, 154/1.4);
             ctx.restore();
             ctx.save();
             ctx.scale(1, 1);
-            ctx.fillRect(120, 90, jogador1.rodadas*(610/100), 30);
-            ctx.fillRect(840-106-jogador2.rodadas*(610/100), 90,jogador2.rodadas*(610/100), 30);
+            ctx.fillRect(120, 90, player1.pointsInGame*(610/100), 30);
+            ctx.fillRect(840-106-player2.pointsInGame*(610/100), 90,player2.pointsInGame*(610/100), 30);
+            //ctx.fillRect(player1.posiXDeck, player1.posiYDeck,100, 250);
+            //ctx.fillRect(player2.posiXDeck-100, player2.posiYDeck,100, 250);
             ctx.restore();
             ctx.restore();
             ctx.scale(4, 4);
@@ -673,36 +841,39 @@ class __TwigTemplate_e64f239b895bd363d8f83430afd17a24d1ba09ae0ce6482b039df96c30d
 
         }
 
-        function drawacard(n, x, y){
-            ctx.drawImage(cardsImage[n], x, y);
-        }
-
         function drawcards(){
             var j = 0;
-            for(var i in jogador1.mao){
-                drawacard(jogador1.mao[i], jogador1.cardx[j], jogador1.cardy[j]);
-                j++;
-            }
-            j = 0;
-            for(var i in jogador2.mao){
-                drawacard(jogador2.mao[i], jogador2.cardx[j], jogador2.cardy[j]);
-                j++;
-            }
-        }
 
+            for(i = 0 ; i < player1.round[round].hand.length ; i++){
+                console.log(player1.round[round].hand[i].image.width);
+                ctx.drawImage(player1.round[round].hand[i].image, player1.round[round].hand[i].posiX, player1.round[round].hand[i].posiY,
+                    widthCard,heightCard);
+
+            }
+            for(i = 0 ; i < player2.round[round].hand.length ; i++){
+                console.log(player2.round[round].hand[i]);
+                ctx.drawImage(player2.round[round].hand[i].image, player2.round[round].hand[i].posiX, player2.round[round].hand[i].posiY,
+                    widthCard,heightCard);
+
+            }
+
+        }
+        canvas_draw();
         function canvas_draw(){
             ctx.font = \"12px Comic Sans\";
             ctx.save();
-            ctx.drawImage(imageBG2, 0, 0, imageBG2.width, imageBG2.height);
+            ctx.drawImage(imageBG, 0, 0, imageBG.width, imageBG.height);
 
-            ctx.drawImage(imageEnemy_1, 20, 340, imageEnemy_1.width, imageEnemy_1.height);
-            ctx.drawImage(imageEnemy_2, 1024-180, 340);
-            ctx.drawImage(imageFace_1, 12, 20);
-            ctx.drawImage(imageFace_2, 1024-140, 20);
+
+            ctx.drawImage(imageEnemy1, 20, 340, imageEnemy1.width, imageEnemy1.height);
+            ctx.drawImage(imageEnemy2, 1024-180, 340);
+            ctx.drawImage(imageFace1, 12, 20);
+            ctx.drawImage(imageFace2, 1024-140, 20);
             ctx.restore();
             printNames();
             drawcards();
             drawScores();
+
         }
 
     </script>
