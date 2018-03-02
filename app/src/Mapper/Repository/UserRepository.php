@@ -13,10 +13,18 @@ class UserRepository extends DocumentRepository
     /**
      * @param string $username
      * @param string $password
-     * @return PersistentCollection
+     * @return PersistentCollection\
      */
     public function getUserWithUsernamePassword(string $username, string $password) {
         return $this->dm->getRepository(User::class)->findBy(['username' => $username, 'password' => $password]);
+    }
+    /**
+     * @param string $username
+     * @param string $password
+     * @return PersistentCollection\
+     */
+    public function getUserWithUsername(string $username) {
+        return $this->dm->getRepository(User::class)->findBy(['username' => $username]);
     }
 
 }

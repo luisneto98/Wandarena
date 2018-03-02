@@ -40,16 +40,19 @@ class __TwigTemplate_7d3f7e626fdf2ef47c495ffc90836fa8ada976830c7ef17e15683df6ab1
 </head>
 
 <body class=\"text-center\">
-<form class=\"form-signin\">
+<form class=\"form-signin\" method=\"post\" action=\"";
+        // line 19
+        echo twig_escape_filter($this->env, $this->env->getExtension('Slim\Views\TwigExtension')->pathFor("auth"), "html", null, true);
+        echo "\">
     <img class=\"mb-4 text-center\" src=\"";
         // line 20
         echo twig_escape_filter($this->env, $this->env->getExtension('Slim\Views\TwigExtension')->baseUrl(), "html", null, true);
         echo "/Images/System/Logo_Wandarena.png\" alt=\"\" width=\"330\" height=\"300\">
     <h6 class=\"h6 mb-3 font-weight-normal\">Bem vindo ao sistema Wandarena</h6>
     <label for=\"inputUser\" class=\"sr-only\">Usuario</label>
-    <input type=\"text\" id=\"inputUser\" class=\"form-control\" placeholder=\"Usuário\" required autofocus>
+    <input type=\"text\" name=\"username\" id=\"inputUser\" class=\"form-control\" placeholder=\"Usuário\" required autofocus>
     <label for=\"inputPassword\" class=\"sr-only\">Password</label>
-    <input type=\"password\" id=\"inputPassword\" class=\"form-control\" placeholder=\"Senha\" required>
+    <input type=\"password\" name=\"password\" id=\"inputPassword\" class=\"form-control\" placeholder=\"Senha\" required>
     <button class=\"btn btn-lg btn-primary btn-block\" type=\"submit\">Entrar</button>
 </form>
 </body>
@@ -68,7 +71,7 @@ class __TwigTemplate_7d3f7e626fdf2ef47c495ffc90836fa8ada976830c7ef17e15683df6ab1
 
     public function getDebugInfo()
     {
-        return array (  46 => 20,  34 => 11,  30 => 10,  19 => 1,);
+        return array (  49 => 20,  45 => 19,  34 => 11,  30 => 10,  19 => 1,);
     }
 
     public function getSourceContext()
@@ -91,13 +94,13 @@ class __TwigTemplate_7d3f7e626fdf2ef47c495ffc90836fa8ada976830c7ef17e15683df6ab1
 </head>
 
 <body class=\"text-center\">
-<form class=\"form-signin\">
+<form class=\"form-signin\" method=\"post\" action=\"{{ path_for('auth') }}\">
     <img class=\"mb-4 text-center\" src=\"{{ base_url() }}/Images/System/Logo_Wandarena.png\" alt=\"\" width=\"330\" height=\"300\">
     <h6 class=\"h6 mb-3 font-weight-normal\">Bem vindo ao sistema Wandarena</h6>
     <label for=\"inputUser\" class=\"sr-only\">Usuario</label>
-    <input type=\"text\" id=\"inputUser\" class=\"form-control\" placeholder=\"Usuário\" required autofocus>
+    <input type=\"text\" name=\"username\" id=\"inputUser\" class=\"form-control\" placeholder=\"Usuário\" required autofocus>
     <label for=\"inputPassword\" class=\"sr-only\">Password</label>
-    <input type=\"password\" id=\"inputPassword\" class=\"form-control\" placeholder=\"Senha\" required>
+    <input type=\"password\" name=\"password\" id=\"inputPassword\" class=\"form-control\" placeholder=\"Senha\" required>
     <button class=\"btn btn-lg btn-primary btn-block\" type=\"submit\">Entrar</button>
 </form>
 </body>

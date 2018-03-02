@@ -66,7 +66,10 @@ class __TwigTemplate_c863a9da9ec1fc0fd54f1fc69a6317b56368ec145f08e27a9f588caf694
     <div style=\"max-height: 100%; min-height: 100%\">
         <header class=\"d-inline\">
             <nav class=\"navbar navbar-expand-lg bg-yellow navbar-light\">
-                <a class=\"navbar-brand font-weight-bold text-dark\" href=\"#\">Wandarena<b class=\"font-weight-normal text-secondary\">Telemídia</b></a>
+                <a class=\"navbar-brand font-weight-bold text-dark\" href=\"";
+        // line 28
+        echo twig_escape_filter($this->env, $this->env->getExtension('Slim\Views\TwigExtension')->pathFor("wanda.home.index"), "html", null, true);
+        echo "\">Wandarena<b class=\"font-weight-normal text-secondary\">Telemídia</b></a>
                 <button class=\"navbar-toggler\" type=\"button\" data-toggle=\"collapse\" data-target=\"#navbarNavAltMarkup\" aria-controls=\"navbarNavAltMarkup\" aria-expanded=\"false\" aria-label=\"Toggle navigation\">
                     <span class=\"navbar-toggler-icon\"></span>
                 </button>
@@ -78,7 +81,7 @@ class __TwigTemplate_c863a9da9ec1fc0fd54f1fc69a6317b56368ec145f08e27a9f588caf694
         echo "\">
                             <a class=\"nav-link\" href=\"";
         // line 35
-        echo twig_escape_filter($this->env, $this->env->getExtension('Slim\Views\TwigExtension')->pathFor("wanda.home.index"), "html", null, true);
+        echo twig_escape_filter($this->env, $this->env->getExtension('Slim\Views\TwigExtension')->pathFor("wanda.home.listar"), "html", null, true);
         echo "\">Arenas </a>
                         </li>
                         ";
@@ -102,7 +105,10 @@ class __TwigTemplate_c863a9da9ec1fc0fd54f1fc69a6317b56368ec145f08e27a9f588caf694
             echo "                            <li class=\"nav-item ";
             $this->displayBlock('registerUser', $context, $blocks);
             echo "\">
-                                <a class=\"nav-link\" href=\"#\">Cadastrar Usuário </a>
+                                <a class=\"nav-link\" href=\"";
+            // line 44
+            echo twig_escape_filter($this->env, $this->env->getExtension('Slim\Views\TwigExtension')->pathFor("wanda.user.register"), "html", null, true);
+            echo "\">Cadastrar Usuário </a>
                             </li>
                             <li class=\"nav-item ";
             // line 46
@@ -201,7 +207,7 @@ class __TwigTemplate_c863a9da9ec1fc0fd54f1fc69a6317b56368ec145f08e27a9f588caf694
 
     public function getDebugInfo()
     {
-        return array (  187 => 58,  182 => 56,  177 => 46,  172 => 43,  167 => 38,  162 => 34,  157 => 19,  152 => 18,  134 => 59,  132 => 58,  127 => 56,  119 => 50,  113 => 47,  109 => 46,  102 => 43,  99 => 42,  93 => 39,  88 => 38,  86 => 37,  81 => 35,  77 => 34,  61 => 20,  59 => 19,  55 => 18,  48 => 14,  44 => 13,  40 => 12,  27 => 1,);
+        return array (  193 => 58,  188 => 56,  183 => 46,  178 => 43,  173 => 38,  168 => 34,  163 => 19,  158 => 18,  140 => 59,  138 => 58,  133 => 56,  125 => 50,  119 => 47,  115 => 46,  110 => 44,  105 => 43,  102 => 42,  96 => 39,  91 => 38,  89 => 37,  84 => 35,  80 => 34,  71 => 28,  61 => 20,  59 => 19,  55 => 18,  48 => 14,  44 => 13,  40 => 12,  27 => 1,);
     }
 
     public function getSourceContext()
@@ -233,14 +239,14 @@ class __TwigTemplate_c863a9da9ec1fc0fd54f1fc69a6317b56368ec145f08e27a9f588caf694
     <div style=\"max-height: 100%; min-height: 100%\">
         <header class=\"d-inline\">
             <nav class=\"navbar navbar-expand-lg bg-yellow navbar-light\">
-                <a class=\"navbar-brand font-weight-bold text-dark\" href=\"#\">Wandarena<b class=\"font-weight-normal text-secondary\">Telemídia</b></a>
+                <a class=\"navbar-brand font-weight-bold text-dark\" href=\"{{  path_for('wanda.home.index') }}\">Wandarena<b class=\"font-weight-normal text-secondary\">Telemídia</b></a>
                 <button class=\"navbar-toggler\" type=\"button\" data-toggle=\"collapse\" data-target=\"#navbarNavAltMarkup\" aria-controls=\"navbarNavAltMarkup\" aria-expanded=\"false\" aria-label=\"Toggle navigation\">
                     <span class=\"navbar-toggler-icon\"></span>
                 </button>
                 <div class=\"collapse navbar-collapse \" id=\"navbarNavAltMarkup\">
                     <ul class=\"navbar-nav\">
                         <li class=\"nav-item {% block arena %}{% endblock %}\">
-                            <a class=\"nav-link\" href=\"{{ path_for('wanda.home.index') }}\">Arenas </a>
+                            <a class=\"nav-link\" href=\"{{ path_for('wanda.home.listar') }}\">Arenas </a>
                         </li>
                         {% if admin == true %}
                             <li class=\"nav-item {% block practice %}{% endblock %}\">
@@ -249,7 +255,7 @@ class __TwigTemplate_c863a9da9ec1fc0fd54f1fc69a6317b56368ec145f08e27a9f588caf694
                         {% endif %}
                         {% if admin == true %}
                             <li class=\"nav-item {% block registerUser %}{% endblock %}\">
-                                <a class=\"nav-link\" href=\"#\">Cadastrar Usuário </a>
+                                <a class=\"nav-link\" href=\"{{ path_for('wanda.user.register') }}\">Cadastrar Usuário </a>
                             </li>
                             <li class=\"nav-item {% block arenasControl %}{% endblock %}\">
                                 <a class=\"nav-link\" href=\"{{ path_for('wanda.arena.control.index') }}\">Controle de Arenas </a>

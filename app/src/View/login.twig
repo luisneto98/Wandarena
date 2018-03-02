@@ -16,13 +16,13 @@
 </head>
 
 <body class="text-center">
-<form class="form-signin">
+<form class="form-signin" method="post" action="{{ path_for('auth') }}">
     <img class="mb-4 text-center" src="{{ base_url() }}/Images/System/Logo_Wandarena.png" alt="" width="330" height="300">
     <h6 class="h6 mb-3 font-weight-normal">Bem vindo ao sistema Wandarena</h6>
     <label for="inputUser" class="sr-only">Usuario</label>
-    <input type="text" id="inputUser" class="form-control" placeholder="Usuário" required autofocus>
+    <input type="text" name="username" id="inputUser" class="form-control" placeholder="Usuário" required autofocus>
     <label for="inputPassword" class="sr-only">Password</label>
-    <input type="password" id="inputPassword" class="form-control" placeholder="Senha" required>
+    <input type="password" name="password" id="inputPassword" class="form-control" placeholder="Senha" required>
     <button class="btn btn-lg btn-primary btn-block" type="submit">Entrar</button>
 </form>
 </body>

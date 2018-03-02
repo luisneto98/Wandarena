@@ -50,15 +50,15 @@ class __TwigTemplate_91ccb7e49f3fc33dbba0847ee408bc6b5e4413711050a5aee2ba51e8b7e
     {
         // line 6
         echo "
-    <form class=\"offset-sm-2 col-sm-8 \">
-
-        <div class=\"form-group \">
-
-            <input type=\"file\" class=\"custom-file custom-file-label \" data-icon=\"false\" accept=\".lua\">
-
-        </div>
-
+    <form action=\"";
+        // line 7
+        echo twig_escape_filter($this->env, $this->env->getExtension('Slim\Views\TwigExtension')->pathFor("wanda.home.teste"), "html", null, true);
+        echo "\" method=\"POST\"
+          enctype=\"multipart/form-data\">
+        Arquivo: <input type=\"file\" name=\"code\"><br>
+        <input type=\"submit\" value=\"Enviar\">
     </form>
+
 ";
     }
 
@@ -74,7 +74,7 @@ class __TwigTemplate_91ccb7e49f3fc33dbba0847ee408bc6b5e4413711050a5aee2ba51e8b7e
 
     public function getDebugInfo()
     {
-        return array (  52 => 6,  49 => 5,  43 => 4,  37 => 3,  31 => 2,  11 => 1,);
+        return array (  55 => 7,  52 => 6,  49 => 5,  43 => 4,  37 => 3,  31 => 2,  11 => 1,);
     }
 
     public function getSourceContext()
@@ -85,15 +85,12 @@ class __TwigTemplate_91ccb7e49f3fc33dbba0847ee408bc6b5e4413711050a5aee2ba51e8b7e
 {% block practice %} active {% endblock %}
 {% block content %}
 
-    <form class=\"offset-sm-2 col-sm-8 \">
-
-        <div class=\"form-group \">
-
-            <input type=\"file\" class=\"custom-file custom-file-label \" data-icon=\"false\" accept=\".lua\">
-
-        </div>
-
+    <form action=\"{{ path_for('wanda.home.teste') }}\" method=\"POST\"
+          enctype=\"multipart/form-data\">
+        Arquivo: <input type=\"file\" name=\"code\"><br>
+        <input type=\"submit\" value=\"Enviar\">
     </form>
+
 {% endblock %}", "View/Practice/practice.twig", "/var/www/html/Wandarena/app/src/View/Practice/practice.twig");
     }
 }

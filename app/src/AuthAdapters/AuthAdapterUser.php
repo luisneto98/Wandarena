@@ -46,7 +46,7 @@ class AuthAdapterUser implements AuthAdapterInterface
 
         $arrayUser = $this->databaseConnection->getRepository(User::class)
             ->getUserWithUsernamePassword($this->username, $this->password);
-
+        echo "entrou";
         if (count($arrayUser) == 0) {
             return new AuthResponse(AuthResponse::AUTHRESPONSE_FAILURE, 'User not found');
         }
@@ -54,7 +54,7 @@ class AuthAdapterUser implements AuthAdapterInterface
         $user = $arrayUser[0];
 
         $arraySettings = $ci->get('settings');
-        return new AuthResponse(AuthResponse::AUTHRESPONSE_SUCCESS, 'User auth success', $arraySettings['session']['name'], [ 'id' => $user->getId(), 'username' => $user->getUsername(), 'fullname' => $user->getFullname() ]);
+        return new AuthResponse(AuthResponse::AUTHRESPONSE_SUCCESS, 'User auth success', $arraySettings['session']['name'], [ 'id' => $user->getId(), 'username' => $user->getUsername()]);
     }
 
 }

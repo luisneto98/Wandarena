@@ -10,6 +10,15 @@
     <script>
 
         var ctx = loadCanvasCtx();
+        var requestAnimationFrame =
+            window.requestAnimationFrame ||
+            window.webkitRequestAnimationFrame ||
+            window.mozRequestAnimationFrame ||
+            window.msRequestAnimationFrame ||
+            window.oRequestAnimationFrame ||
+            function(callback) {
+                return setTimeout(callback, 1);
+            };
         var gamedata;
         /////background
         var imageBG = new Image();
@@ -34,18 +43,23 @@
         var max_rounds = {{ rounds }};
         var heightDeck = 300;
         var widthScreen = 1024;
+        var heightScreen = 512;
         var qtdcards = {{ qtdCards }};
         var imageCards = [];
         loadImageCards();
         var marginCard = (heightDeck / (qtdcards + 1))/qtdcards;
         var heightCard = (heightDeck / (qtdcards)) - marginCard;
         var widthCard = heightCard;
+        var loserCardAnimate = false;
+        var selectedcardAnimate = true;
+        var displacementCard = 30;
+        var startMatch = true;
         //////
         ///////player1
-        var player1 = {round: [], deck:[] , name: "Jogador1", pointsInMatch: 0 , pointsInGame : 0, posiXDeck: 150 , posiYDeck:150};
+        var player1 = {round: [], deck:[] , name: "Jogador1", pointsInMatch: 0 , pointsInGame : 0, posiXDeck: 150 , posiYDeck:150,loser: false , selectedCardInMatch: 0};
         ///////
         ///////Player2
-        var player2 = {round: [], deck:[] , name: "Jogador2", pointsInMatch: 0 , pointsInGame : 0, posiXDeck: widthScreen-150 , posiYDeck:150};
+        var player2 = {round: [], deck:[] , name: "Jogador2", pointsInMatch: 0 , pointsInGame : 0, posiXDeck: widthScreen-150 , posiYDeck:150, loser: false, selectedCardInMatch: 0};
         ///////
 
 
@@ -58,6 +72,8 @@
             {% endfor %}
         }
         function configCards(){
+            console.log(player1.round[round].hand);
+            console.log(gamedata.matchs[match].rounds[round].player1.hand);
             for (i = 0; i < player1.round[round].hand.length; i++) {
                 var namecard = player1.round[round].hand[i];
                 player1.round[round].hand[i] = {};
@@ -108,6 +124,7 @@
                     gamedata.matchs[{{ loop.index0 }}].winner = {{ match.winner }};
                     {% for round in match.rounds %}
                         gamedata.matchs[{{ loop1 }}].rounds[{{ loop.index0 }}] = {};
+                        gamedata.matchs[{{ loop1 }}].rounds[{{ loop.index0 }}].winner = {{ round.winner }};
                         gamedata.matchs[{{ loop1 }}].rounds[{{ loop.index0 }}].player1 = {};
                         gamedata.matchs[{{ loop1 }}].rounds[{{ loop.index0 }}].player1.hand = [];
                         {% set loop2 = loop.index0 %}
@@ -142,14 +159,100 @@
                 player2.round[i].playedcard = gamedata.matchs[match].rounds[i].player2.playedcard;
             }
             configCards();
-            match = match+1;
+
             round = 0;
         }
-
-        loadGameData();
-        loadMatch();
-        console.log(gamedata);
         ///////////////////////
+        load();
+        setInterval(update,50);
+        function load(){
+            loadGameData();
+        }
+        function update(){
+
+            zas = gamedata.matchs[match].rounds[round].winner;
+            if(startMatch) {
+                loadMatch();
+                startMatch = false;
+            }
+
+            canvas_draw();
+            if(selectedcardAnimate) {
+                selectedcardAnimate = animateSelectedCard();
+                if(selectedcardAnimate == false)
+                    loserCardAnimate = true;
+            }else if(loserCardAnimate) {
+                    loserCardAnimate = animateLoserCard();
+            }else{
+
+                round++;
+                if(round > 2){
+                    round = 0;
+                    if(player1.pointsInMatch > player2.pointsInMatch){
+                        player1.pointsInGame++;
+                    }else if(player2.pointsInMatch > player1.pointsInMatch){
+                        player2.pointsInGame++;
+                    }
+                    player1.pointsInMatch = 0;
+                    player2.pointsInMatch = 0;
+                    startMatch = true;
+                    match++;
+                }
+                if(zas == 1){
+                    player1.pointsInMatch++;
+
+                }if(zas == 2){
+                    player2.pointsInMatch++;
+                }
+                selectedcardAnimate = true;
+                configCards();
+            }
+        }
+        function animateSelectedCard(){
+            var getPosiSelectedCard = function(player){
+                for(i = 0 ; i < player.round[round].hand.length ; i++){
+                    if(player.round[round].hand[i].name == player.round[round].playedcard){
+
+                        return i;
+                    }
+
+                }
+            };
+            var posiCardP1 = getPosiSelectedCard(player1);
+            var posiCardP2 = getPosiSelectedCard(player2);
+            player1.selectedCardInMatch = posiCardP1;
+            player2.selectedCardInMatch = posiCardP2;
+            var control = false; //define final ou continuação da animação
+            if((player1.round[round].hand[posiCardP1].posiX+widthCard+marginCard) < widthScreen/2){
+                player1.round[round].hand[posiCardP1].posiX += displacementCard;
+                control = true;
+            }
+            if((player2.round[round].hand[posiCardP2].posiX+marginCard) > widthScreen/2){
+                player2.round[round].hand[posiCardP2].posiX -= displacementCard;
+                control = control && true;
+            }
+            return control;
+
+        }
+        function animateLoserCard(){
+            if(zas == 2){
+                player1.round[round].hand[player1.selectedCardInMatch].posiY += displacementCard;
+                if(player1.round[round].hand[player1.selectedCardInMatch].posiY > heightScreen)
+                    return false;
+            }else if(zas == 1){
+
+                player2.round[round].hand[player2.selectedCardInMatch].posiY += displacementCard;
+                if(player2.round[round].hand[player2.selectedCardInMatch].posiY > heightScreen)
+                    return false;
+            }else{
+                player1.round[round].hand[player1.selectedCardInMatch].posiY += displacementCard;
+                player2.round[round].hand[player2.selectedCardInMatch].posiY += displacementCard;
+                if(player1.round[round].hand[player1.selectedCardInMatch].posiY > heightScreen &&
+                    player2.round[round].hand[player2.selectedCardInMatch].posiY > heightScreen)
+                    return false;
+            }
+            return true;
+        }
         function printNames(){
             ctx.save();
             ctx.fillStyle = "rgba(255, 255, 255, 255)";
@@ -188,13 +291,16 @@
             ctx.restore();
             ctx.restore();
             ctx.scale(4, 4);
-            if(zas == 1)
-                ctx.fillText("VENCEDOR: " + namejog1.toUpperCase(), 80/4, 250/4);
-            if(zas == 2)
-                ctx.fillText("VENCEDOR: " + namejog2.toUpperCase(), 80/4, 250/4);
-            if(zas == 0)
-                ctx.fillText("EMPATE!", 480/4, 250/4);
-            ctx.scale(1, 1);
+            if(round == 2){
+                if(zas == 1)
+                    ctx.fillText("VENCEDOR: " + player1.name, 80/4, 250/4);
+                if(zas == 2)
+                    ctx.fillText("VENCEDOR: " + player2.name, 80/4, 250/4);
+                if(zas == 0)
+                    ctx.fillText("EMPATE!", 480/4, 250/4);
+                ctx.scale(1, 1);
+
+            }
             ctx.restore();
 
         }
@@ -203,20 +309,17 @@
             var j = 0;
 
             for(i = 0 ; i < player1.round[round].hand.length ; i++){
-                console.log(player1.round[round].hand[i].image.width);
                 ctx.drawImage(player1.round[round].hand[i].image, player1.round[round].hand[i].posiX, player1.round[round].hand[i].posiY,
                     widthCard,heightCard);
 
             }
             for(i = 0 ; i < player2.round[round].hand.length ; i++){
-                console.log(player2.round[round].hand[i]);
                 ctx.drawImage(player2.round[round].hand[i].image, player2.round[round].hand[i].posiX, player2.round[round].hand[i].posiY,
                     widthCard,heightCard);
 
             }
 
         }
-        canvas_draw();
         function canvas_draw(){
             ctx.font = "12px Comic Sans";
             ctx.save();

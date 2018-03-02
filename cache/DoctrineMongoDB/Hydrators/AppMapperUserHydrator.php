@@ -56,6 +56,19 @@ class AppMapperUserHydrator implements HydratorInterface
         }
 
         /** @Field(type="string") */
+        if (isset($data['name']) || (! empty($this->class->fieldMappings['name']['nullable']) && array_key_exists('name', $data))) {
+            $value = $data['name'];
+            if ($value !== null) {
+                $typeIdentifier = $this->class->fieldMappings['name']['type'];
+                $return = (string) $value;
+            } else {
+                $return = null;
+            }
+            $this->class->reflFields['name']->setValue($document, $return);
+            $hydratedData['name'] = $return;
+        }
+
+        /** @Field(type="string") */
         if (isset($data['password']) || (! empty($this->class->fieldMappings['password']['nullable']) && array_key_exists('password', $data))) {
             $value = $data['password'];
             if ($value !== null) {
@@ -66,6 +79,19 @@ class AppMapperUserHydrator implements HydratorInterface
             }
             $this->class->reflFields['password']->setValue($document, $return);
             $hydratedData['password'] = $return;
+        }
+
+        /** @Field(type="bool") */
+        if (isset($data['admin']) || (! empty($this->class->fieldMappings['admin']['nullable']) && array_key_exists('admin', $data))) {
+            $value = $data['admin'];
+            if ($value !== null) {
+                $typeIdentifier = $this->class->fieldMappings['admin']['type'];
+                $return = (bool) $value;
+            } else {
+                $return = null;
+            }
+            $this->class->reflFields['admin']->setValue($document, $return);
+            $hydratedData['admin'] = $return;
         }
 
         /** @Many */

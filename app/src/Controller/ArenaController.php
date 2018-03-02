@@ -39,7 +39,7 @@ class ArenaController extends AbstractController
      * @param Request $request
      * @param Response $response
      * @return mixed
-     * @Get(name="/registrar", alias="wanda.arena.register.index")
+     * @Get(name="/registrar", alias="wanda.arena.register.index", middleware={"App\Middleware\SessionMiddleware"})
      */
     public function registerAction(Request $request, Response $response) {
 
@@ -50,7 +50,7 @@ class ArenaController extends AbstractController
      * @param Request $request
      * @param Response $response
      * @return mixed
-     * @Post(name="/salvar", alias="wanda.arena.register.save")
+     * @Post(name="/salvar", alias="wanda.arena.register.save", middleware={"App\Middleware\SessionMiddleware"})
      */
     public function saveAction(Request $request, Response $response) {
         $arena = new Arena();
@@ -73,17 +73,17 @@ class ArenaController extends AbstractController
      * @param Request $request
      * @param Response $response
      * @return mixed
-     * @Get(name="/", alias="wanda.arena.control.index")
+     * @Get(name="/", alias="wanda.arena.control.index", middleware={"App\Middleware\SessionMiddleware"})
      */
     public function listAction(Request $request, Response $response) {
         $arenas = $this->_dm->getRepository(Arena::class)->findAll();
-        return $this->view->render($response,"View/Arena/arenasControl.twig",["admin" => true,"arenas"=>$arenas,"nome"=>$arenas[0]->getGameInfo()[0]]);
+        return $this->view->render($response,"View/Arena/arenasControl.twig",["admin" => true,"arenas"=>$arenas]);
     }
     /**
      * @param Request $request
      * @param Response $response
      * @return mixed
-     * @Get(name="/deletar/{id}", alias="wanda.arena.control.delete")
+     * @Get(name="/deletar/{id}", alias="wanda.arena.control.delete", middleware={"App\Middleware\SessionMiddleware"})
      */
     public function deleteAction(Request $request, Response $response) {
         $id = $request->getAttribute("id");
@@ -100,7 +100,7 @@ class ArenaController extends AbstractController
      * @param Request $request
      * @param Response $response
      * @return mixed
-     * @Get(name="/alterar/{id}", alias="wanda.arena.control.change")
+     * @Get(name="/alterar/{id}", alias="wanda.arena.control.change", middleware={"App\Middleware\SessionMiddleware"})
      */
     public function changeAction(Request $request, Response $response) {
         $id = $request->getAttribute("id");

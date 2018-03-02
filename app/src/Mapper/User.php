@@ -21,9 +21,19 @@ class User
     private $username;
 
     /**
+     * @ODM\Field(name="name", type="string")
+     */
+    private $name;
+
+    /**
      * @ODM\Field(name="password", type="string")
      */
     private $password;
+
+    /**
+     * @ODM\Field(name="admin", type="bool")
+     */
+    private $admin;
 
     /**
      * @ODM\ReferenceMany(targetDocument = "Submit" , inversedBy="user")
@@ -101,6 +111,42 @@ class User
     {
         $this->submits->add($submit);
         return $this;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getName()
+    {
+        return $this->name;
+    }
+
+    /**
+     * @param mixed $name
+     * @return User
+     */
+    public function setName($name)
+    {
+        $this->name = $name;
+        return $this;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function isAdmin()
+    {
+        return $this->admin;
+    }
+
+    /**
+     * @param mixed $admin
+     */
+    public function setAdmin($admin)
+    {   if($admin == "admin")
+            $this->admin = true;
+        else
+            $this->admin = false;
     }
 
 

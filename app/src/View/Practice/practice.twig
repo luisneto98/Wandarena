@@ -4,13 +4,10 @@
 {% block practice %} active {% endblock %}
 {% block content %}
 
-    <form class="offset-sm-2 col-sm-8 ">
-
-        <div class="form-group ">
-
-            <input type="file" class="custom-file custom-file-label " data-icon="false" accept=".lua">
-
-        </div>
-
+    <form action="{{ path_for('wanda.home.teste') }}" method="POST"
+          enctype="multipart/form-data">
+        Arquivo: <input type="file" name="code"><br>
+        <input type="submit" value="Enviar">
     </form>
+
 {% endblock %}
