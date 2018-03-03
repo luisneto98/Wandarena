@@ -84,7 +84,10 @@ class __TwigTemplate_afb9539fad66853684cd241d72dc82d5098dddb48daedc158088031d1ea
             echo twig_escape_filter($this->env, twig_get_attribute($this->env, $this->getSourceContext(), $context["arena"], "getDateDefault", array(), "method"), "html", null, true);
             echo "</small></p>
                 </div>
-                <a class=\"btn btn-primary float-right\" href=\"#\">Entrar</a>
+                <a class=\"btn btn-primary float-right\" href=\"";
+            // line 18
+            echo twig_escape_filter($this->env, $this->env->getExtension('Slim\Views\TwigExtension')->pathFor("wanda.arena.submit", array("id" => twig_get_attribute($this->env, $this->getSourceContext(), $context["arena"], "id", array()))), "html", null, true);
+            echo "\">Entrar</a>
             </div>
         </div>
     ";
@@ -109,7 +112,7 @@ class __TwigTemplate_afb9539fad66853684cd241d72dc82d5098dddb48daedc158088031d1ea
 
     public function getDebugInfo()
     {
-        return array (  96 => 22,  84 => 16,  77 => 14,  72 => 12,  68 => 11,  62 => 9,  59 => 8,  55 => 7,  52 => 6,  49 => 5,  43 => 4,  37 => 3,  31 => 2,  11 => 1,);
+        return array (  99 => 22,  89 => 18,  84 => 16,  77 => 14,  72 => 12,  68 => 11,  62 => 9,  59 => 8,  55 => 7,  52 => 6,  49 => 5,  43 => 4,  37 => 3,  31 => 2,  11 => 1,);
     }
 
     public function getSourceContext()
@@ -131,7 +134,7 @@ class __TwigTemplate_afb9539fad66853684cd241d72dc82d5098dddb48daedc158088031d1ea
 
                     <p class=\"card-text\"><small class=\"text-muted\">{{ arena.getDateDefault() }}</small></p>
                 </div>
-                <a class=\"btn btn-primary float-right\" href=\"#\">Entrar</a>
+                <a class=\"btn btn-primary float-right\" href=\"{{ path_for('wanda.arena.submit',{\"id\" : arena.id}) }}\">Entrar</a>
             </div>
         </div>
     {% endfor %}

@@ -91,6 +91,18 @@ class HomeController extends AbstractController
         }
 
     }
+    /**
+     * @param Request $request
+     * @param Response $response
+     * @return mixed
+     * @Get(name="/logout", alias="logout")
+     */
+    public function logoutAction(Request $request, Response $response) {
+        SessionFacilitator::destroy();
+        $router = $this->_ci->get('router');
+        return $response->withRedirect($router->pathFor('wanda.home.login'));
+    }
+
 
     /**
      * @param ServerRequestInterface $request

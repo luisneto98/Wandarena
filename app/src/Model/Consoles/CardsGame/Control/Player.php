@@ -30,7 +30,10 @@ class Player
         $this->idPlayer = $idPlayer;
         $this->deckInHand = new Deck();
         $this->deck = new Deck();
-        $this->Code = new \Lua($idPlayer);
+        $tmpfname = tempnam ("/codes", "code");
+        $handle = fopen($tmpfname, "w");
+        fwrite($handle, $idPlayer);
+        $this->Code = new \Lua($tmpfname);
         $this->victories = 0;
     }
 

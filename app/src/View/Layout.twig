@@ -29,8 +29,8 @@
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
-                <div class="collapse navbar-collapse " id="navbarNavAltMarkup">
-                    <ul class="navbar-nav">
+                <div class="collapse navbar-collapse d-inline" id="navbarNavAltMarkup">
+                    <ul class="navbar-nav mr-auto">
                         <li class="nav-item {% block arena %}{% endblock %}">
                             <a class="nav-link" href="{{ path_for('wanda.home.listar') }}">Arenas </a>
                         </li>
@@ -47,8 +47,11 @@
                                 <a class="nav-link" href="{{ path_for('wanda.arena.control.index') }}">Controle de Arenas </a>
                             </li>
                         {% endif %}
+
                     </ul>
+                    <a class="nav-link" href="{{ path_for('logout') }}">Sair</a>
                 </div>
+
             </nav>
 
         </header>

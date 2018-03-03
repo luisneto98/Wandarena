@@ -43,7 +43,7 @@ class Confrontation
      */
     private $order;
     /**
-     * @ODM\Field(name="logJson"; type="string")
+     * @ODM\Field(name="logJson", type="string")
      */
     private $logJson;
 
@@ -51,12 +51,18 @@ class Confrontation
     public function start($gameClass)
     {
         $gameConsole = new GameConsole();
-        $this->logJson = $gameConsole->startGame($this->player1,$this->player2,$gameClass);
-        $this->winner = $this->logJson["winner"];
-        $this->logJson = json_encode($this->logJson);
-        if($this->winner == 0){
+        $this->logJson = $gameConsole->startGame($this->player1->getCode(),$this->player2->getCode(),$gameClass);
+
+
+        if($this->logJson["winner"] == 1){
+            $this->winner = $this->player1;
+        }elseif($this->logJson["winner"] == 2){
+            $this->winner = $this->player2;
+        }else{
+            var_dump("chegou");
             return $this->start($gameClass);
         }
+        $this->logJson = json_encode($this->logJson);
         return json_decode($this->logJson);
     }
 
@@ -123,7 +129,7 @@ class Confrontation
      */
     public function getLogJson()
     {
-        return $this->logJson;
+        return json_decode($this->logJson);
     }
 
     /**

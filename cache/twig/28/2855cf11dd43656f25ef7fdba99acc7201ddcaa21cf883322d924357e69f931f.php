@@ -73,8 +73,8 @@ class __TwigTemplate_c863a9da9ec1fc0fd54f1fc69a6317b56368ec145f08e27a9f588caf694
                 <button class=\"navbar-toggler\" type=\"button\" data-toggle=\"collapse\" data-target=\"#navbarNavAltMarkup\" aria-controls=\"navbarNavAltMarkup\" aria-expanded=\"false\" aria-label=\"Toggle navigation\">
                     <span class=\"navbar-toggler-icon\"></span>
                 </button>
-                <div class=\"collapse navbar-collapse \" id=\"navbarNavAltMarkup\">
-                    <ul class=\"navbar-nav\">
+                <div class=\"collapse navbar-collapse d-inline\" id=\"navbarNavAltMarkup\">
+                    <ul class=\"navbar-nav mr-auto\">
                         <li class=\"nav-item ";
         // line 34
         $this->displayBlock('arena', $context, $blocks);
@@ -122,21 +122,27 @@ class __TwigTemplate_c863a9da9ec1fc0fd54f1fc69a6317b56368ec145f08e27a9f588caf694
                         ";
         }
         // line 50
-        echo "                    </ul>
+        echo "
+                    </ul>
+                    <a class=\"nav-link\" href=\"";
+        // line 52
+        echo twig_escape_filter($this->env, $this->env->getExtension('Slim\Views\TwigExtension')->pathFor("logout"), "html", null, true);
+        echo "\">Sair</a>
                 </div>
+
             </nav>
 
         </header>
        <main>
            <h3 class=\"mb-5 mt-3 ml-5\"> ";
-        // line 56
+        // line 59
         $this->displayBlock('titlePage', $context, $blocks);
         echo "</h3>
            <section class=\"container-fluid mb-5\" >
                ";
-        // line 58
+        // line 61
         $this->displayBlock('content', $context, $blocks);
-        // line 59
+        // line 62
         echo "           </section>
        </main>
         <footer class=\"mt-auto bg-dark text-light border-top footer border-white position-fixed\" style=\"bottom: 0px; width: 100%\">
@@ -184,12 +190,12 @@ class __TwigTemplate_c863a9da9ec1fc0fd54f1fc69a6317b56368ec145f08e27a9f588caf694
     {
     }
 
-    // line 56
+    // line 59
     public function block_titlePage($context, array $blocks = array())
     {
     }
 
-    // line 58
+    // line 61
     public function block_content($context, array $blocks = array())
     {
         echo " ";
@@ -207,7 +213,7 @@ class __TwigTemplate_c863a9da9ec1fc0fd54f1fc69a6317b56368ec145f08e27a9f588caf694
 
     public function getDebugInfo()
     {
-        return array (  193 => 58,  188 => 56,  183 => 46,  178 => 43,  173 => 38,  168 => 34,  163 => 19,  158 => 18,  140 => 59,  138 => 58,  133 => 56,  125 => 50,  119 => 47,  115 => 46,  110 => 44,  105 => 43,  102 => 42,  96 => 39,  91 => 38,  89 => 37,  84 => 35,  80 => 34,  71 => 28,  61 => 20,  59 => 19,  55 => 18,  48 => 14,  44 => 13,  40 => 12,  27 => 1,);
+        return array (  199 => 61,  194 => 59,  189 => 46,  184 => 43,  179 => 38,  174 => 34,  169 => 19,  164 => 18,  146 => 62,  144 => 61,  139 => 59,  129 => 52,  125 => 50,  119 => 47,  115 => 46,  110 => 44,  105 => 43,  102 => 42,  96 => 39,  91 => 38,  89 => 37,  84 => 35,  80 => 34,  71 => 28,  61 => 20,  59 => 19,  55 => 18,  48 => 14,  44 => 13,  40 => 12,  27 => 1,);
     }
 
     public function getSourceContext()
@@ -243,8 +249,8 @@ class __TwigTemplate_c863a9da9ec1fc0fd54f1fc69a6317b56368ec145f08e27a9f588caf694
                 <button class=\"navbar-toggler\" type=\"button\" data-toggle=\"collapse\" data-target=\"#navbarNavAltMarkup\" aria-controls=\"navbarNavAltMarkup\" aria-expanded=\"false\" aria-label=\"Toggle navigation\">
                     <span class=\"navbar-toggler-icon\"></span>
                 </button>
-                <div class=\"collapse navbar-collapse \" id=\"navbarNavAltMarkup\">
-                    <ul class=\"navbar-nav\">
+                <div class=\"collapse navbar-collapse d-inline\" id=\"navbarNavAltMarkup\">
+                    <ul class=\"navbar-nav mr-auto\">
                         <li class=\"nav-item {% block arena %}{% endblock %}\">
                             <a class=\"nav-link\" href=\"{{ path_for('wanda.home.listar') }}\">Arenas </a>
                         </li>
@@ -261,8 +267,11 @@ class __TwigTemplate_c863a9da9ec1fc0fd54f1fc69a6317b56368ec145f08e27a9f588caf694
                                 <a class=\"nav-link\" href=\"{{ path_for('wanda.arena.control.index') }}\">Controle de Arenas </a>
                             </li>
                         {% endif %}
+
                     </ul>
+                    <a class=\"nav-link\" href=\"{{ path_for('logout') }}\">Sair</a>
                 </div>
+
             </nav>
 
         </header>

@@ -7,9 +7,12 @@
  */
 
 namespace App\Controller;
+use App\Facilitator\App\SessionFacilitator;
 use App\Mapper\Arena;
 use App\Mapper\Repository\ArenaRepository;
 use App\Mapper\Repository\UserRepository;
+use App\Mapper\Submit;
+use App\Mapper\User;
 use App\Model\Consoles\CardsGame\Game\JoKenPo\Game;
 use App\Model\Consoles\CardsGame\GameConsole;
 use Interop\Container\ContainerInterface;
@@ -108,6 +111,66 @@ class ArenaController extends AbstractController
 
         $router = $this->_ci->get('router');
         return $this->view->render($response,"View/Arena/registerArena.twig",["admin" => true,"arena"=>$arena[0]]);
+
+    }
+
+    /**
+     * @param Request $request
+     * @param Response $response
+     * @return mixed
+     * @Get(name="/envio/{id}", alias="wanda.arena.submit", middleware={"App\Middleware\SessionMiddleware"})
+     */
+    public function submitAction(Request $request, Response $response) {
+        $id = $request->getAttribute("id");
+        $arena = $this->_dm->getRepository(Arena::class)->getArenaWithId($id);
+        if($arena[0]->getDateUnix() <= time()){
+            $arena[0]->start();
+            $this->_dm->persist($arena[0]);
+            $this->_dm->flush();
+            $game = $arena[0]->getConfrontations()[0]->getLogJson();
+            $cardsimage = json_decode(json_encode(Game::getImagesCards()));
+            $gameimages = Game::getImagesPerson();
+            $imagebg = Game::getImageBG();
+            return $this->view->render($response,"View/Arena/cardsGamePlayer.twig",["admin" => true,"cardsimage"=>$cardsimage,
+                "gameimages"=>$gameimages,"imagebg"=>$imagebg,"game"=>$game,"matchs"=>Game::getMatchs(),"rounds"=>Game::getRounds(),"qtdCards"=>Game::COUNTCARDS]);
+        }
+        return $this->view->render($response,"View/User/submitCode.twig",["admin" => true,"arena"=>$arena[0]]);
+
+    }
+
+    /**
+     * @param Request $request
+     * @param Response $response
+     * @return mixed
+     * @Post(name="/envio/salvar/{id}", alias="wanda.arena.submit.save", middleware={"App\Middleware\SessionMiddleware"})
+     */
+    public function saveSubmitAction(Request $request, Response $response) {
+        $id = $request->getAttribute("id");
+        $arena = $this->_dm->getRepository(Arena::class)->getArenaWithId($id);
+
+
+        $sessionUser = SessionFacilitator::getAttributeSession();
+        $sessionUserId = $sessionUser["id"];
+
+        $user = $this->_dm->getRepository(User::class)->find($sessionUserId);
+
+        $submit = new Submit();
+        $submit->setUser($user);
+        $submit->setNickname($request->getParam("nickname"));
+        $file = $request->getUploadedFiles();
+        $code = $file["code"]->file;
+        $submit->setCode(file_get_contents($code));
+
+        $user->addSubmit($submit);
+
+        $arena[0]->addSubmit($submit);
+
+        $this->_dm->persist($submit);
+        $this->_dm->persist($arena[0]);
+        $this->_dm->flush();
+
+        $router = $this->_ci->get('router');
+        return $response->withRedirect($router->pathFor('wanda.home.index'));
 
     }
 

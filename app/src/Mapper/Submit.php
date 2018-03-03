@@ -21,13 +21,13 @@ class Submit
 
 
     /**
-     * @ReferenceOne(targetDocument = "User" , mappedBy="submits")
+     * @ODM\ReferenceOne(targetDocument = "User" , mappedBy="submits")
      */
     private $user;
 
 
     /**
-     * @ODM\Field(name="code", type="bin")
+     * @ODM\Field(name="code", type="string")
      */
     private $code;
 

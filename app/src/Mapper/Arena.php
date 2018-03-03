@@ -67,20 +67,22 @@ class Arena
     public function __construct()
     {
         $this->submits = new ArrayCollection();
-        $this->confrontations = new ArrayCollection();
+        $this->confrontations = array();
     }
 
     public function start(){
-        if($this->getDateUnix($this->date) >= time()){
+        if($this->getDateUnix() <= time()){
             if(!$this->isReady){
+
                 $auxSubmits = $this->submits;
                 while(count($auxSubmits) > 1){
-                    $this->createConfrontations($auxSubmits);
+                    $auxSubmits = $this->createConfrontations($auxSubmits);
                 }
-                $this->winner = $auxSubmits;
+                $this->winner = $auxSubmits[0];
 
-                return true;
+
             }
+            return true;
         }
             return false;
 
@@ -94,7 +96,7 @@ class Arena
             for($i = 0 ; $i < count($submits) ; $i += 2){
                 $confrontation = new Confrontation();
                 $confrontation->setPlayer1($submits[$i])->setPlayer2($submits[$i]);
-                $confrontation->start($this->game);
+                $confrontation->start($this->getGame());
                 $confrontation->setKey($key);
                 $confrontation->setOrder($i/2 + 1);
                 array_push($auxConfrontatios,$confrontation);
@@ -104,15 +106,15 @@ class Arena
             for($i = 0 ; $i < count($submits)-1 ; $i += 2){
                 $confrontation = new Confrontation();
                 $confrontation->setPlayer1($submits[$i])->setPlayer2($submits[$i]);
-                $confrontation->start($this->game);
+                $confrontation->start($this->getGame());
                 $confrontation->setKey($key);
                 $confrontation->setOrder($i/2 + 1);
                 array_push($auxConfrontatios,$confrontation);
                 array_push($auxSubmits,$confrontation->getWinner());
             }
             $confrontation = new Confrontation();
-            $confrontation->setPlayer1($submits[count($submits)-1])->setPlayer2($this->game::Bot);
-            $confrontation->start($this->game);
+            $confrontation->setPlayer1($submits[count($submits)-1])->setPlayer2($this->getGame()::Bot);
+            $confrontation->start($this->getGame());
             $confrontation->setKey($key);
             $confrontation->setOrder($i/2 + 1);
             array_push($auxConfrontatios,$confrontation);
@@ -123,8 +125,9 @@ class Arena
         return $auxSubmits;
     }
 
-    private function getDateUnix($date){
-        $dateArray = getdate($date);
+    public function getDateUnix(){
+
+        $dateArray = getdate($this->date);
         return mktime($dateArray["hours"],$dateArray["minutes"],$dateArray["seconds"],
             $dateArray["month"],$dateArray["mday"],$dateArray["year"]);
     }
@@ -180,7 +183,7 @@ class Arena
      * @param mixed $submits
      * @return Arena
      */
-    public function addSubmits($submits)
+    public function addSubmit($submits)
     {
         $this->submits->add($submits);
         return $this;
@@ -291,6 +294,14 @@ class Arena
     }
 
     /**
+    * @return mixed
+    */
+    public function getGame()
+    {
+        return ($this->gameInfo[1]);
+    }
+
+    /**
      * @return mixed
      */
     public function getDateDefault(){
@@ -298,7 +309,7 @@ class Arena
     }
 
     public function getBGArena(){
-        return ($this->gameInfo[1])::getImageBG();
+        return $this->getGame()::getImageBG();
     }
 
 

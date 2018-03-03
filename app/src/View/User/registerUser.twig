@@ -18,7 +18,7 @@
             <label for="name">Nome:</label>
             <input type="text" class="form-control" id="name" name="name" placeholder="Nome" {% if user != NULL %} value="{{ user.name }}"{% endif %}>
         </div>
-        <label class="d-inline">Tipo de Usuário:</label>
+        <label class="d-inline-block">Tipo de Usuário:</label>
         <div class="form-group">
 
             <div class="form-check form-check-inline">
@@ -26,7 +26,7 @@
                 <label class="form-check-label" for="option1">Administrador</label>
             </div>
             <div class="form-check form-check-inline">
-                <input class="form-check-input" type="radio" name="typeUser" id="option2" value="user">
+                <input class="form-check-input" type="radio" name="typeUser" id="option2" value="user" checked>
                 <label class="form-check-label" for="option2">Aluno</label>
             </div>
         </div>

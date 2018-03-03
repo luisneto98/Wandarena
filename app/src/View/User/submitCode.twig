@@ -1,0 +1,19 @@
+{% extends "View/Layout.twig" %}
+{% block title %} Envio {% endblock %}
+{% block titlePage %}Envio{% endblock %}
+{% block arenas %} active {% endblock %}
+{% block content %}
+    <form class = "offset-sm-2 col-sm-8 rounded p-4 border" method="post" action="{{ path_for('wanda.arena.submit.save',{"id" : arena.id}) }}" enctype="multipart/form-data">
+
+        <div class="form-group">
+            <label for="nickname">Apelido:</label>
+            <input type="text" class="form-control" id="nickname" name="nickname" placeholder="Apelido">
+        </div>
+        Arquivo:
+        <input type="file" name="code"><br>
+        <div class="form-group row offset-8 col-4">
+            <button class="form-control btn btn-primary" id="submit" type="submit">Enviar</button>
+        </div>
+    </form>
+
+{% endblock %}

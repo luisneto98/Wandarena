@@ -92,7 +92,7 @@ class __TwigTemplate_a3afa5da159526c43f7068e7a692309fb02445f3d2a4cce0c93e42efe9b
         }
         echo ">
         </div>
-        <label class=\"d-inline\">Tipo de Usuário:</label>
+        <label class=\"d-inline-block\">Tipo de Usuário:</label>
         <div class=\"form-group\">
 
             <div class=\"form-check form-check-inline\">
@@ -100,7 +100,7 @@ class __TwigTemplate_a3afa5da159526c43f7068e7a692309fb02445f3d2a4cce0c93e42efe9b
                 <label class=\"form-check-label\" for=\"option1\">Administrador</label>
             </div>
             <div class=\"form-check form-check-inline\">
-                <input class=\"form-check-input\" type=\"radio\" name=\"typeUser\" id=\"option2\" value=\"user\">
+                <input class=\"form-check-input\" type=\"radio\" name=\"typeUser\" id=\"option2\" value=\"user\" checked>
                 <label class=\"form-check-label\" for=\"option2\">Aluno</label>
             </div>
         </div>
@@ -164,7 +164,7 @@ class __TwigTemplate_a3afa5da159526c43f7068e7a692309fb02445f3d2a4cce0c93e42efe9b
             <label for=\"name\">Nome:</label>
             <input type=\"text\" class=\"form-control\" id=\"name\" name=\"name\" placeholder=\"Nome\" {% if user != NULL %} value=\"{{ user.name }}\"{% endif %}>
         </div>
-        <label class=\"d-inline\">Tipo de Usuário:</label>
+        <label class=\"d-inline-block\">Tipo de Usuário:</label>
         <div class=\"form-group\">
 
             <div class=\"form-check form-check-inline\">
@@ -172,7 +172,7 @@ class __TwigTemplate_a3afa5da159526c43f7068e7a692309fb02445f3d2a4cce0c93e42efe9b
                 <label class=\"form-check-label\" for=\"option1\">Administrador</label>
             </div>
             <div class=\"form-check form-check-inline\">
-                <input class=\"form-check-input\" type=\"radio\" name=\"typeUser\" id=\"option2\" value=\"user\">
+                <input class=\"form-check-input\" type=\"radio\" name=\"typeUser\" id=\"option2\" value=\"user\" checked>
                 <label class=\"form-check-label\" for=\"option2\">Aluno</label>
             </div>
         </div>
