@@ -12,7 +12,7 @@ use App\Model\Consoles\CardsGame\GameConsole;
 use Doctrine\ODM\MongoDB\Mapping\Annotations as ODM;
 
 /**
- * @ODM\Document(collection="Confrontation", repositoryClass="App\Mapper\Repository\ConfrontationRepository")
+ * @ODM\EmbeddedDocument
  */
 class Confrontation
 {
@@ -22,15 +22,15 @@ class Confrontation
     private $id;
 
     /**
-     * @ODM\Field(name="player1", type="string")
+     * @ODM\ReferenceOne(targetDocument="Submit")
      */
     private $player1;
     /**
-     * @ODM\Field(name="player2", type="string")
+     * @ODM\ReferenceOne(targetDocument="Submit")
      */
     private $player2;
     /**
-     * @ODM\Field(name="winner", type="int")
+     * @ODM\ReferenceOne(targetDocument="Submit")
      */
     private $winner;
 
@@ -51,7 +51,10 @@ class Confrontation
     public function start($gameClass)
     {
         $gameConsole = new GameConsole();
-        $this->logJson = $gameConsole->startGame($this->player1->getCode(),$this->player2->getCode(),$gameClass);
+        if($this->player2 == NULL)
+            $this->logJson = $gameConsole->startGame($this->player1->getCode(),$gameClass::getBot(),$gameClass);
+        else
+            $this->logJson = $gameConsole->startGame($this->player1->getCode(),$this->player2->getCode(),$gameClass);
 
 
         if($this->logJson["winner"] == 1){
@@ -59,7 +62,6 @@ class Confrontation
         }elseif($this->logJson["winner"] == 2){
             $this->winner = $this->player2;
         }else{
-            var_dump("chegou");
             return $this->start($gameClass);
         }
         $this->logJson = json_encode($this->logJson);
@@ -115,13 +117,7 @@ class Confrontation
      */
     public function getWinner()
     {
-        if($this->winner == 1){
-            return $this->player1;
-        }elseif ($this->winner == 2){
-            return $this->player2;
-        }else{
-            return 0;
-        }
+        return $this->winner;
     }
 
     /**

@@ -123,19 +123,31 @@ class ArenaController extends AbstractController
     public function submitAction(Request $request, Response $response) {
         $id = $request->getAttribute("id");
         $arena = $this->_dm->getRepository(Arena::class)->getArenaWithId($id);
-        if($arena[0]->getDateUnix() <= time()){
-            $arena[0]->start();
-            $this->_dm->persist($arena[0]);
-            $this->_dm->flush();
-            $game = $arena[0]->getConfrontations()[0]->getLogJson();
-            $cardsimage = json_decode(json_encode(Game::getImagesCards()));
-            $gameimages = Game::getImagesPerson();
-            $imagebg = Game::getImageBG();
-            return $this->view->render($response,"View/Arena/cardsGamePlayer.twig",["admin" => true,"cardsimage"=>$cardsimage,
-                "gameimages"=>$gameimages,"imagebg"=>$imagebg,"game"=>$game,"matchs"=>Game::getMatchs(),"rounds"=>Game::getRounds(),"qtdCards"=>Game::COUNTCARDS]);
+        if($arena->getDateUnix() <= time()){
+            if(!$arena->isReady()){
+                $arena->start();
+                $this->_dm->flush();
+            }
+            return $this->view->render($response,"View/Arena/listConfrontations.twig",["admin" => true,"arena"=>$arena]);
         }
-        return $this->view->render($response,"View/User/submitCode.twig",["admin" => true,"arena"=>$arena[0]]);
+        return $this->view->render($response,"View/User/submitCode.twig",["admin" => true,"arena"=>$arena]);
 
+    }
+
+    /**
+     * @param Request $request
+     * @param Response $response
+     * @return mixed
+     * @Get(name="/tocador/{idArena}/{idConfrontation}", alias="wanda.arena.play", middleware={"App\Middleware\SessionMiddleware"})
+     */
+    public function playConfrontationAction(Request $request, Response $response) {
+        $idArena = $request->getAttribute("idArena");
+        $idConfrontation = $request->getAttribute("idConfrontation");
+        $arena = $this->_dm->getRepository(Arena::class)->getArenaWithId($idArena);
+        $confrontation = $arena->getConfrontationById($idConfrontation);
+        $game = $confrontation->getlogJson();
+        return $this->view->render($response,"View/Arena/cardsGamePlayer.twig",["admin" => true
+            ,"gameinfo"=>$arena->getGame()::getGameInfo(),"game"=>$game,"confrontation"=>$confrontation]);
     }
 
     /**
@@ -163,10 +175,9 @@ class ArenaController extends AbstractController
 
         $user->addSubmit($submit);
 
-        $arena[0]->addSubmit($submit);
+        $arena->addSubmit($submit);
 
         $this->_dm->persist($submit);
-        $this->_dm->persist($arena[0]);
         $this->_dm->flush();
 
         $router = $this->_ci->get('router');

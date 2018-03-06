@@ -100,6 +100,7 @@ class GameConsole
         }else{
             $this->logJson["winner"] = 0;
         }
+
         return $this->logJson;
     }
 }

@@ -10,12 +10,20 @@ class Game
     const ROUNDS = 3;
     const COUNTCARDS = 3;
     const CARDS = array("pedra","papel","tesoura");
-    const BOT = __DIR__."/Bot.lua";
+    const BOT ="
+    function round1(carta1,carta2,carta3)
+        return carta2;
+    end
+    function round2(carta1,carta2,ctOponente1,ctOponente2)
+        return carta2;
+    end";
     const IMAGESCARDS = array(array("name"=>"pedra","image"=>"/Images/Jo-Ken-Po/Textures/cardpedra.png"),array("name"=>"papel","image"=>"/Images/Jo-Ken-Po/Textures/cardpapel.png"),
         array("name"=>"tesoura","image"=>"/Images/Jo-Ken-Po/Textures/cardtesoura.png"));
     const IMAGEBG = "/Images/Jo-Ken-Po/Textures/bg.png";
     const IMAGESPERSON = array("enemy"=>"/Images/Jo-Ken-Po/Player1/enemy.png",
         "face"=>"/Images/Jo-Ken-Po/Player1/face.png");
+    const GAMEINFO = array("name"=>self::NAME,"matchs"=>self::MATCHS,"rounds"=>self::ROUNDS,"countcards"=>self::COUNTCARDS,"cardsimages"=>self::IMAGESCARDS
+        ,"imagebg"=>self::IMAGEBG,"imagesperson"=>self::IMAGESPERSON);
 
 
 
@@ -71,6 +79,13 @@ class Game
      */
     static function getImagesPerson(){
         return self::IMAGESPERSON;
+    }
+
+    /**
+     * @return array
+     */
+    static function getGameInfo(){
+        return self::GAMEINFO;
     }
 
 

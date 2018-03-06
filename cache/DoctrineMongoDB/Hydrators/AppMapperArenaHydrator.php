@@ -114,16 +114,16 @@ class AppMapperArenaHydrator implements HydratorInterface
         }
 
         /** @Field(type="bool") */
-        if (isset($data['isReady']) || (! empty($this->class->fieldMappings['isReady']['nullable']) && array_key_exists('isReady', $data))) {
-            $value = $data['isReady'];
+        if (isset($data['ready']) || (! empty($this->class->fieldMappings['ready']['nullable']) && array_key_exists('ready', $data))) {
+            $value = $data['ready'];
             if ($value !== null) {
-                $typeIdentifier = $this->class->fieldMappings['isReady']['type'];
+                $typeIdentifier = $this->class->fieldMappings['ready']['type'];
                 $return = (bool) $value;
             } else {
                 $return = null;
             }
-            $this->class->reflFields['isReady']->setValue($document, $return);
-            $hydratedData['isReady'] = $return;
+            $this->class->reflFields['ready']->setValue($document, $return);
+            $hydratedData['ready'] = $return;
         }
 
         /** @ReferenceOne */

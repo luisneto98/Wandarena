@@ -25,16 +25,22 @@ class Player
      * Player constructor.
      * @param $idPlayer
      */
-    public function __construct($idPlayer)
+    public function __construct($code)
     {
-        $this->idPlayer = $idPlayer;
         $this->deckInHand = new Deck();
         $this->deck = new Deck();
-        $tmpfname = tempnam ("/codes", "code");
-        $handle = fopen($tmpfname, "w");
-        fwrite($handle, $idPlayer);
-        $this->Code = new \Lua($tmpfname);
+        $this->idPlayer = tempnam (sys_get_temp_dir(), "code");
+        $handle = fopen($this->idPlayer, "w");
+        fwrite($handle, $code);
+        fclose($handle);
+        $this->Code = new \Lua($this->idPlayer);
         $this->victories = 0;
+    }
+
+
+    public function __destruct()
+    {
+        unlink($this->idPlayer);
     }
 
     /**

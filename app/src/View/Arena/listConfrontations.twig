@@ -1,0 +1,45 @@
+{% extends "View/Layout.twig" %}
+{% block title %} Lista de Confrontos {% endblock %}
+{% block titlePage %} Lista de Confrontos {% endblock %}
+{% block arena %} active {% endblock %}
+{% block content %}
+
+    <div class="offset-3 col-6">
+
+        {% for i in arena.countKeys()..1 %}
+            <div class="card text-center">
+                <div class="card-header bg-secondary rounded text-white">
+                    Chave {{ i }}
+                </div>
+                <div class="card-body">
+
+                        <table class="table table-hover border">
+                            <thead class="bg-info">
+                            <tr>
+                                <th scope="col">Ordem</th>
+                                <th scope="col">Adversários</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            {% for confrontation in arena.confrontations %}
+                                {% if confrontation.key == i %}
+
+                                        <tr>
+                                            <th scope="row">{{ confrontation.order }}</th>
+                                            <td><a class="btn btn-outline-primary" href="{{ path_for('wanda.arena.play',{"idArena":arena.id,"idConfrontation": confrontation.id}) }}">{{ confrontation.player1.nickname }} x
+                                                {% if confrontation.player2 != NULL %}{{ confrontation.player2.nickname }} {% else %} BOT {% endif %}</a></td>
+                                        </tr>
+
+
+                                {% endif %}
+                            {% endfor %}
+                            </tbody>
+                        </table>
+
+                </div>
+            </div>
+
+        {% endfor %}
+    </div>
+
+{% endblock %}

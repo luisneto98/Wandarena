@@ -385,6 +385,7 @@ class UnitOfWork implements PropertyChangedListener
      */
     public function commit($document = null, array $options = array())
     {
+
         // Raise preFlush
         if ($this->evm->hasListeners(Events::preFlush)) {
             $this->evm->dispatchEvent(Events::preFlush, new Event\PreFlushEventArgs($this->dm));
@@ -468,6 +469,7 @@ class UnitOfWork implements PropertyChangedListener
         } finally {
             $this->commitsInProgress--;
         }
+
     }
 
     /**
