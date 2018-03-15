@@ -51,18 +51,46 @@ class __TwigTemplate_786839fd6ee861aa25aff487c348e10deeddacd3e801c10cd1c53683c12
         // line 6
         echo "
     <div class=\"offset-3 col-6\">
-
         ";
+        // line 8
+        $context["countStages"] = twig_get_attribute($this->env, $this->getSourceContext(), ($context["arena"] ?? null), "countStages", array(), "method");
         // line 9
+        echo "        ";
         $context['_parent'] = $context;
-        $context['_seq'] = twig_ensure_traversable(range(twig_get_attribute($this->env, $this->getSourceContext(), ($context["arena"] ?? null), "countKeys", array(), "method"), 1));
+        $context['_seq'] = twig_ensure_traversable(range(1, ($context["countStages"] ?? null)));
         foreach ($context['_seq'] as $context["_key"] => $context["i"]) {
             // line 10
             echo "            <div class=\"card text-center\">
                 <div class=\"card-header bg-secondary rounded text-white\">
-                    Chave ";
+                    ";
             // line 12
-            echo twig_escape_filter($this->env, $context["i"], "html", null, true);
+            if (((($context["countStages"] ?? null) - $context["i"]) == 3)) {
+                // line 13
+                echo "                        Oitavas de Final
+                    ";
+            } elseif (((            // line 14
+($context["countStages"] ?? null) - $context["i"]) == 2)) {
+                // line 15
+                echo "                        Quartas de Final
+                    ";
+            } elseif (((            // line 16
+($context["countStages"] ?? null) - $context["i"]) == 1)) {
+                // line 17
+                echo "                        Semi Final
+                    ";
+            } elseif (((            // line 18
+($context["countStages"] ?? null) - $context["i"]) == 0)) {
+                // line 19
+                echo "                        Final
+                    ";
+            } else {
+                // line 21
+                echo "                        Etapa ";
+                echo twig_escape_filter($this->env, $context["i"], "html", null, true);
+                echo "
+                    ";
+            }
+            // line 23
             echo "
                 </div>
                 <div class=\"card-body\">
@@ -76,28 +104,28 @@ class __TwigTemplate_786839fd6ee861aa25aff487c348e10deeddacd3e801c10cd1c53683c12
                             </thead>
                             <tbody>
                             ";
-            // line 24
+            // line 35
             $context['_parent'] = $context;
             $context['_seq'] = twig_ensure_traversable(twig_get_attribute($this->env, $this->getSourceContext(), ($context["arena"] ?? null), "confrontations", array()));
             foreach ($context['_seq'] as $context["_key"] => $context["confrontation"]) {
-                // line 25
+                // line 36
                 echo "                                ";
-                if ((twig_get_attribute($this->env, $this->getSourceContext(), $context["confrontation"], "key", array()) == $context["i"])) {
-                    // line 26
+                if ((twig_get_attribute($this->env, $this->getSourceContext(), $context["confrontation"], "stage", array()) == $context["i"])) {
+                    // line 37
                     echo "
                                         <tr>
                                             <th scope=\"row\">";
-                    // line 28
+                    // line 39
                     echo twig_escape_filter($this->env, twig_get_attribute($this->env, $this->getSourceContext(), $context["confrontation"], "order", array()), "html", null, true);
                     echo "</th>
                                             <td><a class=\"btn btn-outline-primary\" href=\"";
-                    // line 29
+                    // line 40
                     echo twig_escape_filter($this->env, $this->env->getExtension('Slim\Views\TwigExtension')->pathFor("wanda.arena.play", array("idArena" => twig_get_attribute($this->env, $this->getSourceContext(), ($context["arena"] ?? null), "id", array()), "idConfrontation" => twig_get_attribute($this->env, $this->getSourceContext(), $context["confrontation"], "id", array()))), "html", null, true);
                     echo "\">";
                     echo twig_escape_filter($this->env, twig_get_attribute($this->env, $this->getSourceContext(), twig_get_attribute($this->env, $this->getSourceContext(), $context["confrontation"], "player1", array()), "nickname", array()), "html", null, true);
                     echo " x
                                                 ";
-                    // line 30
+                    // line 41
                     if ((twig_get_attribute($this->env, $this->getSourceContext(), $context["confrontation"], "player2", array()) != null)) {
                         echo twig_escape_filter($this->env, twig_get_attribute($this->env, $this->getSourceContext(), twig_get_attribute($this->env, $this->getSourceContext(), $context["confrontation"], "player2", array()), "nickname", array()), "html", null, true);
                         echo " ";
@@ -110,13 +138,13 @@ class __TwigTemplate_786839fd6ee861aa25aff487c348e10deeddacd3e801c10cd1c53683c12
 
                                 ";
                 }
-                // line 35
+                // line 46
                 echo "                            ";
             }
             $_parent = $context['_parent'];
             unset($context['_seq'], $context['_iterated'], $context['_key'], $context['confrontation'], $context['_parent'], $context['loop']);
             $context = array_intersect_key($context, $_parent) + $_parent;
-            // line 36
+            // line 47
             echo "                            </tbody>
                         </table>
 
@@ -128,7 +156,7 @@ class __TwigTemplate_786839fd6ee861aa25aff487c348e10deeddacd3e801c10cd1c53683c12
         $_parent = $context['_parent'];
         unset($context['_seq'], $context['_iterated'], $context['_key'], $context['i'], $context['_parent'], $context['loop']);
         $context = array_intersect_key($context, $_parent) + $_parent;
-        // line 43
+        // line 54
         echo "    </div>
 
 ";
@@ -146,7 +174,7 @@ class __TwigTemplate_786839fd6ee861aa25aff487c348e10deeddacd3e801c10cd1c53683c12
 
     public function getDebugInfo()
     {
-        return array (  132 => 43,  120 => 36,  114 => 35,  101 => 30,  95 => 29,  91 => 28,  87 => 26,  84 => 25,  80 => 24,  65 => 12,  61 => 10,  57 => 9,  52 => 6,  49 => 5,  43 => 4,  37 => 3,  31 => 2,  11 => 1,);
+        return array (  160 => 54,  148 => 47,  142 => 46,  129 => 41,  123 => 40,  119 => 39,  115 => 37,  112 => 36,  108 => 35,  94 => 23,  88 => 21,  84 => 19,  82 => 18,  79 => 17,  77 => 16,  74 => 15,  72 => 14,  69 => 13,  67 => 12,  63 => 10,  58 => 9,  56 => 8,  52 => 6,  49 => 5,  43 => 4,  37 => 3,  31 => 2,  11 => 1,);
     }
 
     public function getSourceContext()
@@ -158,11 +186,22 @@ class __TwigTemplate_786839fd6ee861aa25aff487c348e10deeddacd3e801c10cd1c53683c12
 {% block content %}
 
     <div class=\"offset-3 col-6\">
-
-        {% for i in arena.countKeys()..1 %}
+        {% set countStages = arena.countStages() %}
+        {% for i in 1..countStages %}
             <div class=\"card text-center\">
                 <div class=\"card-header bg-secondary rounded text-white\">
-                    Chave {{ i }}
+                    {% if ((countStages - i ) == 3) %}
+                        Oitavas de Final
+                    {% elseif  ((countStages - i) == 2)%}
+                        Quartas de Final
+                    {% elseif  ((countStages - i) == 1)%}
+                        Semi Final
+                    {% elseif  ((countStages - i) == 0)%}
+                        Final
+                    {% else %}
+                        Etapa {{ i }}
+                    {% endif %}
+
                 </div>
                 <div class=\"card-body\">
 
@@ -175,7 +214,7 @@ class __TwigTemplate_786839fd6ee861aa25aff487c348e10deeddacd3e801c10cd1c53683c12
                             </thead>
                             <tbody>
                             {% for confrontation in arena.confrontations %}
-                                {% if confrontation.key == i %}
+                                {% if confrontation.stage == i %}
 
                                         <tr>
                                             <th scope=\"row\">{{ confrontation.order }}</th>

@@ -18,7 +18,7 @@ class ArenaRepository extends DocumentRepository
 
     /**
      * @param $id
-     * @return array
+     * @return mixed
      */
     public function getArenaWithId($id) {
         return $this->dm->getRepository(Arena::class)->findOneBy(['id' => $id]);

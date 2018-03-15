@@ -12,7 +12,7 @@ use App\Model\Consoles\CardsGame\GameConsole;
 use Doctrine\ODM\MongoDB\Mapping\Annotations as ODM;
 
 /**
- * @ODM\EmbeddedDocument
+ * @ODM\Document(collection="Confrontation", repositoryClass="App\Mapper\Repository\ConfrontationRepository")
  */
 class Confrontation
 {
@@ -37,7 +37,7 @@ class Confrontation
     /**
      * @ODM\Field(name="key", type="int")
      */
-    private $key;
+    private $stage;
     /**
      * @ODM\Field(name="order", type="int")
      */
@@ -131,18 +131,18 @@ class Confrontation
     /**
      * @return mixed
      */
-    public function getKey()
+    public function getStage()
     {
-        return $this->key;
+        return $this->stage;
     }
 
     /**
      * @param mixed $key
      * @return $this
      */
-    public function setKey($key)
+    public function setStage($key)
     {
-        $this->key = $key;
+        $this->stage = $key;
         return $this;
     }
 

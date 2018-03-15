@@ -16,6 +16,7 @@ use Psr\Http\Message\ServerRequestInterface;
 use Slim\Http\Request;
 use Slim\Http\Response;
 use SlimAuth\SlimAuthFacade;
+use App\Validator\LoginFieldsValidator;
 
 /**
  * Class HomeController
@@ -51,7 +52,14 @@ class HomeController extends AbstractController
      * @Get(name="/login", alias="wanda.home.login")
      */
     public function loginAction(Request $request, Response $response) {
-        return $this->view->render($response,"View/login.twig",["admin" => true]);
+        $flash = $this->_ci->get('flash');
+
+        $message = $flash->getMessage('return');
+        $error = false;
+
+        if($message!=NULL) $error = true;
+
+        return $this->view->render($response,"View/login.twig",['error'=>$error,'errMessage'=>$message[0]]);
     }
 
     /**
@@ -62,7 +70,21 @@ class HomeController extends AbstractController
      */
     public function authenticateAction(Request $request, Response $response) {
 
+        $inputValid = new LoginFieldsValidator();
+
+        $arrayR = ["user" => $request->getParam("username"),
+            "password" => $request->getParam("password")];
+
+        if(!($inputValid->isValid($arrayR))) {
+            $arrayMessage = $inputValid->getMessages();
+            $flash = $this->_ci->get('flash');
+            $flash->addMessage('return', array_shift($arrayMessage));
+            $router = $this->_ci->get('router');
+            return $response->withRedirect($router->pathFor('wanda.home.login'));
+        }
+
         $session = SessionFacilitator::getSession();
+
         $username = $request->getParam("username");
         $password = md5($request->getParam("password"));
 
@@ -76,7 +98,7 @@ class HomeController extends AbstractController
                 return $response->withRedirect($router->pathFor('wanda.home.index'));
             } else {
                 $flash = $this->_ci->get('flash');
-                $flash->addMessage('return', 'Email ou senha incorretos.');
+                $flash->addMessage('return', 'Usuário ou senha incorretos.');
 
                 $router = $this->_ci->get('router');
 
@@ -84,7 +106,7 @@ class HomeController extends AbstractController
             }
         } catch (\Exception $e) {
             $flash = $this->_ci->get('flash');
-            $flash->addMessage('return', 'Email ou senha incorretos.');
+            $flash->addMessage('return', 'Usuário ou senha incorretos.');
 
             $router = $this->_ci->get('router');
             return $response->withRedirect($router->pathFor('wanda.home.login'));

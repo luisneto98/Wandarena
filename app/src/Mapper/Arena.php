@@ -44,7 +44,7 @@ class Arena
 
 
     /**
-     * @ODM\EmbedMany(targetDocument="Confrontation")
+     * @ODM\ReferenceMany(targetDocument="Confrontation", cascade={"persist"})
      */
     private $confrontations;
 
@@ -74,10 +74,12 @@ class Arena
     public function start(){
         if($this->getDateUnix() <= time()){
             if(!$this->ready){
+                $stage = 1;
                 $auxSubmits = $this->submits;
                 while(count($auxSubmits) > 1){
                     $auxSubmits = $this->reverseOrder($auxSubmits);
-                    $auxSubmits = $this->createConfrontations($auxSubmits);
+                    $auxSubmits = $this->createConfrontations($auxSubmits,$stage);
+                    $stage++;
                 }
                 $this->winner = $auxSubmits[0];
                 $this->ready = true;
@@ -97,21 +99,14 @@ class Arena
         }
         return $aux;
     }
-    private function reduceKeys(){
-        for ($i = $this->confrontations->count()-1 ; $i >= 0 ; $i--){
-            $this->confrontations[$i]->setKey($this->confrontations[$i]->getKey()-1);
-        }
-    }
-
-    private function createConfrontations($submits){
+    private function createConfrontations($submits,$stage){
         $auxSubmits = new ArrayCollection();
-        $key = ceil(count($submits)/2);
         if($submits->count() % 2 == 0){
             for($i = 0 ; $i < $submits->count() ; $i += 2){
                 $confrontation = new Confrontation();
                 $confrontation->setPlayer1($submits[$i])->setPlayer2($submits[$i+1]);
                 $confrontation->start($this->getGame());
-                $confrontation->setKey($key);
+                $confrontation->setStage($stage);
                 $confrontation->setOrder($i/2 + 1);
                 $this->addConfrontation($confrontation);
                 $auxSubmits->add($confrontation->getWinner());
@@ -121,7 +116,7 @@ class Arena
                 $confrontation = new Confrontation();
                 $confrontation->setPlayer1($submits[$i])->setPlayer2($submits[$i+1]);
                 $confrontation->start($this->getGame());
-                $confrontation->setKey($key);
+                $confrontation->setStage($stage);
                 $confrontation->setOrder($i/2 + 1);
                 $this->addConfrontation($confrontation);
                 $auxSubmits->add($confrontation->getWinner());
@@ -129,13 +124,11 @@ class Arena
             $confrontation = new Confrontation();
             $confrontation->setPlayer1($submits[count($submits)-1])->setPlayer2(NULL);
             $confrontation->start($this->getGame());
-            $confrontation->setKey($key);
+            $confrontation->setStage($stage);
             $confrontation->setOrder($i/2 + 1);
             $this->addConfrontation($confrontation);
             if($confrontation->getWinner() != NULL){
                 $auxSubmits->add($confrontation->getWinner());
-            }else{
-                $this->reduceKeys();
             }
 
         }
@@ -143,10 +136,7 @@ class Arena
     }
 
     public function getDateUnix(){
-
-        $dateArray = getdate($this->date);
-        return mktime($dateArray["hours"],$dateArray["minutes"],$dateArray["seconds"],
-            $dateArray["month"],$dateArray["mday"],$dateArray["year"]);
+        return strtotime($this->getDateDefault());
     }
 
 
@@ -343,22 +333,14 @@ class Arena
     public function getBGArena(){
         return $this->getGame()::getImageBG();
     }
-    public function countKeys(){
-        $maxKey = 0;
+    public function countStages(){
+        $maxStage = 0;
         for ($i = 0; $i < $this->confrontations->count(); $i++){
-            if($this->confrontations[$i]->getKey() > $maxKey)
-                $maxKey = $this->confrontations[$i]->getKey();
+            if($this->confrontations[$i]->getStage() > $maxStage)
+                $maxStage = $this->confrontations[$i]->getStage();
         }
-        return $maxKey;
+        return $maxStage;
     }
-    public function getConfrontationById($id){
-        for ($i = $this->confrontations->count()-1 ; $i >= 0 ; $i--){
-            if($this->confrontations[$i]->getId() == $id){
-                return $this->confrontations[$i];
-            }
-        }
-    }
-
 
 
 

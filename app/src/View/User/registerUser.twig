@@ -10,13 +10,13 @@
         {% endif %}
         <div class="form-group ">
             <label for="user">Usuário:</label>
-            <input type="text" class="form-control" id="user" name="username" placeholder="Usuário" {% if user != NULL %} value="{{ user.username }}"{% endif %}>
+            <input type="text" class="form-control" id="user" name="username" placeholder="Usuário" {% if user != NULL %} value="{{ user.username }}"{% endif %} required>
             <small class="help-block form-text text-danger">{% if usernameinval %}Usuário Inválido{% endif %}</small>
         </div>
 
         <div class="form-group">
             <label for="name">Nome:</label>
-            <input type="text" class="form-control" id="name" name="name" placeholder="Nome" {% if user != NULL %} value="{{ user.name }}"{% endif %}>
+            <input type="text" class="form-control" id="name" name="name" placeholder="Nome" {% if user != NULL %} value="{{ user.name }}"{% endif %} required>
         </div>
         <label class="d-inline-block">Tipo de Usuário:</label>
         <div class="form-group">

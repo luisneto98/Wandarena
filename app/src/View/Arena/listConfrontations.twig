@@ -5,11 +5,22 @@
 {% block content %}
 
     <div class="offset-3 col-6">
-
-        {% for i in arena.countKeys()..1 %}
+        {% set countStages = arena.countStages() %}
+        {% for i in 1..countStages %}
             <div class="card text-center">
                 <div class="card-header bg-secondary rounded text-white">
-                    Chave {{ i }}
+                    {% if ((countStages - i ) == 3) %}
+                        Oitavas de Final
+                    {% elseif  ((countStages - i) == 2)%}
+                        Quartas de Final
+                    {% elseif  ((countStages - i) == 1)%}
+                        Semi Final
+                    {% elseif  ((countStages - i) == 0)%}
+                        Final
+                    {% else %}
+                        Etapa {{ i }}
+                    {% endif %}
+
                 </div>
                 <div class="card-body">
 
@@ -22,7 +33,7 @@
                             </thead>
                             <tbody>
                             {% for confrontation in arena.confrontations %}
-                                {% if confrontation.key == i %}
+                                {% if confrontation.stage == i %}
 
                                         <tr>
                                             <th scope="row">{{ confrontation.order }}</th>

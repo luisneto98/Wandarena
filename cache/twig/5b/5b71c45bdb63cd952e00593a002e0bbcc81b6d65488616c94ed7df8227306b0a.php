@@ -72,7 +72,7 @@ class __TwigTemplate_3a558961d516063423837084d89ef6049a74f10a06fea0b238b9e42d31e
             echo twig_escape_filter($this->env, twig_get_attribute($this->env, $this->getSourceContext(), ($context["arena"] ?? null), "title", array()), "html", null, true);
             echo "\"";
         }
-        echo ">
+        echo " required>
         </div>
         <div class=\"form-group\">
             <label for=\"Game\">Selecione o jogo:</label>
@@ -83,7 +83,7 @@ class __TwigTemplate_3a558961d516063423837084d89ef6049a74f10a06fea0b238b9e42d31e
         </div>
         <div class=\"form-group\">
             <label for=\"Description\">Descrição:</label>
-            <textarea class=\"form-control\" id=\"Description\" rows=\"3\" name=\"description\" >";
+            <textarea class=\"form-control\" id=\"Description\" rows=\"3\" name=\"description\" required>";
         // line 25
         if ((($context["arena"] ?? null) != null)) {
             echo " ";
@@ -100,7 +100,7 @@ class __TwigTemplate_3a558961d516063423837084d89ef6049a74f10a06fea0b238b9e42d31e
             echo twig_escape_filter($this->env, twig_get_attribute($this->env, $this->getSourceContext(), ($context["arena"] ?? null), "getDateDefault", array(), "method"), "html", null, true);
             echo "\"";
         }
-        echo ">
+        echo " required>
         </div>
         <div class=\"form-group row offset-8 col-4\">
             <button class=\"form-control btn btn-primary\" id=\"submit\" type=\"submit\">Enviar</button>
@@ -139,7 +139,7 @@ class __TwigTemplate_3a558961d516063423837084d89ef6049a74f10a06fea0b238b9e42d31e
         {% endif %}
         <div class=\"form-group \">
             <label for=\"Title\">Título:</label>
-            <input type=\"text\" class=\"form-control\" id=\"Title\" name=\"title\" placeholder=\"Título...\" {% if arena != NULL %} value=\"{{ arena.title }}\"{% endif %}>
+            <input type=\"text\" class=\"form-control\" id=\"Title\" name=\"title\" placeholder=\"Título...\" {% if arena != NULL %} value=\"{{ arena.title }}\"{% endif %} required>
         </div>
         <div class=\"form-group\">
             <label for=\"Game\">Selecione o jogo:</label>
@@ -150,11 +150,11 @@ class __TwigTemplate_3a558961d516063423837084d89ef6049a74f10a06fea0b238b9e42d31e
         </div>
         <div class=\"form-group\">
             <label for=\"Description\">Descrição:</label>
-            <textarea class=\"form-control\" id=\"Description\" rows=\"3\" name=\"description\" >{% if arena != NULL %} {{ arena.description }}{% endif %}</textarea>
+            <textarea class=\"form-control\" id=\"Description\" rows=\"3\" name=\"description\" required>{% if arena != NULL %} {{ arena.description }}{% endif %}</textarea>
         </div>
         <div class=\"form-group\">
             <label for=\"date\">Data:</label>
-            <input type=\"datetime-local\"  class=\"form-control\" id=\"date\" name=\"date\" {% if arena != NULL %} value=\"{{ arena.getDateDefault() }}\"{% endif %}>
+            <input type=\"datetime-local\"  class=\"form-control\" id=\"date\" name=\"date\" {% if arena != NULL %} value=\"{{ arena.getDateDefault() }}\"{% endif %} required>
         </div>
         <div class=\"form-group row offset-8 col-4\">
             <button class=\"form-control btn btn-primary\" id=\"submit\" type=\"submit\">Enviar</button>

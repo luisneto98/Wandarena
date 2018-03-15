@@ -79,16 +79,16 @@ class AppMapperConfrontationHydrator implements HydratorInterface
         }
 
         /** @Field(type="int") */
-        if (isset($data['key']) || (! empty($this->class->fieldMappings['key']['nullable']) && array_key_exists('key', $data))) {
+        if (isset($data['key']) || (! empty($this->class->fieldMappings['stage']['nullable']) && array_key_exists('key', $data))) {
             $value = $data['key'];
             if ($value !== null) {
-                $typeIdentifier = $this->class->fieldMappings['key']['type'];
+                $typeIdentifier = $this->class->fieldMappings['stage']['type'];
                 $return = (int) $value;
             } else {
                 $return = null;
             }
-            $this->class->reflFields['key']->setValue($document, $return);
-            $hydratedData['key'] = $return;
+            $this->class->reflFields['stage']->setValue($document, $return);
+            $hydratedData['stage'] = $return;
         }
 
         /** @Field(type="int") */

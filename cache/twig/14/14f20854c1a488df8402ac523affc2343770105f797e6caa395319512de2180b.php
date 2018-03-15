@@ -72,7 +72,7 @@ class __TwigTemplate_a3afa5da159526c43f7068e7a692309fb02445f3d2a4cce0c93e42efe9b
             echo twig_escape_filter($this->env, twig_get_attribute($this->env, $this->getSourceContext(), ($context["user"] ?? null), "username", array()), "html", null, true);
             echo "\"";
         }
-        echo ">
+        echo " required>
             <small class=\"help-block form-text text-danger\">";
         // line 14
         if (($context["usernameinval"] ?? null)) {
@@ -90,7 +90,7 @@ class __TwigTemplate_a3afa5da159526c43f7068e7a692309fb02445f3d2a4cce0c93e42efe9b
             echo twig_escape_filter($this->env, twig_get_attribute($this->env, $this->getSourceContext(), ($context["user"] ?? null), "name", array()), "html", null, true);
             echo "\"";
         }
-        echo ">
+        echo " required>
         </div>
         <label class=\"d-inline-block\">Tipo de Usuário:</label>
         <div class=\"form-group\">
@@ -156,13 +156,13 @@ class __TwigTemplate_a3afa5da159526c43f7068e7a692309fb02445f3d2a4cce0c93e42efe9b
         {% endif %}
         <div class=\"form-group \">
             <label for=\"user\">Usuário:</label>
-            <input type=\"text\" class=\"form-control\" id=\"user\" name=\"username\" placeholder=\"Usuário\" {% if user != NULL %} value=\"{{ user.username }}\"{% endif %}>
+            <input type=\"text\" class=\"form-control\" id=\"user\" name=\"username\" placeholder=\"Usuário\" {% if user != NULL %} value=\"{{ user.username }}\"{% endif %} required>
             <small class=\"help-block form-text text-danger\">{% if usernameinval %}Usuário Inválido{% endif %}</small>
         </div>
 
         <div class=\"form-group\">
             <label for=\"name\">Nome:</label>
-            <input type=\"text\" class=\"form-control\" id=\"name\" name=\"name\" placeholder=\"Nome\" {% if user != NULL %} value=\"{{ user.name }}\"{% endif %}>
+            <input type=\"text\" class=\"form-control\" id=\"name\" name=\"name\" placeholder=\"Nome\" {% if user != NULL %} value=\"{{ user.name }}\"{% endif %} required>
         </div>
         <label class=\"d-inline-block\">Tipo de Usuário:</label>
         <div class=\"form-group\">

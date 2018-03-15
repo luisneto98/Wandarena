@@ -11,7 +11,7 @@
         {% endif %}
         <div class="form-group ">
             <label for="Title">Título:</label>
-            <input type="text" class="form-control" id="Title" name="title" placeholder="Título..." {% if arena != NULL %} value="{{ arena.title }}"{% endif %}>
+            <input type="text" class="form-control" id="Title" name="title" placeholder="Título..." {% if arena != NULL %} value="{{ arena.title }}"{% endif %} required>
         </div>
         <div class="form-group">
             <label for="Game">Selecione o jogo:</label>
@@ -22,11 +22,11 @@
         </div>
         <div class="form-group">
             <label for="Description">Descrição:</label>
-            <textarea class="form-control" id="Description" rows="3" name="description" >{% if arena != NULL %} {{ arena.description }}{% endif %}</textarea>
+            <textarea class="form-control" id="Description" rows="3" name="description" required>{% if arena != NULL %} {{ arena.description }}{% endif %}</textarea>
         </div>
         <div class="form-group">
             <label for="date">Data:</label>
-            <input type="datetime-local"  class="form-control" id="date" name="date" {% if arena != NULL %} value="{{ arena.getDateDefault() }}"{% endif %}>
+            <input type="datetime-local"  class="form-control" id="date" name="date" {% if arena != NULL %} value="{{ arena.getDateDefault() }}"{% endif %} required>
         </div>
         <div class="form-group row offset-8 col-4">
             <button class="form-control btn btn-primary" id="submit" type="submit">Enviar</button>
