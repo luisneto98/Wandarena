@@ -3,11 +3,14 @@
 {% block titlePage %}Praticar{% endblock %}
 {% block practice %} active {% endblock %}
 {% block content %}
-
-    <form action="{{ path_for('wanda.home.teste') }}" method="POST"
+<div class="offset-5 col-2">
+    <form class="justify-content-center" action="{{ path_for('wanda.home.teste') }}" method="POST"
           enctype="multipart/form-data">
-        Arquivo: <input type="file" name="code"><br>
-        <input type="submit" value="Enviar">
+        Player 1: <input type="file" name="code1"><br>
+        Player 2: <input type="file" name="code2"><br>
+        <input type="submit" class="btn btn-info float-right" value="Enviar">
     </form>
+
+</div>
 
 {% endblock %}

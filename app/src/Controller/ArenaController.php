@@ -187,7 +187,7 @@ class ArenaController extends AbstractController
         $code = $file["code"]->file;
         $validator = new CodeValidator();
         if(!$validator->isValid(["player"=>$file["code"],"game"=>$arena->getGame()])){
-            return $response->withRedirect($router->pathFor('wanda.home.index'));
+            return $this->view->render($response,"View/User/submitCode.twig",["admin" => true,"arena"=>$arena,"message"=>"Código inválido!"]);
 
         }
         $submit->setCode(file_get_contents($code));

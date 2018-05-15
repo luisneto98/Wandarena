@@ -18,7 +18,9 @@ class CodeValidator extends AbstractValidator
         $game = $value["game"];
         $code = $value["player"]->file;
         $type = $value["player"]->getClientMediaType();
-        $game::isValid($code);
+        $result = $game::isValid($code);
+        if($result == false)
+            return false;
         if($type == "text/x-lua")
             return true;
         else

@@ -39,7 +39,7 @@
                                 <a class="nav-link" href="{{ path_for('wanda.home.practice') }}">Praticar </a>
                             </li>
                         {% endif %}
-                        {% if admin == true %}
+                        {% if admin == false %}
                             <li class="nav-item {% block registerUser %}{% endblock %}">
                                 <a class="nav-link" href="{{ path_for('wanda.user.register') }}">Cadastrar Usuário </a>
                             </li>

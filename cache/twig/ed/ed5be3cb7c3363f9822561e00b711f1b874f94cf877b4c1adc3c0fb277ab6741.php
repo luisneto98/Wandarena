@@ -53,15 +53,18 @@ class __TwigTemplate_68633ec5222b07f23586ba2e686dcba27e2dd8a8072e9fa10bdef6f057b
     public function block_content($context, array $blocks = array())
     {
         // line 6
-        echo "
-    <form action=\"";
+        echo "<div class=\"offset-5 col-2\">
+    <form class=\"justify-content-center\" action=\"";
         // line 7
         echo twig_escape_filter($this->env, $this->extensions['Slim\Views\TwigExtension']->pathFor("wanda.home.teste"), "html", null, true);
         echo "\" method=\"POST\"
           enctype=\"multipart/form-data\">
-        Arquivo: <input type=\"file\" name=\"code\"><br>
-        <input type=\"submit\" value=\"Enviar\">
+        Player 1: <input type=\"file\" name=\"code1\"><br>
+        Player 2: <input type=\"file\" name=\"code2\"><br>
+        <input type=\"submit\" class=\"btn btn-info float-right\" value=\"Enviar\">
     </form>
+
+</div>
 
 ";
     }
@@ -88,12 +91,15 @@ class __TwigTemplate_68633ec5222b07f23586ba2e686dcba27e2dd8a8072e9fa10bdef6f057b
 {% block titlePage %}Praticar{% endblock %}
 {% block practice %} active {% endblock %}
 {% block content %}
-
-    <form action=\"{{ path_for('wanda.home.teste') }}\" method=\"POST\"
+<div class=\"offset-5 col-2\">
+    <form class=\"justify-content-center\" action=\"{{ path_for('wanda.home.teste') }}\" method=\"POST\"
           enctype=\"multipart/form-data\">
-        Arquivo: <input type=\"file\" name=\"code\"><br>
-        <input type=\"submit\" value=\"Enviar\">
+        Player 1: <input type=\"file\" name=\"code1\"><br>
+        Player 2: <input type=\"file\" name=\"code2\"><br>
+        <input type=\"submit\" class=\"btn btn-info float-right\" value=\"Enviar\">
     </form>
+
+</div>
 
 {% endblock %}", "View/Practice/practice.twig", "/var/www/html/Wandarena/app/src/View/Practice/practice.twig");
     }

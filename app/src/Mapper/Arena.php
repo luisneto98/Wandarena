@@ -195,7 +195,13 @@ class Arena
         if($this->submits == NULL){
             $this->submits = new ArrayCollection();
         }
+        foreach($this->submits->getIterator() as $i => $item) {
+            if($item->getUser()->getId() == $submits->getUser()->getId()){
+                $this->submits->delete($item);
 
+                return $this;
+            }
+        }
         $this->submits->add($submits);
         return $this;
     }

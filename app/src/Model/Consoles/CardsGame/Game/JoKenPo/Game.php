@@ -132,12 +132,27 @@ class Game
         }
     }
 
+    /**
+     * @param $linkCode
+     * @return bool
+     */
     static function isValid($linkCode){
-        $lua = new \Lua($linkCode);
-        if(self::play($lua,self::CARDS,self::CARDS) == null){
+        try{
+            $lua = new \Lua($linkCode);
+            if(self::play($lua,self::CARDS,self::CARDS) == null){
+                return false;
+            }else{
+                $ret = $lua->call("round1",["pedra","papel","papel"]);
+                if(!in_array($ret,self::CARDS))
+                    return false;
+                $ret = $lua->call("round1",["papel","papel","pedra","pedra"]);
+                if(!in_array($ret,self::CARDS))
+                    return false;
+                return true;
+            }
+
+        }catch (\Exception $e){
             return false;
-        }else{
-            return true;
         }
     }
 }

@@ -104,7 +104,7 @@ class __TwigTemplate_51562c30e9bf539d4bf42650ca73a3839d2fe550b6dfcf81a8b142ebd75
         }
         // line 42
         echo "                        ";
-        if ((($context["admin"] ?? null) == true)) {
+        if ((($context["admin"] ?? null) == false)) {
             // line 43
             echo "                            <li class=\"nav-item ";
             $this->displayBlock('registerUser', $context, $blocks);
@@ -263,7 +263,7 @@ class __TwigTemplate_51562c30e9bf539d4bf42650ca73a3839d2fe550b6dfcf81a8b142ebd75
                                 <a class=\"nav-link\" href=\"{{ path_for('wanda.home.practice') }}\">Praticar </a>
                             </li>
                         {% endif %}
-                        {% if admin == true %}
+                        {% if admin == false %}
                             <li class=\"nav-item {% block registerUser %}{% endblock %}\">
                                 <a class=\"nav-link\" href=\"{{ path_for('wanda.user.register') }}\">Cadastrar Usuário </a>
                             </li>

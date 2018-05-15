@@ -53,18 +53,25 @@ class __TwigTemplate_61e9d1f812252558d92c63ba2167a7195fac7634291f027aeb01f03e1d6
     public function block_content($context, array $blocks = array())
     {
         // line 6
-        echo "    <form class = \"offset-sm-2 col-sm-8 rounded p-4 border\" method=\"post\" action=\"";
+        echo "
+    <form class = \"offset-sm-2 col-sm-8 rounded p-4 border\" method=\"post\" action=\"";
+        // line 7
         echo twig_escape_filter($this->env, $this->extensions['Slim\Views\TwigExtension']->pathFor("wanda.arena.submit.save", array("id" => twig_get_attribute($this->env, $this->source, ($context["arena"] ?? null), "id", array()))), "html", null, true);
         echo "\" enctype=\"multipart/form-data\">
 
         <div class=\"form-group\">
             <label for=\"nickname\">Apelido:</label>
-            <input type=\"text\" class=\"form-control\" id=\"nickname\" name=\"nickname\" placeholder=\"Apelido\">
+            <input type=\"text\" class=\"form-control\" id=\"nickname\" name=\"nickname\" placeholder=\"Apelido\" required>
         </div>
         Arquivo:
         <input type=\"file\" name=\"code\"><br>
+        <span class=\"text-danger\">";
+        // line 15
+        echo twig_escape_filter($this->env, ($context["message"] ?? null), "html", null, true);
+        echo "</span>
         <div class=\"form-group row offset-8 col-4\">
             <button class=\"form-control btn btn-primary\" id=\"submit\" type=\"submit\">Enviar</button>
+
         </div>
     </form>
 
@@ -83,7 +90,7 @@ class __TwigTemplate_61e9d1f812252558d92c63ba2167a7195fac7634291f027aeb01f03e1d6
 
     public function getDebugInfo()
     {
-        return array (  56 => 6,  53 => 5,  47 => 4,  41 => 3,  35 => 2,  15 => 1,);
+        return array (  70 => 15,  59 => 7,  56 => 6,  53 => 5,  47 => 4,  41 => 3,  35 => 2,  15 => 1,);
     }
 
     public function getSourceContext()
@@ -93,16 +100,19 @@ class __TwigTemplate_61e9d1f812252558d92c63ba2167a7195fac7634291f027aeb01f03e1d6
 {% block titlePage %}Envio{% endblock %}
 {% block arenas %} active {% endblock %}
 {% block content %}
+
     <form class = \"offset-sm-2 col-sm-8 rounded p-4 border\" method=\"post\" action=\"{{ path_for('wanda.arena.submit.save',{\"id\" : arena.id}) }}\" enctype=\"multipart/form-data\">
 
         <div class=\"form-group\">
             <label for=\"nickname\">Apelido:</label>
-            <input type=\"text\" class=\"form-control\" id=\"nickname\" name=\"nickname\" placeholder=\"Apelido\">
+            <input type=\"text\" class=\"form-control\" id=\"nickname\" name=\"nickname\" placeholder=\"Apelido\" required>
         </div>
         Arquivo:
         <input type=\"file\" name=\"code\"><br>
+        <span class=\"text-danger\">{{ message }}</span>
         <div class=\"form-group row offset-8 col-4\">
             <button class=\"form-control btn btn-primary\" id=\"submit\" type=\"submit\">Enviar</button>
+
         </div>
     </form>
 
