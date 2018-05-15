@@ -17,6 +17,9 @@ use MongoDB\Operation\ListIndexes;
  */
 class BucketFunctionalTest extends FunctionalTestCase
 {
+    /**
+     * @doesNotPerformAssertions
+     */
     public function testValidConstructorOptions()
     {
         new Bucket($this->manager, $this->getDatabaseName(), [
@@ -138,7 +141,7 @@ class BucketFunctionalTest extends FunctionalTestCase
     }
 
     /**
-     * @expectedException PHPUnit_Framework_Error_Warning
+     * @expectedException PHPUnit\Framework\Error\Warning
      */
     public function testDownloadingFileWithMissingChunk()
     {
@@ -150,7 +153,7 @@ class BucketFunctionalTest extends FunctionalTestCase
     }
 
     /**
-     * @expectedException PHPUnit_Framework_Error_Warning
+     * @expectedException PHPUnit\Framework\Error\Warning
      */
     public function testDownloadingFileWithUnexpectedChunkIndex()
     {
@@ -165,7 +168,7 @@ class BucketFunctionalTest extends FunctionalTestCase
     }
 
     /**
-     * @expectedException PHPUnit_Framework_Error_Warning
+     * @expectedException PHPUnit\Framework\Error\Warning
      */
     public function testDownloadingFileWithUnexpectedChunkSize()
     {
@@ -187,7 +190,6 @@ class BucketFunctionalTest extends FunctionalTestCase
         $id = $this->bucket->uploadFromStream('filename', $this->createStream($input));
         $destination = $this->createStream();
         $this->bucket->downloadToStream($id, $destination);
-        rewind($destination);
 
         $this->assertStreamContents($input, $destination);
     }
@@ -222,37 +224,30 @@ class BucketFunctionalTest extends FunctionalTestCase
 
         $destination = $this->createStream();
         $this->bucket->downloadToStreamByName('filename', $destination);
-        rewind($destination);
         $this->assertStreamContents('baz', $destination);
 
         $destination = $this->createStream();
         $this->bucket->downloadToStreamByName('filename', $destination, ['revision' => -3]);
-        rewind($destination);
         $this->assertStreamContents('foo', $destination);
 
         $destination = $this->createStream();
         $this->bucket->downloadToStreamByName('filename', $destination, ['revision' => -2]);
-        rewind($destination);
         $this->assertStreamContents('bar', $destination);
 
         $destination = $this->createStream();
         $this->bucket->downloadToStreamByName('filename', $destination, ['revision' => -1]);
-        rewind($destination);
         $this->assertStreamContents('baz', $destination);
 
         $destination = $this->createStream();
         $this->bucket->downloadToStreamByName('filename', $destination, ['revision' => 0]);
-        rewind($destination);
         $this->assertStreamContents('foo', $destination);
 
         $destination = $this->createStream();
         $this->bucket->downloadToStreamByName('filename', $destination, ['revision' => 1]);
-        rewind($destination);
         $this->assertStreamContents('bar', $destination);
 
         $destination = $this->createStream();
         $this->bucket->downloadToStreamByName('filename', $destination, ['revision' => 2]);
-        rewind($destination);
         $this->assertStreamContents('baz', $destination);
     }
 
@@ -371,6 +366,26 @@ class BucketFunctionalTest extends FunctionalTestCase
         $this->assertEquals('fs', $this->bucket->getBucketName());
     }
 
+    public function testGetChunksCollection()
+    {
+        $chunksCollection = $this->bucket->getChunksCollection();
+
+        $this->assertInstanceOf('MongoDB\Collection', $chunksCollection);
+        $this->assertEquals('fs.chunks', $chunksCollection->getCollectionName());
+    }
+
+    public function testGetChunkSizeBytesWithCustomValue()
+    {
+        $bucket = new Bucket($this->manager, $this->getDatabaseName(), ['chunkSizeBytes' => 8192]);
+
+        $this->assertEquals(8192, $bucket->getChunkSizeBytes());
+    }
+
+    public function testGetChunkSizeBytesWithDefaultValue()
+    {
+        $this->assertEquals(261120, $this->bucket->getChunkSizeBytes());
+    }
+
     public function testGetDatabaseName()
     {
         $this->assertEquals($this->getDatabaseName(), $this->bucket->getDatabaseName());
@@ -396,7 +411,7 @@ class BucketFunctionalTest extends FunctionalTestCase
 
         $fileDocument = $this->bucket->getFileDocumentForStream($stream);
 
-        $this->assertSameObjectID($id, $fileDocument->_id);
+        $this->assertSameObjectId($id, $fileDocument->_id);
         $this->assertSame('filename', $fileDocument->filename);
         $this->assertSame(6, $fileDocument->length);
         $this->assertSameDocument($metadata, $fileDocument->metadata);
@@ -443,7 +458,7 @@ class BucketFunctionalTest extends FunctionalTestCase
         $id = $this->bucket->uploadFromStream('filename', $this->createStream('foobar'));
         $stream = $this->bucket->openDownloadStream($id);
 
-        $this->assertSameObjectID($id, $this->bucket->getFileIdForStream($stream));
+        $this->assertSameObjectId($id, $this->bucket->getFileIdForStream($stream));
     }
 
     public function testGetFileIdForStreamWithWritableStream()
@@ -460,6 +475,14 @@ class BucketFunctionalTest extends FunctionalTestCase
     public function testGetFileIdForStreamShouldRequireGridFSStreamResource($stream)
     {
         $this->bucket->getFileIdForStream($stream);
+    }
+
+    public function testGetFilesCollection()
+    {
+        $filesCollection = $this->bucket->getFilesCollection();
+
+        $this->assertInstanceOf('MongoDB\Collection', $filesCollection);
+        $this->assertEquals('fs.files', $filesCollection->getCollectionName());
     }
 
     /**

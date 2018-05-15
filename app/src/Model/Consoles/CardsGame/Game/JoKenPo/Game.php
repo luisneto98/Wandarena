@@ -117,15 +117,27 @@ class Game
      * define how to play
      */
     static function play($code,$cardsP1,$cardsP2){
-        if(count($cardsP1) == self::COUNTCARDS){
-            return $code->call("round1",$cardsP1);
+        try{
+            if(count($cardsP1) == self::COUNTCARDS){
+                return $code->call("round1",$cardsP1);
 
-        }elseif(count($cardsP1) == (self::COUNTCARDS - 1)){
-            return $code->call("round2",array($cardsP1[0],$cardsP1[1],$cardsP2[0],$cardsP2[1]));
-        }else{
-            return $cardsP1[0];
+            }elseif(count($cardsP1) == (self::COUNTCARDS - 1)){
+                return $code->call("round2",array($cardsP1[0],$cardsP1[1],$cardsP2[0],$cardsP2[1]));
+            }else{
+                return $cardsP1[0];
+            }
+
+        }catch(\Exception $e){
+            return null;
         }
+    }
 
-
+    static function isValid($linkCode){
+        $lua = new \Lua($linkCode);
+        if(self::play($lua,self::CARDS,self::CARDS) == null){
+            return false;
+        }else{
+            return true;
+        }
     }
 }

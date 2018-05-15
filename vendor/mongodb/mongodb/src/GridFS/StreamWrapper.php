@@ -19,6 +19,7 @@ namespace MongoDB\GridFS;
 
 use MongoDB\BSON\UTCDateTime;
 use Exception;
+use stdClass;
 
 /**
  * Stream wrapper for reading and writing a GridFS file.
@@ -117,7 +118,7 @@ class StreamWrapper
      *
      * Note: this method may return a string smaller than the requested length
      * if data is not available to be read.
-     * 
+     *
      * @see http://php.net/manual/en/streamwrapper.stream-read.php
      * @param integer $length Number of bytes to read
      * @return string
@@ -134,6 +135,40 @@ class StreamWrapper
             trigger_error(sprintf('%s: %s', get_class($e), $e->getMessage()), \E_USER_WARNING);
             return false;
         }
+    }
+
+    /**
+     * Return the current position of the stream.
+     *
+     * @see http://php.net/manual/en/streamwrapper.stream-seek.php
+     * @param integer $offset Stream offset to seek to
+     * @param integer $whence One of SEEK_SET, SEEK_CUR, or SEEK_END
+     * @return boolean True if the position was updated and false otherwise
+     */
+    public function stream_seek($offset, $whence = \SEEK_SET)
+    {
+        $size = $this->stream->getSize();
+
+        if ($whence === \SEEK_CUR) {
+            $offset += $this->stream->tell();
+        }
+
+        if ($whence === \SEEK_END) {
+            $offset += $size;
+        }
+
+        // WritableStreams are always positioned at the end of the stream
+        if ($this->stream instanceof WritableStream) {
+            return $offset === $size;
+        }
+
+        if ($offset < 0 || $offset > $size) {
+            return false;
+        }
+
+        $this->stream->seek($offset);
+
+        return true;
     }
 
     /**
@@ -164,6 +199,17 @@ class StreamWrapper
         }
 
         return $stat;
+    }
+
+    /**
+     * Return the current position of the stream.
+     *
+     * @see http://php.net/manual/en/streamwrapper.stream-tell.php
+     * @return integer The current position of the stream
+     */
+    public function stream_tell()
+    {
+        return $this->stream->tell();
     }
 
     /**

@@ -41,8 +41,14 @@ class FindOneAndUpdate implements Executable
      *
      * Supported options:
      *
-     *  * bypassDocumentValidation (boolean): If true, allows the write to opt
-     *    out of document level validation.
+     *  * arrayFilters (document array): A set of filters specifying to which
+     *    array elements an update should apply.
+     *
+     *  * bypassDocumentValidation (boolean): If true, allows the write to
+     *    circumvent document level validation.
+     *
+     *    For servers < 3.2, this option is ignored as document level validation
+     *    is not available.
      *
      *  * collation (document): Collation specification.
      *
@@ -60,6 +66,10 @@ class FindOneAndUpdate implements Executable
      *    FindOneAndUpdate::RETURN_DOCUMENT_BEFORE or
      *    FindOneAndUpdate::RETURN_DOCUMENT_AFTER. The default is
      *    FindOneAndUpdate::RETURN_DOCUMENT_BEFORE.
+     *
+     *  * session (MongoDB\Driver\Session): Client session.
+     *
+     *    Sessions are not supported for server versions < 3.6.
      *
      *  * sort (document): Determines which document the operation modifies if
      *    the query selects multiple documents.

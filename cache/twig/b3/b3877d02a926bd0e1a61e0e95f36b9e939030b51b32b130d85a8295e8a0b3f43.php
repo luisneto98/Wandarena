@@ -1,0 +1,200 @@
+<?php
+
+/* View/User/registerUser.twig */
+class __TwigTemplate_40771e463f1a95375a4d4cf8f5668b45b6494d6f87718a1501d8f04765a9448f extends Twig_Template
+{
+    private $source;
+
+    public function __construct(Twig_Environment $env)
+    {
+        parent::__construct($env);
+
+        $this->source = $this->getSourceContext();
+
+        // line 1
+        $this->parent = $this->loadTemplate("View/Layout.twig", "View/User/registerUser.twig", 1);
+        $this->blocks = array(
+            'title' => array($this, 'block_title'),
+            'titlePage' => array($this, 'block_titlePage'),
+            'registerUser' => array($this, 'block_registerUser'),
+            'content' => array($this, 'block_content'),
+        );
+    }
+
+    protected function doGetParent(array $context)
+    {
+        return "View/Layout.twig";
+    }
+
+    protected function doDisplay(array $context, array $blocks = array())
+    {
+        $this->parent->display($context, array_merge($this->blocks, $blocks));
+    }
+
+    // line 2
+    public function block_title($context, array $blocks = array())
+    {
+        echo " Cadastro Usuário ";
+    }
+
+    // line 3
+    public function block_titlePage($context, array $blocks = array())
+    {
+        echo "Cadastro Usuário";
+    }
+
+    // line 4
+    public function block_registerUser($context, array $blocks = array())
+    {
+        echo " active ";
+    }
+
+    // line 5
+    public function block_content($context, array $blocks = array())
+    {
+        // line 6
+        echo "    <form class = \"offset-sm-2 col-sm-8 rounded p-4 border\" method=\"post\" action=\"";
+        echo twig_escape_filter($this->env, $this->extensions['Slim\Views\TwigExtension']->pathFor("wanda.user.save"), "html", null, true);
+        echo "\">
+        ";
+        // line 7
+        if ((($context["user"] ?? null) != null)) {
+            // line 8
+            echo "            <input type=\"hidden\" name=\"id\" value=\"";
+            echo twig_escape_filter($this->env, twig_get_attribute($this->env, $this->source, ($context["user"] ?? null), "id", array()), "html", null, true);
+            echo "\">
+
+        ";
+        }
+        // line 11
+        echo "        <div class=\"form-group \">
+            <label for=\"user\">Usuário:</label>
+            <input type=\"text\" class=\"form-control\" id=\"user\" name=\"username\" placeholder=\"Usuário\" ";
+        // line 13
+        if ((($context["user"] ?? null) != null)) {
+            echo " value=\"";
+            echo twig_escape_filter($this->env, twig_get_attribute($this->env, $this->source, ($context["user"] ?? null), "username", array()), "html", null, true);
+            echo "\"";
+        }
+        echo " required>
+            <small class=\"help-block form-text text-danger\">";
+        // line 14
+        if (($context["usernameinval"] ?? null)) {
+            echo "Usuário Inválido";
+        }
+        echo "</small>
+        </div>
+
+        <div class=\"form-group\">
+            <label for=\"name\">Nome:</label>
+            <input type=\"text\" class=\"form-control\" id=\"name\" name=\"name\" placeholder=\"Nome\" ";
+        // line 19
+        if ((($context["user"] ?? null) != null)) {
+            echo " value=\"";
+            echo twig_escape_filter($this->env, twig_get_attribute($this->env, $this->source, ($context["user"] ?? null), "name", array()), "html", null, true);
+            echo "\"";
+        }
+        echo " required>
+        </div>
+        <label class=\"d-inline-block\">Tipo de Usuário:</label>
+        <div class=\"form-group\">
+
+            <div class=\"form-check form-check-inline\">
+                <input class=\"form-check-input\" type=\"radio\" name=\"typeUser\" id=\"option1\" value=\"admin\">
+                <label class=\"form-check-label\" for=\"option1\">Administrador</label>
+            </div>
+            <div class=\"form-check form-check-inline\">
+                <input class=\"form-check-input\" type=\"radio\" name=\"typeUser\" id=\"option2\" value=\"user\" checked>
+                <label class=\"form-check-label\" for=\"option2\">Aluno</label>
+            </div>
+        </div>
+        <div class=\"form-group\">
+            <label for=\"inputPassword\" class=\"control-label\">Senha:</label>
+            <div class=\"form-group\">
+                <input type=\"password\" data-minlength=\"6\" class=\"form-control\" id=\"inputPassword\" placeholder=\"Senha\" name=\"password\" required>
+                <small class=\"help-block form-text text-danger\">";
+        // line 37
+        if (($context["passwordinval"] ?? null)) {
+            echo "Senhas não combinaram";
+        }
+        echo "</small>
+            </div>
+            <div class=\"form-group\">
+                <input type=\"password\" name=\"confirmPassword\" class=\"form-control\" id=\"inputPasswordConfirm\" data-match=\"#inputPassword\" data-match-error=\"As senhas são diferentes\" placeholder=\"Confirmação\" required>
+                <small class=\"help-block form-text text-muted\"></small>
+            </div>
+        </div>
+        <div class=\"form-group row offset-8 col-4\">
+            <button class=\"form-control btn btn-primary\" id=\"submit\" type=\"submit\">Enviar</button>
+        </div>
+    </form>
+";
+    }
+
+    public function getTemplateName()
+    {
+        return "View/User/registerUser.twig";
+    }
+
+    public function isTraitable()
+    {
+        return false;
+    }
+
+    public function getDebugInfo()
+    {
+        return array (  117 => 37,  92 => 19,  82 => 14,  74 => 13,  70 => 11,  63 => 8,  61 => 7,  56 => 6,  53 => 5,  47 => 4,  41 => 3,  35 => 2,  15 => 1,);
+    }
+
+    public function getSourceContext()
+    {
+        return new Twig_Source("{% extends \"View/Layout.twig\" %}
+{% block title %} Cadastro Usuário {% endblock %}
+{% block titlePage %}Cadastro Usuário{% endblock %}
+{% block registerUser %} active {% endblock %}
+{% block content %}
+    <form class = \"offset-sm-2 col-sm-8 rounded p-4 border\" method=\"post\" action=\"{{ path_for(\"wanda.user.save\") }}\">
+        {% if user != NULL %}
+            <input type=\"hidden\" name=\"id\" value=\"{{ user.id }}\">
+
+        {% endif %}
+        <div class=\"form-group \">
+            <label for=\"user\">Usuário:</label>
+            <input type=\"text\" class=\"form-control\" id=\"user\" name=\"username\" placeholder=\"Usuário\" {% if user != NULL %} value=\"{{ user.username }}\"{% endif %} required>
+            <small class=\"help-block form-text text-danger\">{% if usernameinval %}Usuário Inválido{% endif %}</small>
+        </div>
+
+        <div class=\"form-group\">
+            <label for=\"name\">Nome:</label>
+            <input type=\"text\" class=\"form-control\" id=\"name\" name=\"name\" placeholder=\"Nome\" {% if user != NULL %} value=\"{{ user.name }}\"{% endif %} required>
+        </div>
+        <label class=\"d-inline-block\">Tipo de Usuário:</label>
+        <div class=\"form-group\">
+
+            <div class=\"form-check form-check-inline\">
+                <input class=\"form-check-input\" type=\"radio\" name=\"typeUser\" id=\"option1\" value=\"admin\">
+                <label class=\"form-check-label\" for=\"option1\">Administrador</label>
+            </div>
+            <div class=\"form-check form-check-inline\">
+                <input class=\"form-check-input\" type=\"radio\" name=\"typeUser\" id=\"option2\" value=\"user\" checked>
+                <label class=\"form-check-label\" for=\"option2\">Aluno</label>
+            </div>
+        </div>
+        <div class=\"form-group\">
+            <label for=\"inputPassword\" class=\"control-label\">Senha:</label>
+            <div class=\"form-group\">
+                <input type=\"password\" data-minlength=\"6\" class=\"form-control\" id=\"inputPassword\" placeholder=\"Senha\" name=\"password\" required>
+                <small class=\"help-block form-text text-danger\">{% if passwordinval %}Senhas não combinaram{% endif %}</small>
+            </div>
+            <div class=\"form-group\">
+                <input type=\"password\" name=\"confirmPassword\" class=\"form-control\" id=\"inputPasswordConfirm\" data-match=\"#inputPassword\" data-match-error=\"As senhas são diferentes\" placeholder=\"Confirmação\" required>
+                <small class=\"help-block form-text text-muted\"></small>
+            </div>
+        </div>
+        <div class=\"form-group row offset-8 col-4\">
+            <button class=\"form-control btn btn-primary\" id=\"submit\" type=\"submit\">Enviar</button>
+        </div>
+    </form>
+{% endblock %}", "View/User/registerUser.twig", "/var/www/html/Wandarena/app/src/View/User/registerUser.twig");
+    }
+}

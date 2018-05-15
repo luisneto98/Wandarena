@@ -1,9 +1,25 @@
 arg_name: option
+name: arrayFilters
+type: array
+description: |
+   An array of filter documents that determines which array elements to modify
+   for an update operation on an array field.
+
+   This is not supported for server versions prior to 3.6 and will result in an
+   exception at execution time if used.
+interface: phpmethod
+operation: ~
+optional: true
+---
+arg_name: option
 name: bypassDocumentValidation
 type: boolean
 description: |
    If ``true``, allows the write operation to circumvent document level
    validation. Defaults to ``false``.
+
+   This option is available in MongoDB 3.2+ and is ignored for older server
+   versions, which do not support document level validation.
 interface: phpmethod
 operation: ~
 optional: true

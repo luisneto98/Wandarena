@@ -22,7 +22,7 @@ use MongoDB\BSON\ObjectId;
 use MongoDB\BSON\UTCDateTime;
 use MongoDB\Driver\Exception\RuntimeException as DriverRuntimeException;
 use MongoDB\Exception\InvalidArgumentException;
-use MongoDB\Exception\RuntimeException;
+use stdClass;
 
 /**
  * WritableStream abstracts the process of writing a GridFS file.
@@ -49,7 +49,7 @@ class WritableStream
      *
      *  * _id (mixed): File document identifier. Defaults to a new ObjectId.
      *
-     *  * aliases (array of strings): DEPRECATED An array of aliases. 
+     *  * aliases (array of strings): DEPRECATED An array of aliases.
      *    Applications wishing to store aliases should add an aliases field to
      *    the metadata document instead.
      *
@@ -102,7 +102,6 @@ class WritableStream
             '_id' => $options['_id'],
             'chunkSize' => $this->chunkSize,
             'filename' => (string) $filename,
-            'uploadDate' => new UTCDateTime,
         ] + array_intersect_key($options, ['aliases' => 1, 'contentType' => 1, 'metadata' => 1]);
     }
 
@@ -162,6 +161,21 @@ class WritableStream
     }
 
     /**
+     * Return the current position of the stream.
+     *
+     * This is the offset within the stream where the next byte would be
+     * written. Since seeking is not supported and writes are appended, this is
+     * always the end of the stream.
+     *
+     * @see WriteableStream::getSize()
+     * @return integer
+     */
+    public function tell()
+    {
+        return $this->getSize();
+    }
+
+    /**
      * Inserts binary data into GridFS via chunks.
      *
      * Data will be buffered internally until chunkSizeBytes are accumulated, at
@@ -209,6 +223,7 @@ class WritableStream
 
         $this->file['length'] = $this->length;
         $this->file['md5'] = $md5;
+        $this->file['uploadDate'] = new UTCDateTime;
 
         try {
             $this->collectionWrapper->insertFile($this->file);

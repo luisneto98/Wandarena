@@ -1,21 +1,4 @@
 <?php
-/*
- * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
- * "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
- * LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
- * A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT
- * OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
- * SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
- * LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
- * DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
- * THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
- * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
- * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
- *
- * This software consists of voluntary contributions made by many individuals
- * and is licensed under the MIT license. For more information, see
- * <http://www.doctrine-project.org>.
- */
 
 namespace Doctrine\MongoDB;
 
@@ -91,10 +74,15 @@ class GridFS extends Collection
         }
 
         $document = array_merge(['_id' => $id], $document);
-        $gridFsFile = $this->mongoCollection->get($id);
+        $gridFsFile = $this->withPrimaryReadPreference(function () use ($id) {
+            return $this->mongoCollection->get($id);
+        });
 
-        // TODO: Consider throwing exception if file cannot be fetched
-        $file->setMongoGridFSFile($this->mongoCollection->get($id));
+        if ( ! $gridFsFile instanceof \MongoGridFSFile) {
+            throw new \LogicException('Could not find newly persisted GridFS file');
+        }
+
+        $file->setMongoGridFSFile($gridFsFile);
 
         return $file;
     }
@@ -304,5 +292,25 @@ class GridFS extends Collection
         // Now send the original update bringing the file up to date
         $options = isset($options['safe']) ? $this->convertWriteConcern($options) : $options;
         return $this->mongoCollection->update($query, $newObj, $options);
+    }
+
+    /**
+     * Executes a closure with a temporary primary read preference.
+     *
+     * @param \Closure $closure
+     *
+     * @return mixed
+     */
+    private function withPrimaryReadPreference(\Closure $closure)
+    {
+        $prevReadPref = $this->mongoCollection->getReadPreference();
+        $this->mongoCollection->setReadPreference(\MongoClient::RP_PRIMARY);
+
+        try {
+            return $closure();
+        } finally {
+            $prevTags = ! empty($prevReadPref['tagsets']) ? $prevReadPref['tagsets'] : [];
+            $this->mongoCollection->setReadPreference($prevReadPref['type'], $prevTags);
+        }
     }
 }

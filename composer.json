@@ -1,5 +1,5 @@
 {
-    "name": "luisneto98/slim3-skeleton",
+    "name": "luisneto98/wandarena",
     "description": "Simple Slim Framework 3 skeleton with Doctrine ODM, Monolog, Slim Session and JWT. Based project Akrabat.",
     "license": "BSD-3-Clause",
     "type": "project",

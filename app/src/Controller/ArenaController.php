@@ -16,6 +16,7 @@ use App\Mapper\Submit;
 use App\Mapper\User;
 use App\Model\Consoles\CardsGame\Game\JoKenPo\Game;
 use App\Model\Consoles\CardsGame\GameConsole;
+use App\Validator\CodeValidator;
 use Interop\Container\ContainerInterface;
 use Slim\Http\Request;
 use Slim\Http\Response;
@@ -169,7 +170,10 @@ class ArenaController extends AbstractController
     public function saveSubmitAction(Request $request, Response $response) {
         $id = $request->getAttribute("id");
         $arena = $this->_dm->getRepository(Arena::class)->getArenaWithId($id);
-
+        $router = $this->_ci->get('router');
+        if($arena->getDateUnix() <= time()){
+            return $response->withRedirect($router->pathFor('wanda.arena.submit'));
+        }
 
         $sessionUser = SessionFacilitator::getAttributeSession();
         $sessionUserId = $sessionUser["id"];
@@ -181,6 +185,11 @@ class ArenaController extends AbstractController
         $submit->setNickname($request->getParam("nickname"));
         $file = $request->getUploadedFiles();
         $code = $file["code"]->file;
+        $validator = new CodeValidator();
+        if(!$validator->isValid(["player"=>$file["code"],"game"=>$arena->getGame()])){
+            return $response->withRedirect($router->pathFor('wanda.home.index'));
+
+        }
         $submit->setCode(file_get_contents($code));
 
         $user->addSubmit($submit);
@@ -190,7 +199,6 @@ class ArenaController extends AbstractController
         $this->_dm->persist($submit);
         $this->_dm->flush();
 
-        $router = $this->_ci->get('router');
         return $response->withRedirect($router->pathFor('wanda.home.index'));
 
     }
