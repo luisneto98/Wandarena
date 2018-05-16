@@ -12,10 +12,10 @@ class Game
     const CARDS = array("pedra","papel","tesoura");
     const BOT ="
     function round1(carta1,carta2,carta3)
-        return carta2;
+        return carta1;
     end
     function round2(carta1,carta2,ctOponente1,ctOponente2)
-        return carta2;
+        return carta1;
     end";
     const IMAGESCARDS = array(array("name"=>"pedra","image"=>"/Images/Jo-Ken-Po/Textures/cardpedra.png"),array("name"=>"papel","image"=>"/Images/Jo-Ken-Po/Textures/cardpapel.png"),
         array("name"=>"tesoura","image"=>"/Images/Jo-Ken-Po/Textures/cardtesoura.png"));

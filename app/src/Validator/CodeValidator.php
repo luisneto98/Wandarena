@@ -14,17 +14,22 @@ use Zend\Validator\AbstractValidator;
 class CodeValidator extends AbstractValidator
 {
     public function isValid($value)
-    {
-        $game = $value["game"];
-        $code = $value["player"]->file;
-        $type = $value["player"]->getClientMediaType();
-        $result = $game::isValid($code);
-        if($result == false)
+    {   try{
+
+            $game = $value["game"];
+            $code = $value["player"]->file;
+            $type = $value["player"]->getClientMediaType();
+            $result = $game::isValid($code);
+            if($result == false)
+                return false;
+            if($type == "text/x-lua")
+                return true;
+            else
+                return false;
+
+        }catch (\Exception $e){
             return false;
-        if($type == "text/x-lua")
-            return true;
-        else
-            return false;
+        }
 
     }
 }

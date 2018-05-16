@@ -51,11 +51,15 @@ class Confrontation
     public function start($gameClass)
     {
         $gameConsole = new GameConsole();
-        if($this->player2 == NULL)
+        if( $this->player1 == NULL)
+            if($this->player2 == NULL)
+                $this->logJson = $gameConsole->startGame($gameClass::getBot(),$gameClass::getBot(),$gameClass);
+            else
+                $this->logJson = $gameConsole->startGame($gameClass::getBot(),$this->player2->getCode(),$gameClass);
+        elseif($this->player2 == NULL)
             $this->logJson = $gameConsole->startGame($this->player1->getCode(),$gameClass::getBot(),$gameClass);
         else
             $this->logJson = $gameConsole->startGame($this->player1->getCode(),$this->player2->getCode(),$gameClass);
-
 
         if($this->logJson["winner"] == 1){
             $this->winner = $this->player1;

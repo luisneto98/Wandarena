@@ -34,12 +34,12 @@
                         <li class="nav-item {% block arena %}{% endblock %}">
                             <a class="nav-link" href="{{ path_for('wanda.home.listar') }}">Arenas </a>
                         </li>
-                        {% if admin == true %}
+
                             <li class="nav-item {% block practice %}{% endblock %}">
                                 <a class="nav-link" href="{{ path_for('wanda.home.practice') }}">Praticar </a>
                             </li>
-                        {% endif %}
-                        {% if admin == false %}
+
+                        {% if admin == true %}
                             <li class="nav-item {% block registerUser %}{% endblock %}">
                                 <a class="nav-link" href="{{ path_for('wanda.user.register') }}">Cadastrar Usuário </a>
                             </li>

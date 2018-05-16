@@ -88,23 +88,20 @@ class __TwigTemplate_51562c30e9bf539d4bf42650ca73a3839d2fe550b6dfcf81a8b142ebd75
         echo twig_escape_filter($this->env, $this->extensions['Slim\Views\TwigExtension']->pathFor("wanda.home.listar"), "html", null, true);
         echo "\">Arenas </a>
                         </li>
-                        ";
-        // line 37
-        if ((($context["admin"] ?? null) == true)) {
-            // line 38
-            echo "                            <li class=\"nav-item ";
-            $this->displayBlock('practice', $context, $blocks);
-            echo "\">
+
+                            <li class=\"nav-item ";
+        // line 38
+        $this->displayBlock('practice', $context, $blocks);
+        echo "\">
                                 <a class=\"nav-link\" href=\"";
-            // line 39
-            echo twig_escape_filter($this->env, $this->extensions['Slim\Views\TwigExtension']->pathFor("wanda.home.practice"), "html", null, true);
-            echo "\">Praticar </a>
+        // line 39
+        echo twig_escape_filter($this->env, $this->extensions['Slim\Views\TwigExtension']->pathFor("wanda.home.practice"), "html", null, true);
+        echo "\">Praticar </a>
                             </li>
+
                         ";
-        }
         // line 42
-        echo "                        ";
-        if ((($context["admin"] ?? null) == false)) {
+        if ((($context["admin"] ?? null) == true)) {
             // line 43
             echo "                            <li class=\"nav-item ";
             $this->displayBlock('registerUser', $context, $blocks);
@@ -217,7 +214,7 @@ class __TwigTemplate_51562c30e9bf539d4bf42650ca73a3839d2fe550b6dfcf81a8b142ebd75
 
     public function getDebugInfo()
     {
-        return array (  203 => 61,  198 => 59,  193 => 46,  188 => 43,  183 => 38,  178 => 34,  173 => 19,  168 => 18,  150 => 62,  148 => 61,  143 => 59,  133 => 52,  129 => 50,  123 => 47,  119 => 46,  114 => 44,  109 => 43,  106 => 42,  100 => 39,  95 => 38,  93 => 37,  88 => 35,  84 => 34,  75 => 28,  65 => 20,  63 => 19,  59 => 18,  52 => 14,  48 => 13,  44 => 12,  31 => 1,);
+        return array (  200 => 61,  195 => 59,  190 => 46,  185 => 43,  180 => 38,  175 => 34,  170 => 19,  165 => 18,  147 => 62,  145 => 61,  140 => 59,  130 => 52,  126 => 50,  120 => 47,  116 => 46,  111 => 44,  106 => 43,  104 => 42,  98 => 39,  94 => 38,  88 => 35,  84 => 34,  75 => 28,  65 => 20,  63 => 19,  59 => 18,  52 => 14,  48 => 13,  44 => 12,  31 => 1,);
     }
 
     public function getSourceContext()
@@ -258,12 +255,12 @@ class __TwigTemplate_51562c30e9bf539d4bf42650ca73a3839d2fe550b6dfcf81a8b142ebd75
                         <li class=\"nav-item {% block arena %}{% endblock %}\">
                             <a class=\"nav-link\" href=\"{{ path_for('wanda.home.listar') }}\">Arenas </a>
                         </li>
-                        {% if admin == true %}
+
                             <li class=\"nav-item {% block practice %}{% endblock %}\">
                                 <a class=\"nav-link\" href=\"{{ path_for('wanda.home.practice') }}\">Praticar </a>
                             </li>
-                        {% endif %}
-                        {% if admin == false %}
+
+                        {% if admin == true %}
                             <li class=\"nav-item {% block registerUser %}{% endblock %}\">
                                 <a class=\"nav-link\" href=\"{{ path_for('wanda.user.register') }}\">Cadastrar Usuário </a>
                             </li>

@@ -56,7 +56,7 @@ class __TwigTemplate_68633ec5222b07f23586ba2e686dcba27e2dd8a8072e9fa10bdef6f057b
         echo "<div class=\"offset-5 col-2\">
     <form class=\"justify-content-center\" action=\"";
         // line 7
-        echo twig_escape_filter($this->env, $this->extensions['Slim\Views\TwigExtension']->pathFor("wanda.home.teste"), "html", null, true);
+        echo twig_escape_filter($this->env, $this->extensions['Slim\Views\TwigExtension']->pathFor("wanda.pratice"), "html", null, true);
         echo "\" method=\"POST\"
           enctype=\"multipart/form-data\">
         Player 1: <input type=\"file\" name=\"code1\"><br>
@@ -92,7 +92,7 @@ class __TwigTemplate_68633ec5222b07f23586ba2e686dcba27e2dd8a8072e9fa10bdef6f057b
 {% block practice %} active {% endblock %}
 {% block content %}
 <div class=\"offset-5 col-2\">
-    <form class=\"justify-content-center\" action=\"{{ path_for('wanda.home.teste') }}\" method=\"POST\"
+    <form class=\"justify-content-center\" action=\"{{ path_for('wanda.pratice') }}\" method=\"POST\"
           enctype=\"multipart/form-data\">
         Player 1: <input type=\"file\" name=\"code1\"><br>
         Player 2: <input type=\"file\" name=\"code2\"><br>
