@@ -26,6 +26,11 @@ class User
     private $name;
 
     /**
+     * @ODM\Field(name="qtdLogin", type="int")
+     */
+    private $qtdLogin;
+
+    /**
      * @ODM\Field(name="password", type="string")
      */
     private $password;
@@ -44,6 +49,7 @@ class User
     public function __construct()
     {
         $this->submits = new ArrayCollection();
+        $this->qtdLogin = 0;
     }
 
     /**
@@ -147,6 +153,22 @@ class User
             $this->admin = true;
         else
             $this->admin = false;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getQtdLogin()
+    {
+        return $this->qtdLogin;
+    }
+
+    /**
+     * @param mixed $qtdLogin
+     */
+    public function setQtdLogin($qtdLogin)
+    {
+        $this->qtdLogin = $qtdLogin;
     }
 
 

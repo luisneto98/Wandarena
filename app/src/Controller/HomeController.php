@@ -134,7 +134,9 @@ class HomeController extends AbstractController
      */
     public function listAction(ServerRequestInterface $request, ResponseInterface $response) {
         $arenas = $this->_dm->getRepository(Arena::class)->findAll();
-        return $this->view->render($response,"View/Arena/arenaList.twig",["admin" => true,"arenas"=>$arenas]);
+        $sessionUser = SessionFacilitator::getAttributeSession();
+        $sessionUserAdmin = $sessionUser["admin"];
+        return $this->view->render($response,"View/Arena/arenaList.twig",["admin" => $sessionUserAdmin,"arenas"=>$arenas]);
     }
     /**
      * @param ServerRequestInterface $request
@@ -143,7 +145,9 @@ class HomeController extends AbstractController
      * @Get(name="/praticar", alias="wanda.home.practice" , middleware={"App\Middleware\SessionMiddleware"})
      */
     public function practiceAction(ServerRequestInterface $request, ResponseInterface $response) {
-        return $this->view->render($response,"View/Practice/practice.twig",["admin" => true]);
+        $sessionUser = SessionFacilitator::getAttributeSession();
+        $sessionUserAdmin = $sessionUser["admin"];
+        return $this->view->render($response,"View/Practice/practice.twig",["admin" => $sessionUserAdmin]);
     }
     /**
      * @param Request $request

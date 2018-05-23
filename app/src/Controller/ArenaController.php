@@ -49,8 +49,8 @@ class ArenaController extends AbstractController
     public function registerAction(Request $request, Response $response) {
 
         $sessionUser = SessionFacilitator::getAttributeSession();
-        $sessionUserId = $sessionUser["id"];
-        return $this->view->render($response,"View/Arena/registerArena.twig",["admin" => $sessionUserId,"timeActual"=>date("Y-m-d\TH:i",time())]);
+        $sessionAdmin = $sessionUser["admin"];
+        return $this->view->render($response,"View/Arena/registerArena.twig",["admin" => $sessionAdmin,"timeActual"=>date("Y-m-d\TH:i",time())]);
     }
 
     /**
@@ -86,8 +86,8 @@ class ArenaController extends AbstractController
     public function listAction(Request $request, Response $response) {
         $arenas = $this->_dm->getRepository(Arena::class)->findAll();
         $sessionUser = SessionFacilitator::getAttributeSession();
-        $sessionUserId = $sessionUser["id"];;
-        return $this->view->render($response,"View/Arena/arenasControl.twig",["admin" => $sessionUserId,"arenas"=>$arenas]);
+        $sessionUserAdmin = $sessionUser["admin"];;
+        return $this->view->render($response,"View/Arena/arenasControl.twig",["admin" => $sessionUserAdmin,"arenas"=>$arenas]);
     }
     /**
      * @param Request $request
@@ -114,12 +114,12 @@ class ArenaController extends AbstractController
      */
     public function changeAction(Request $request, Response $response) {
         $sessionUser = SessionFacilitator::getAttributeSession();
-        $sessionUserId = $sessionUser["id"];
+        $sessionUserAdmin = $sessionUser["admin"];
         $id = $request->getAttribute("id");
         $arena = $this->_dm->getRepository(Arena::class)->getArenaWithId($id);
 
         $router = $this->_ci->get('router');
-        return $this->view->render($response,"View/Arena/registerArena.twig",["admin" => $sessionUserId,"arena"=>$arena]);
+        return $this->view->render($response,"View/Arena/registerArena.twig",["admin" => $sessionUserAdmin,"arena"=>$arena]);
 
     }
 
@@ -133,7 +133,7 @@ class ArenaController extends AbstractController
         $id = $request->getAttribute("id");
         $arena = $this->_dm->getRepository(Arena::class)->getArenaWithId($id);
         $sessionUser = SessionFacilitator::getAttributeSession();
-        $sessionUserId = $sessionUser["id"];
+        $sessionUserAdmin = $sessionUser["admin"];
 
         if($arena->getDateUnix() <= time()){
             if(!$arena->isReady()){
@@ -141,11 +141,11 @@ class ArenaController extends AbstractController
                 $this->_dm->flush();
             }
 
-            return $this->view->render($response,"View/Arena/listConfrontations.twig",["admin" => $sessionUserId,"arena"=>$arena]);
+            return $this->view->render($response,"View/Arena/listConfrontations.twig",["admin" => $sessionUserAdmin,"arena"=>$arena]);
         }
 
 
-        return $this->view->render($response,"View/User/submitCode.twig",["admin" => $sessionUserId,"arena"=>$arena]);
+        return $this->view->render($response,"View/User/submitCode.twig",["admin" => $sessionUserAdmin,"arena"=>$arena]);
 
     }
 
@@ -166,8 +166,8 @@ class ArenaController extends AbstractController
         $game = $confrontation->getlogJson();
 
         $sessionUser = SessionFacilitator::getAttributeSession();
-        $sessionUserId = $sessionUser["id"];
-        return $this->view->render($response,"View/Arena/cardsGamePlayer.twig",["admin" => $sessionUserId
+        $sessionUserAdmin = $sessionUser["admin"];
+        return $this->view->render($response,"View/Arena/cardsGamePlayer.twig",["admin" => $sessionUserAdmin
             ,"gameinfo"=>$arena->getGame()::getGameInfo(),"game"=>$game,"confrontation"=>$confrontation]);
     }
 
@@ -196,10 +196,9 @@ class ArenaController extends AbstractController
         $file = $request->getUploadedFiles();
         $code = $file["code"]->file;
         $validator = new CodeValidator();
-        $sessionUser = SessionFacilitator::getAttributeSession();
-        $sessionUserId = $sessionUser["id"];
+        $sessionUserAdmin = $sessionUser["admin"];
         if(!$validator->isValid(["player"=>$file["code"],"game"=>$arena->getGame()])){
-            return $this->view->render($response,"View/User/submitCode.twig",["admin" => $sessionUserId,"arena"=>$arena,"message"=>"Código inválido!"]);
+            return $this->view->render($response,"View/User/submitCode.twig",["admin" => $sessionUserAdmin,"arena"=>$arena,"message"=>"Código inválido!"]);
 
         }
         $submit->setCode(file_get_contents($code));
@@ -224,6 +223,7 @@ class ArenaController extends AbstractController
 
         $sessionUser = SessionFacilitator::getAttributeSession();
         $sessionUserId = $sessionUser["id"];
+        $sessionUserAdmin = $sessionUser["admin"];
 
         $user = $this->_dm->getRepository(User::class)->find($sessionUserId);
 
@@ -264,7 +264,7 @@ class ArenaController extends AbstractController
 
         $this->_dm->flush();
         $router = $this->_ci->get('router');
-        return $this->view->render($response,"View/Arena/cardsGamePlayer.twig",["admin" => $sessionUserId
+        return $this->view->render($response,"View/Arena/cardsGamePlayer.twig",["admin" => $sessionUserAdmin
             ,"gameinfo"=>Game::getGameInfo(),"game"=>$confrontation->getLogJson(),"confrontation"=>$confrontation]);
 
     }

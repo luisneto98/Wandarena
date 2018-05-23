@@ -3,7 +3,10 @@
 {% block titlePage %} Lista de Confrontos {% endblock %}
 {% block arena %} active {% endblock %}
 {% block content %}
-
+    <!-- Button trigger modal -->
+    <button type="button" class="btn btn-primary offset-10" data-toggle="modal" data-target="#winnerModal">
+        Exibir Vencedor
+    </button>
     <div class="offset-3 col-6">
         {% set countStages = arena.countStages() %}
         {% for i in 1..countStages %}
@@ -51,6 +54,26 @@
             </div>
 
         {% endfor %}
+
+        <!-- Modal -->
+        <div class="modal fade" id="winnerModal" tabindex="-1" role="dialog" aria-labelledby="winnerModal" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">Vencedor</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        {{ arena.winner.nickname }}
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 
 {% endblock %}

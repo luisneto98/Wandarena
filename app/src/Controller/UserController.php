@@ -7,6 +7,7 @@
  */
 
 namespace App\Controller;
+use App\Facilitator\App\SessionFacilitator;
 use App\Mapper\User;
 use Interop\Container\ContainerInterface;
 use Slim\Http\Request;
@@ -36,7 +37,9 @@ class UserController extends AbstractController
      * @Get(name="/registrar", alias="wanda.user.register" , middleware={"App\Middleware\SessionMiddleware"})
      */
     public function registerAction(Request $request, Response $response) {
-        return $this->view->render($response,"View/User/registerUser.twig",["admin" => true]);
+        $sessionUser = SessionFacilitator::getAttributeSession();
+        $sessionUserAdmin = $sessionUser["admin"];
+        return $this->view->render($response,"View/User/registerUser.twig",["admin" => $sessionUserAdmin]);
     }
     /**
      * @param Request $request
@@ -44,13 +47,15 @@ class UserController extends AbstractController
      * @return mixed
      * @Post(name="/salvar", alias="wanda.user.save" , middleware={"App\Middleware\SessionMiddleware"})
      */
-    public function testeAction(Request $request, Response $response) {
+    public function salvarAction(Request $request, Response $response) {
         $user = new User();
+        $sessionUser = SessionFacilitator::getAttributeSession();
+        $sessionUserAdmin = $sessionUser["admin"];
         if($request->getParam("password") != $request->getParam("confirmPassword"))
-            return $this->view->render($response,"View/User/registerUser.twig",["admin" => true, "passwordinval"=>true]);
+            return $this->view->render($response,"View/User/registerUser.twig",["admin" => $sessionUserAdmin, "passwordinval"=>true]);
 
         if(count($this->_dm->getRepository(User::class)->getUserWithUsername($request->getParam("username"))) > 0)
-            return $this->view->render($response,"View/User/registerUser.twig",["admin" => true, "usernameinval"=>true]);
+            return $this->view->render($response,"View/User/registerUser.twig",["admin" => $sessionUserAdmin, "usernameinval"=>true]);
 
         $user->setUsername($request->getParam("username"));
         $user->setName($request->getParam("name"));

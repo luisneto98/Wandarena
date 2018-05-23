@@ -51,7 +51,8 @@ class AuthAdapterUser implements AuthAdapterInterface
         }
 
         $user = $arrayUser[0];
-
+        $user->setQtdLogin($user->getQtdLogin()+1);
+        $this->databaseConnection->flush();
         $arraySettings = $ci->get('settings');
         return new AuthResponse(AuthResponse::AUTHRESPONSE_SUCCESS, 'User auth success', $arraySettings['session']['name'], [ 'id' => $user->getId(), 'username' => $user->getUsername(),'admin'=>$user->isAdmin()]);
     }

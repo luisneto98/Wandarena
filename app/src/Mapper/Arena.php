@@ -197,8 +197,8 @@ class Arena
         }
         foreach($this->submits->getIterator() as $i => $item) {
             if($item->getUser()->getId() == $submits->getUser()->getId()){
-                $this->submits->delete($item);
-
+                $this->submits->removeElement($item);
+                $this->submits->add($submits);
                 return $this;
             }
         }

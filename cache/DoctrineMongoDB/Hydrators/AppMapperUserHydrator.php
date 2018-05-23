@@ -68,6 +68,19 @@ class AppMapperUserHydrator implements HydratorInterface
             $hydratedData['name'] = $return;
         }
 
+        /** @Field(type="int") */
+        if (isset($data['qtdLogin']) || (! empty($this->class->fieldMappings['qtdLogin']['nullable']) && array_key_exists('qtdLogin', $data))) {
+            $value = $data['qtdLogin'];
+            if ($value !== null) {
+                $typeIdentifier = $this->class->fieldMappings['qtdLogin']['type'];
+                $return = (int) $value;
+            } else {
+                $return = null;
+            }
+            $this->class->reflFields['qtdLogin']->setValue($document, $return);
+            $hydratedData['qtdLogin'] = $return;
+        }
+
         /** @Field(type="string") */
         if (isset($data['password']) || (! empty($this->class->fieldMappings['password']['nullable']) && array_key_exists('password', $data))) {
             $value = $data['password'];

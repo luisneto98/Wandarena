@@ -74,7 +74,8 @@
 
                 //////
                 ///////player1
-                var player1 = {round: [], deck:[] , name: "{{ confrontation.player1.nickname }}", pointsInMatch: 0 , pointsInGame : 0, posiXDeck: 150 , posiYDeck:150,loser: false , selectedCardInMatch: 0};
+                var player1 = {round: [], deck:[] , name: {% if(confrontation.player1 != NULL ) %}
+                        "{{ confrontation.player1.nickname }}"{% else %}"Bot"{% endif %}, pointsInMatch: 0 , pointsInGame : 0, posiXDeck: 150 , posiYDeck:150,loser: false , selectedCardInMatch: 0};
                 ///////
                 ///////Player2
                 var player2 = {round: [], deck:[] , name: {% if(confrontation.player2 != NULL ) %}

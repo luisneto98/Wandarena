@@ -159,23 +159,30 @@ class __TwigTemplate_9c47b17a588aa8be7a11783cb71c169a99d7fd1c0c13bb0417b26f683db
 
                 //////
                 ///////player1
-                var player1 = {round: [], deck:[] , name: \"";
+                var player1 = {round: [], deck:[] , name: ";
         // line 77
-        echo twig_escape_filter($this->env, twig_get_attribute($this->env, $this->source, twig_get_attribute($this->env, $this->source, ($context["confrontation"] ?? null), "player1", array()), "nickname", array()), "html", null, true);
-        echo "\", pointsInMatch: 0 , pointsInGame : 0, posiXDeck: 150 , posiYDeck:150,loser: false , selectedCardInMatch: 0};
+        if ((twig_get_attribute($this->env, $this->source, ($context["confrontation"] ?? null), "player1", array()) != null)) {
+            // line 78
+            echo "                        \"";
+            echo twig_escape_filter($this->env, twig_get_attribute($this->env, $this->source, twig_get_attribute($this->env, $this->source, ($context["confrontation"] ?? null), "player1", array()), "nickname", array()), "html", null, true);
+            echo "\"";
+        } else {
+            echo "\"Bot\"";
+        }
+        echo ", pointsInMatch: 0 , pointsInGame : 0, posiXDeck: 150 , posiYDeck:150,loser: false , selectedCardInMatch: 0};
                 ///////
                 ///////Player2
                 var player2 = {round: [], deck:[] , name: ";
-        // line 80
+        // line 81
         if ((twig_get_attribute($this->env, $this->source, ($context["confrontation"] ?? null), "player2", array()) != null)) {
-            // line 81
+            // line 82
             echo "                    \"";
             echo twig_escape_filter($this->env, twig_get_attribute($this->env, $this->source, twig_get_attribute($this->env, $this->source, ($context["confrontation"] ?? null), "player2", array()), "nickname", array()), "html", null, true);
             echo "\"";
         } else {
             echo "\"Bot\"";
         }
-        // line 82
+        // line 83
         echo "                    , pointsInMatch: 0 , pointsInGame : 0, posiXDeck: widthScreen-150 , posiYDeck:150, loser: false, selectedCardInMatch: 0};
                 ///////
 
@@ -188,27 +195,27 @@ class __TwigTemplate_9c47b17a588aa8be7a11783cb71c169a99d7fd1c0c13bb0417b26f683db
                 }
                 function loadImageCards(){
                     ";
-        // line 93
+        // line 94
         $context['_parent'] = $context;
         $context['_seq'] = twig_ensure_traversable(twig_get_attribute($this->env, $this->source, ($context["gameinfo"] ?? null), "cardsimages", array()));
         foreach ($context['_seq'] as $context["_key"] => $context["card"]) {
-            // line 94
+            // line 95
             echo "                    imageCards[\"";
             echo twig_escape_filter($this->env, twig_get_attribute($this->env, $this->source, $context["card"], "name", array()), "html", null, true);
             echo "\"] = new Image();
                     imageCards[\"";
-            // line 95
+            // line 96
             echo twig_escape_filter($this->env, twig_get_attribute($this->env, $this->source, $context["card"], "name", array()), "html", null, true);
             echo "\"].src = \"";
             echo twig_escape_filter($this->env, $this->extensions['Slim\Views\TwigExtension']->baseUrl(), "html", null, true);
             echo twig_escape_filter($this->env, twig_get_attribute($this->env, $this->source, $context["card"], "image", array()), "html", null, true);
             echo "\";
                     imageCards[\"";
-            // line 96
+            // line 97
             echo twig_escape_filter($this->env, twig_get_attribute($this->env, $this->source, $context["card"], "name", array()), "html", null, true);
             echo "\"].width = widthCard;
                     imageCards[\"";
-            // line 97
+            // line 98
             echo twig_escape_filter($this->env, twig_get_attribute($this->env, $this->source, $context["card"], "name", array()), "html", null, true);
             echo "\"].height = heightCard;
                     ";
@@ -216,7 +223,7 @@ class __TwigTemplate_9c47b17a588aa8be7a11783cb71c169a99d7fd1c0c13bb0417b26f683db
         $_parent = $context['_parent'];
         unset($context['_seq'], $context['_iterated'], $context['_key'], $context['card'], $context['_parent'], $context['loop']);
         $context = array_intersect_key($context, $_parent) + $_parent;
-        // line 99
+        // line 100
         echo "                }
                 function configCards(){
                     console.log(player1.round[round].hand);
@@ -248,12 +255,12 @@ class __TwigTemplate_9c47b17a588aa8be7a11783cb71c169a99d7fd1c0c13bb0417b26f683db
                     gamedata = {};
                     gamedata.matchs = [];
                     gamedata.winner = ";
-        // line 129
+        // line 130
         echo twig_escape_filter($this->env, twig_get_attribute($this->env, $this->source, ($context["game"] ?? null), "winner", array()), "html", null, true);
         echo ";
 
                     ";
-        // line 131
+        // line 132
         $context['_parent'] = $context;
         $context['_seq'] = twig_ensure_traversable(twig_get_attribute($this->env, $this->source, ($context["game"] ?? null), "matchs", array()));
         $context['loop'] = array(
@@ -270,25 +277,25 @@ class __TwigTemplate_9c47b17a588aa8be7a11783cb71c169a99d7fd1c0c13bb0417b26f683db
             $context['loop']['last'] = 1 === $length;
         }
         foreach ($context['_seq'] as $context["_key"] => $context["match"]) {
-            // line 132
+            // line 133
             echo "                    gamedata.matchs[";
             echo twig_escape_filter($this->env, twig_get_attribute($this->env, $this->source, $context["loop"], "index0", array()), "html", null, true);
             echo "] = {};
                     gamedata.matchs[";
-            // line 133
+            // line 134
             echo twig_escape_filter($this->env, twig_get_attribute($this->env, $this->source, $context["loop"], "index0", array()), "html", null, true);
             echo "].player1 = {};
                     gamedata.matchs[";
-            // line 134
+            // line 135
             echo twig_escape_filter($this->env, twig_get_attribute($this->env, $this->source, $context["loop"], "index0", array()), "html", null, true);
             echo "].player1.cards = [];
                     ";
-            // line 135
-            $context["loop1"] = twig_get_attribute($this->env, $this->source, $context["loop"], "index0", array());
             // line 136
+            $context["loop1"] = twig_get_attribute($this->env, $this->source, $context["loop"], "index0", array());
+            // line 137
             echo "
                     ";
-            // line 137
+            // line 138
             $context['_parent'] = $context;
             $context['_seq'] = twig_ensure_traversable(twig_get_attribute($this->env, $this->source, twig_get_attribute($this->env, $this->source, $context["match"], "player1", array()), "deck", array()));
             $context['loop'] = array(
@@ -305,7 +312,7 @@ class __TwigTemplate_9c47b17a588aa8be7a11783cb71c169a99d7fd1c0c13bb0417b26f683db
                 $context['loop']['last'] = 1 === $length;
             }
             foreach ($context['_seq'] as $context["_key"] => $context["card"]) {
-                // line 138
+                // line 139
                 echo "                    gamedata.matchs[";
                 echo twig_escape_filter($this->env, ($context["loop1"] ?? null), "html", null, true);
                 echo "].player1.cards[";
@@ -326,19 +333,19 @@ class __TwigTemplate_9c47b17a588aa8be7a11783cb71c169a99d7fd1c0c13bb0417b26f683db
             $_parent = $context['_parent'];
             unset($context['_seq'], $context['_iterated'], $context['_key'], $context['card'], $context['_parent'], $context['loop']);
             $context = array_intersect_key($context, $_parent) + $_parent;
-            // line 140
+            // line 141
             echo "
                     gamedata.matchs[";
-            // line 141
+            // line 142
             echo twig_escape_filter($this->env, twig_get_attribute($this->env, $this->source, $context["loop"], "index0", array()), "html", null, true);
             echo "].player2 = {};
                     gamedata.matchs[";
-            // line 142
+            // line 143
             echo twig_escape_filter($this->env, twig_get_attribute($this->env, $this->source, $context["loop"], "index0", array()), "html", null, true);
             echo "].player2.cards = [];
 
                     ";
-            // line 144
+            // line 145
             $context['_parent'] = $context;
             $context['_seq'] = twig_ensure_traversable(twig_get_attribute($this->env, $this->source, twig_get_attribute($this->env, $this->source, $context["match"], "player2", array()), "deck", array()));
             $context['loop'] = array(
@@ -355,7 +362,7 @@ class __TwigTemplate_9c47b17a588aa8be7a11783cb71c169a99d7fd1c0c13bb0417b26f683db
                 $context['loop']['last'] = 1 === $length;
             }
             foreach ($context['_seq'] as $context["_key"] => $context["card"]) {
-                // line 145
+                // line 146
                 echo "                    gamedata.matchs[";
                 echo twig_escape_filter($this->env, ($context["loop1"] ?? null), "html", null, true);
                 echo "].player2.cards[";
@@ -376,21 +383,21 @@ class __TwigTemplate_9c47b17a588aa8be7a11783cb71c169a99d7fd1c0c13bb0417b26f683db
             $_parent = $context['_parent'];
             unset($context['_seq'], $context['_iterated'], $context['_key'], $context['card'], $context['_parent'], $context['loop']);
             $context = array_intersect_key($context, $_parent) + $_parent;
-            // line 147
+            // line 148
             echo "
 
                     gamedata.matchs[";
-            // line 149
+            // line 150
             echo twig_escape_filter($this->env, twig_get_attribute($this->env, $this->source, $context["loop"], "index0", array()), "html", null, true);
             echo "].rounds = [];
                     gamedata.matchs[";
-            // line 150
+            // line 151
             echo twig_escape_filter($this->env, twig_get_attribute($this->env, $this->source, $context["loop"], "index0", array()), "html", null, true);
             echo "].winner = ";
             echo twig_escape_filter($this->env, twig_get_attribute($this->env, $this->source, $context["match"], "winner", array()), "html", null, true);
             echo ";
                     ";
-            // line 151
+            // line 152
             $context['_parent'] = $context;
             $context['_seq'] = twig_ensure_traversable(twig_get_attribute($this->env, $this->source, $context["match"], "rounds", array()));
             $context['loop'] = array(
@@ -407,14 +414,14 @@ class __TwigTemplate_9c47b17a588aa8be7a11783cb71c169a99d7fd1c0c13bb0417b26f683db
                 $context['loop']['last'] = 1 === $length;
             }
             foreach ($context['_seq'] as $context["_key"] => $context["round"]) {
-                // line 152
+                // line 153
                 echo "                    gamedata.matchs[";
                 echo twig_escape_filter($this->env, ($context["loop1"] ?? null), "html", null, true);
                 echo "].rounds[";
                 echo twig_escape_filter($this->env, twig_get_attribute($this->env, $this->source, $context["loop"], "index0", array()), "html", null, true);
                 echo "] = {};
                     gamedata.matchs[";
-                // line 153
+                // line 154
                 echo twig_escape_filter($this->env, ($context["loop1"] ?? null), "html", null, true);
                 echo "].rounds[";
                 echo twig_escape_filter($this->env, twig_get_attribute($this->env, $this->source, $context["loop"], "index0", array()), "html", null, true);
@@ -422,21 +429,21 @@ class __TwigTemplate_9c47b17a588aa8be7a11783cb71c169a99d7fd1c0c13bb0417b26f683db
                 echo twig_escape_filter($this->env, twig_get_attribute($this->env, $this->source, $context["round"], "winner", array()), "html", null, true);
                 echo ";
                     gamedata.matchs[";
-                // line 154
+                // line 155
                 echo twig_escape_filter($this->env, ($context["loop1"] ?? null), "html", null, true);
                 echo "].rounds[";
                 echo twig_escape_filter($this->env, twig_get_attribute($this->env, $this->source, $context["loop"], "index0", array()), "html", null, true);
                 echo "].player1 = {};
                     gamedata.matchs[";
-                // line 155
+                // line 156
                 echo twig_escape_filter($this->env, ($context["loop1"] ?? null), "html", null, true);
                 echo "].rounds[";
                 echo twig_escape_filter($this->env, twig_get_attribute($this->env, $this->source, $context["loop"], "index0", array()), "html", null, true);
                 echo "].player1.hand = [];
                     ";
-                // line 156
-                $context["loop2"] = twig_get_attribute($this->env, $this->source, $context["loop"], "index0", array());
                 // line 157
+                $context["loop2"] = twig_get_attribute($this->env, $this->source, $context["loop"], "index0", array());
+                // line 158
                 echo "                    ";
                 $context['_parent'] = $context;
                 $context['_seq'] = twig_ensure_traversable(twig_get_attribute($this->env, $this->source, twig_get_attribute($this->env, $this->source, $context["round"], "player1", array()), "hand", array()));
@@ -454,7 +461,7 @@ class __TwigTemplate_9c47b17a588aa8be7a11783cb71c169a99d7fd1c0c13bb0417b26f683db
                     $context['loop']['last'] = 1 === $length;
                 }
                 foreach ($context['_seq'] as $context["_key"] => $context["card"]) {
-                    // line 158
+                    // line 159
                     echo "                    gamedata.matchs[";
                     echo twig_escape_filter($this->env, ($context["loop1"] ?? null), "html", null, true);
                     echo "].rounds[";
@@ -477,7 +484,7 @@ class __TwigTemplate_9c47b17a588aa8be7a11783cb71c169a99d7fd1c0c13bb0417b26f683db
                 $_parent = $context['_parent'];
                 unset($context['_seq'], $context['_iterated'], $context['_key'], $context['card'], $context['_parent'], $context['loop']);
                 $context = array_intersect_key($context, $_parent) + $_parent;
-                // line 160
+                // line 161
                 echo "                    gamedata.matchs[";
                 echo twig_escape_filter($this->env, ($context["loop1"] ?? null), "html", null, true);
                 echo "].rounds[";
@@ -487,21 +494,21 @@ class __TwigTemplate_9c47b17a588aa8be7a11783cb71c169a99d7fd1c0c13bb0417b26f683db
                 echo "\";
 
                     gamedata.matchs[";
-                // line 162
+                // line 163
                 echo twig_escape_filter($this->env, ($context["loop1"] ?? null), "html", null, true);
                 echo "].rounds[";
                 echo twig_escape_filter($this->env, twig_get_attribute($this->env, $this->source, $context["loop"], "index0", array()), "html", null, true);
                 echo "].player2 = {};
                     gamedata.matchs[";
-                // line 163
+                // line 164
                 echo twig_escape_filter($this->env, ($context["loop1"] ?? null), "html", null, true);
                 echo "].rounds[";
                 echo twig_escape_filter($this->env, twig_get_attribute($this->env, $this->source, $context["loop"], "index0", array()), "html", null, true);
                 echo "].player2.hand = [];
                     ";
-                // line 164
-                $context["loop2"] = twig_get_attribute($this->env, $this->source, $context["loop"], "index0", array());
                 // line 165
+                $context["loop2"] = twig_get_attribute($this->env, $this->source, $context["loop"], "index0", array());
+                // line 166
                 echo "                    ";
                 $context['_parent'] = $context;
                 $context['_seq'] = twig_ensure_traversable(twig_get_attribute($this->env, $this->source, twig_get_attribute($this->env, $this->source, $context["round"], "player2", array()), "hand", array()));
@@ -519,7 +526,7 @@ class __TwigTemplate_9c47b17a588aa8be7a11783cb71c169a99d7fd1c0c13bb0417b26f683db
                     $context['loop']['last'] = 1 === $length;
                 }
                 foreach ($context['_seq'] as $context["_key"] => $context["card"]) {
-                    // line 166
+                    // line 167
                     echo "                    gamedata.matchs[";
                     echo twig_escape_filter($this->env, ($context["loop1"] ?? null), "html", null, true);
                     echo "].rounds[";
@@ -542,7 +549,7 @@ class __TwigTemplate_9c47b17a588aa8be7a11783cb71c169a99d7fd1c0c13bb0417b26f683db
                 $_parent = $context['_parent'];
                 unset($context['_seq'], $context['_iterated'], $context['_key'], $context['card'], $context['_parent'], $context['loop']);
                 $context = array_intersect_key($context, $_parent) + $_parent;
-                // line 168
+                // line 169
                 echo "                    gamedata.matchs[";
                 echo twig_escape_filter($this->env, ($context["loop1"] ?? null), "html", null, true);
                 echo "].rounds[";
@@ -563,7 +570,7 @@ class __TwigTemplate_9c47b17a588aa8be7a11783cb71c169a99d7fd1c0c13bb0417b26f683db
             $_parent = $context['_parent'];
             unset($context['_seq'], $context['_iterated'], $context['_key'], $context['round'], $context['_parent'], $context['loop']);
             $context = array_intersect_key($context, $_parent) + $_parent;
-            // line 170
+            // line 171
             echo "
                     ";
             ++$context['loop']['index0'];
@@ -578,7 +585,7 @@ class __TwigTemplate_9c47b17a588aa8be7a11783cb71c169a99d7fd1c0c13bb0417b26f683db
         $_parent = $context['_parent'];
         unset($context['_seq'], $context['_iterated'], $context['_key'], $context['match'], $context['_parent'], $context['loop']);
         $context = array_intersect_key($context, $_parent) + $_parent;
-        // line 172
+        // line 173
         echo "
                 }
 
@@ -806,7 +813,7 @@ class __TwigTemplate_9c47b17a588aa8be7a11783cb71c169a99d7fd1c0c13bb0417b26f683db
 
     public function getDebugInfo()
     {
-        return array (  582 => 172,  567 => 170,  546 => 168,  523 => 166,  505 => 165,  503 => 164,  497 => 163,  491 => 162,  481 => 160,  458 => 158,  440 => 157,  438 => 156,  432 => 155,  426 => 154,  418 => 153,  411 => 152,  394 => 151,  388 => 150,  384 => 149,  380 => 147,  359 => 145,  342 => 144,  337 => 142,  333 => 141,  330 => 140,  309 => 138,  292 => 137,  289 => 136,  287 => 135,  283 => 134,  279 => 133,  274 => 132,  257 => 131,  252 => 129,  220 => 99,  212 => 97,  208 => 96,  201 => 95,  196 => 94,  192 => 93,  179 => 82,  172 => 81,  170 => 80,  164 => 77,  144 => 60,  137 => 56,  133 => 55,  124 => 50,  118 => 48,  110 => 44,  104 => 42,  96 => 38,  64 => 8,  61 => 7,  56 => 5,  50 => 4,  44 => 3,  36 => 2,  15 => 1,);
+        return array (  589 => 173,  574 => 171,  553 => 169,  530 => 167,  512 => 166,  510 => 165,  504 => 164,  498 => 163,  488 => 161,  465 => 159,  447 => 158,  445 => 157,  439 => 156,  433 => 155,  425 => 154,  418 => 153,  401 => 152,  395 => 151,  391 => 150,  387 => 148,  366 => 146,  349 => 145,  344 => 143,  340 => 142,  337 => 141,  316 => 139,  299 => 138,  296 => 137,  294 => 136,  290 => 135,  286 => 134,  281 => 133,  264 => 132,  259 => 130,  227 => 100,  219 => 98,  215 => 97,  208 => 96,  203 => 95,  199 => 94,  186 => 83,  179 => 82,  177 => 81,  166 => 78,  164 => 77,  144 => 60,  137 => 56,  133 => 55,  124 => 50,  118 => 48,  110 => 44,  104 => 42,  96 => 38,  64 => 8,  61 => 7,  56 => 5,  50 => 4,  44 => 3,  36 => 2,  15 => 1,);
     }
 
     public function getSourceContext()
@@ -887,7 +894,8 @@ class __TwigTemplate_9c47b17a588aa8be7a11783cb71c169a99d7fd1c0c13bb0417b26f683db
 
                 //////
                 ///////player1
-                var player1 = {round: [], deck:[] , name: \"{{ confrontation.player1.nickname }}\", pointsInMatch: 0 , pointsInGame : 0, posiXDeck: 150 , posiYDeck:150,loser: false , selectedCardInMatch: 0};
+                var player1 = {round: [], deck:[] , name: {% if(confrontation.player1 != NULL ) %}
+                        \"{{ confrontation.player1.nickname }}\"{% else %}\"Bot\"{% endif %}, pointsInMatch: 0 , pointsInGame : 0, posiXDeck: 150 , posiYDeck:150,loser: false , selectedCardInMatch: 0};
                 ///////
                 ///////Player2
                 var player2 = {round: [], deck:[] , name: {% if(confrontation.player2 != NULL ) %}
