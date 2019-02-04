@@ -1,6 +1,7 @@
 # Wandarena
 
 substituir o conteudo da classe sllim3anottation por:
+```php
 <?php
 
 namespace Slim3\Annotation;
@@ -36,3 +37,4 @@ class Slim3Annotation
         }
     }
 }
+```
